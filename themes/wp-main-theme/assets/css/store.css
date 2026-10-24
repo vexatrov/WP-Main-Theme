@@ -1,0 +1,17 @@
+/* Keep WooCommerce's compatibility styles; layer brand tokens over them. */
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button,
+.woocommerce #respond input#submit, .woocommerce a.button.alt,
+.woocommerce button.button.alt, .woocommerce input.button.alt {
+	background: var(--brand-accent); color: var(--brand-on-accent); border-radius: var(--brand-radius);
+}
+.woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover, .woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover {
+	background: var(--brand-text); color: var(--brand-bg);
+}
+.woocommerce ul.products li.product a img { aspect-ratio: 1; object-fit: contain; background: var(--brand-surface); padding: 1rem; }
+.woocommerce ul.products li.product .price, .woocommerce div.product p.price, .woocommerce div.product span.price { color: var(--brand-accent); }
+.woocommerce span.onsale { background: var(--brand-accent); color: var(--brand-on-accent); }
+.woocommerce table.shop_table { border-color: var(--brand-border); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li { background: var(--brand-surface); }
+.wc-block-components-button:not(.is-link) { border-radius: var(--brand-radius); }

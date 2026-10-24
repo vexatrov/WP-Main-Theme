@@ -1,0 +1,22 @@
+/*
+Theme Name: Brand Starter
+Template: wp-main-theme
+Description: Copy and rename for each store. Shared behavior lives in WP Main Theme.
+Version: 0.1.0
+Requires at least: 6.6
+Requires PHP: 8.1
+License: GPL-2.0-or-later
+Text Domain: brand-starter
+*/
+
+/* Replace these tokens with approved brand values; keep a single palette. */
+:root {
+	--brand-bg: #faf9f6;
+	--brand-surface: #fff;
+	--brand-text: #202420;
+	--brand-muted: #595f59;
+	--brand-accent: #264c3c;
+	--brand-on-accent: #fff;
+	--brand-border: #d7dcd7;
+	--brand-radius: .3rem;
+}
