@@ -7,6 +7,8 @@ GitHub Actions runs PHP syntax checks on PHP 8.1 and 8.3, JavaScript syntax vali
 ## Required staging checks before launch
 
 - Activate parent then child with WordPress debugging enabled; inspect logs. Repeat with WooCommerce disabled and enabled.
+- Set a static homepage and test each Customizer field, hero image/alt text, empty hero settings, additional editor content, and password-protected Home content. Confirm the posts homepage still renders posts.
+- Test homepage with no products, populated/empty categories, missing category images, hidden/out-of-stock products, and plugin disabled. Product search must use WooCommerce results and support pagination.
 - Verify static homepage, posts index, single/page, archive, search/no-results, 404, password-protected content, paginated content and comments.
 - Set logo and menus. Check desktop/mobile navigation, nested links, keyboard access, Escape, focus indicators, skip link, 200% zoom and no-JavaScript navigation.
 - Check each brand at mobile/tablet/desktop widths, long names, real images, contrast, form errors, and empty states. Verify approved RTL/languages if required.

@@ -8,3 +8,4 @@
 - Prefer WooCommerce hooks over copied templates. Do not disable WooCommerce scripts/styles without testing all affected flows.
 - Never commit credentials, customer data, uploads, WordPress core, or installed plugin code.
 - Document setup, changes, validation, and deployment limitations. Do not claim live testing without a WordPress environment.
+- See `docs/BRANDS.md` for the three user-provided Instagram references and approved shared-brand architecture.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-10-24
+
+- Saved all three supplied Instagram references in docs/BRANDS.md; visual review blocked by Instagram fetch restrictions.
+- Added static storefront homepage, sanitized Customizer hero controls, category cards, and native WooCommerce latest arrivals.
+- Added product search/account navigation, responsive homepage layouts, and additional product/account styles; retained native cart/checkout behavior.
+- Updated setup and staging validation instructions. Live WordPress/checkout checks remain pending.
+
 ## 0.1.0 — 2026-10-24
 
 - Created shared custom classic theme with WooCommerce hooks and no page builder.

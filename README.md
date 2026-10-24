@@ -4,7 +4,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Version 0.1.0 is an installable foundation, not a finished storefront. Includes responsive navigation, accessible skip link, content/search/404/comment templates, and hook-based WooCommerce integration. Brand designs, merchandising sections, filtering, and real product content follow after reviewing each brand's Instagram and assets.
+Version 0.2.0 adds a coded storefront homepage with CMS-editable hero content, real category cards and latest product arrivals, product search, and account/cart links. Includes responsive navigation, accessible skip link, content/search/404/comment templates, and hook-based WooCommerce integration. This is a shared base, not a launch-ready branded shop. Brand identities, advanced filtering, and live-store validation remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
 
 No page builder, frontend framework, build step, external font, or JavaScript dependency. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.
 
@@ -14,10 +14,12 @@ No page builder, frontend framework, build step, external font, or JavaScript de
 2. Copy `themes/wp-main-theme` to `wp-content/themes/wp-main-theme`.
 3. Copy `themes/brand-starter` to `wp-content/themes/<brand-slug>`. Change its theme name and text domain; retain `Template: wp-main-theme`.
 4. Install WooCommerce from its official distribution and run store setup. Activate the brand child theme under Appearance > Themes.
-5. Set the site title/logo and assign primary/footer menus. Create Home, set it as the static front page, and add content. With no static front page WordPress shows the post index.
+5. Set the site title/logo and assign primary/footer menus. Create Home, set it as the static front page under Settings > Reading. Under Appearance > Customize > Storefront homepage, set the intro label, heading, description, button label and image. Additional Home editor content appears below the hero. With no static front page WordPress shows the post index.
 6. Configure WooCommerce shop/cart/checkout/account pages, currency, tax, shipping, payment provider, and transactional email.
 
 Parent theme also activates without WooCommerce for content work. Never edit WordPress or WooCommerce core. See [architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), and [validation](docs/VALIDATION.md).
+
+Homepage category cards use up to six populated top-level WooCommerce categories, ordered alphabetically, with their configured thumbnails. Latest arrivals use WooCommerce's product shortcode (eight products), respecting catalog visibility and stock settings. No demo inventory or fabricated store promises are inserted. Configure products and category images in WooCommerce; sections naturally reflect that data. Hero image alternative text comes from its Media Library record.
 
 ## Repository workflow
 

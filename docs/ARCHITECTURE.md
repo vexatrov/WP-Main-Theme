@@ -7,6 +7,6 @@
 - Do not put stock synchronization, payment rules, or other business data logic into the theme. Use provider extensions or a small separately versioned plugin when required.
 - Three independent installations isolate store data and failures. The same versioned parent theme ships to all three; each has its own child theme and settings. Central stock management is outside the initial scope.
 - Parent CSS and navigation JS load throughout the site. Commerce styling loads when WooCommerce is active, including shortcode pages. No speculative dequeuing of core/block/plugin assets.
-- No custom product query or demo products yet. Shop archives and product templates use maintained WooCommerce defaults; future merchandising uses real CMS data.
+- The static front page uses a coded hero with sanitized Customizer fields, populated product categories, and WooCommerce's native products shortcode for eight latest arrivals. Shop archives and product templates use maintained WooCommerce defaults. No demo inventory is inserted.
 
-Before brand implementation collect names, Instagram links, logo files, approved palette/fonts, product categories, catalog size, country/currency, languages (including RTL needs), and payment/shipping requirements.
+Instagram links are recorded in BRANDS.md. Before brand implementation confirm display names, logo files, approved palette/fonts, product categories, catalog size, country/currency, languages (including RTL needs), and payment/shipping requirements.

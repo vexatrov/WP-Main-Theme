@@ -22,6 +22,8 @@
 			</nav>
 		<?php endif; ?>
 		<?php if ( function_exists( 'wc_get_cart_url' ) ) : ?>
+			<?php get_template_part( 'template-parts/header/product-search' ); ?>
+			<?php if ( get_option( 'woocommerce_myaccount_page_id' ) ) : ?><a class="account-link" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Account', 'wp-main-theme' ); ?></a><?php endif; ?>
 			<a class="cart-link" href="<?php echo esc_url( wc_get_cart_url() ); ?>"><?php esc_html_e( 'Cart', 'wp-main-theme' ); ?></a>
 		<?php endif; ?>
 	</div>
