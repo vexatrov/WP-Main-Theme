@@ -14,6 +14,7 @@ get_header();
 		<?php else : ?>
 			<?php if ( trim( get_the_content() ) ) : ?><div class="container entry-content home-content"><?php the_content(); wp_link_pages(); ?></div><?php endif; ?>
 			<?php get_template_part( 'template-parts/storefront/catalog' ); ?>
+			<?php get_template_part( 'template-parts/storefront/journal' ); ?>
 		<?php endif; ?>
 	<?php endwhile; ?>
 </main>

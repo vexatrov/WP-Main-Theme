@@ -4,7 +4,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Version 0.5.0 adds square full-width product images and editable product guidance: use cases, audience, comparison, FAQs, guide links, compatible products and alternatives. WP Store Catalog stores this data separately from the theme. The Persian RTL preview uses tomans (IRT), with clearly labeled sample inventory. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
+Version 0.6.0 adds catalog category navigation, a native WooCommerce filter area, brand-directory and help templates, article/related-reading layouts, homepage guides and account/order styling. It retains square full-width product images and editable product guidance: use cases, audience, comparison, FAQs, guide links, compatible products and alternatives. WP Store Catalog stores this data separately from the theme. The Persian RTL preview uses tomans (IRT), with clearly labeled sample inventory. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 
@@ -27,7 +27,8 @@ No page builder, frontend framework, build step, external font, or JavaScript de
    Install/activate `plugins/wp-store-catalog` for the approved product guidance and relationships. See [product editing and layout](docs/PRODUCT-PAGES.md).
 5. Set the site title/logo and assign primary/footer menus. Create Home, set it as the static front page under Settings > Reading. Under Appearance > Customize > Storefront homepage, set the intro label, heading, description, button label and image. Additional Home editor content appears below the hero. With no static front page WordPress shows the post index.
 6. Configure WooCommerce shop/cart/checkout/account pages, currency, tax, shipping, payment provider, and transactional email.
-7. Create About and Contact pages and assign their supplied templates. Create a Blog/Magazine page and select it as the posts page under Settings > Reading. Assign footer navigation and configure the introduction/About link under Customize > Footer information.
+7. Create Brands using the Brand directory template; populate native WooCommerce product brands. Add native WooCommerce filter widgets under Appearance > Widgets > Shop filters. Use Help and policies for help/policy pages, and the native `[woocommerce_order_tracking]` shortcode for order tracking.
+8. Create About and Contact pages and assign their supplied templates. Create a Blog/Magazine page and select it as the posts page under Settings > Reading. Assign footer navigation and configure the introduction/About link under Customize > Footer information.
 
 Parent theme also activates without WooCommerce for content work. Never edit WordPress or WooCommerce core. See [architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), and [validation](docs/VALIDATION.md).
 

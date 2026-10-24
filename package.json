@@ -7,9 +7,12 @@
 		"test:preview": "node scripts/smoke-preview.mjs",
 		"test:products": "node scripts/test-product-details.mjs",
 		"test:navigation": "node scripts/test-navigation.mjs",
-		"check": "node --check scripts/preview.mjs && node --check themes/wp-main-theme/assets/js/navigation.js"
+		"check": "node --check scripts/preview.mjs && node --check themes/wp-main-theme/assets/js/navigation.js",
+		"test:layouts": "node scripts/test-layouts.mjs"
 	},
-	"engines": { "node": ">=22" },
+	"engines": {
+		"node": ">=22"
+	},
 	"devDependencies": {
 		"@wp-playground/cli": "3.1.40"
 	}

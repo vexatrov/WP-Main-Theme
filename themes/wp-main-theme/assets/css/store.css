@@ -1,4 +1,25 @@
 /* Keep WooCommerce's compatibility styles; layer brand tokens over them. */
+.catalog-categories { display: flex; flex-wrap: wrap; gap: .75rem; margin-block: 1rem 2rem; }
+.catalog-categories a { border: 1px solid var(--brand-border); border-radius: var(--button-radius); padding: .75rem 1rem; text-decoration: none; background: var(--brand-surface); }
+.catalog-categories a:hover { border-color: var(--brand-accent); }
+.catalog-filters { clear: both; border-block: 1px solid var(--brand-border); margin-bottom: 2rem; padding-block: 1rem; }
+.catalog-filters > summary { cursor: pointer; font-weight: 650; padding-block: .5rem; }
+.catalog-filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 2rem; padding-block: 1rem; }
+.catalog-widget { min-width: 0; }
+.catalog-widget h3 { font-size: 1rem; }
+.catalog-widget ul { padding-inline-start: 1.2rem; }
+.woocommerce .woocommerce-ordering { max-width: 100%; }
+.woocommerce .woocommerce-ordering select { width: 100%; }
+.woocommerce .woocommerce-MyAccount-navigation { border: 1px solid var(--brand-border); border-radius: var(--brand-radius); padding: 1rem; background: var(--brand-surface); }
+.woocommerce .woocommerce-MyAccount-navigation a { min-height: 44px; text-decoration: none; }
+.woocommerce .woocommerce-MyAccount-navigation .is-active a { background: var(--brand-bg); border-inline-start: 3px solid var(--brand-accent); }
+.woocommerce .woocommerce-MyAccount-content { padding: 1.5rem; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); background: var(--brand-surface); }
+.woocommerce table.shop_table th, .woocommerce table.shop_table td { padding: 1rem; }
+.woocommerce .cart-collaterals .cart_totals, .woocommerce #order_review { padding: 1.25rem; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); background: var(--brand-surface); }
+.woocommerce .woocommerce-customer-details address { padding: 1.25rem; line-height: 1.9; }
+.woocommerce ul.order_details { display: flex; flex-wrap: wrap; gap: 1rem; padding: 0; }
+.woocommerce ul.order_details li { float: none; margin: 0; padding: 1rem; border: 1px solid var(--brand-border); }
+@media (max-width: 48rem) { .woocommerce .woocommerce-MyAccount-content { margin-top: 1.5rem; padding: 1rem; } }
 .woocommerce a.button, .woocommerce button.button, .woocommerce input.button,
 .woocommerce #respond input#submit, .woocommerce a.button.alt,
 .woocommerce button.button.alt, .woocommerce input.button.alt {

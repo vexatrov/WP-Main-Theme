@@ -10,12 +10,7 @@
 	<?php if ( have_posts() ) : ?>
 		<div class="entry-list">
 		<?php while ( have_posts() ) : the_post(); ?>
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'entry-card' ); ?>>
-				<a class="entry-media" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } else { echo '<span class="entry-image-placeholder" aria-hidden="true"></span>'; } ?></a>
-				<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-				<div class="entry-summary"><?php the_excerpt(); ?></div>
-				<a class="entry-read-more" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Read article', 'wp-main-theme' ); ?><span class="screen-reader-text">: <?php the_title(); ?></span></a>
-			</article>
+			<?php get_template_part( 'template-parts/article-card' ); ?>
 		<?php endwhile; ?>
 		</div>
 		<?php the_posts_pagination(); ?>

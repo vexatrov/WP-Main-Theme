@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+const base = 'http://127.0.0.1:9400';
+async function page(path) {
+	const response = await fetch(new URL(path, base), { headers: { Cookie: 'playground_auto_login_already_happened=1' }, signal: AbortSignal.timeout(60000) });
+	assert.equal(response.status, 200, path);
+	const html = await response.text();
+	assert.doesNotMatch(html, /Fatal error|Uncaught Error/);
+	return html;
+}
+const shop = await page('/shop/');
+assert.match(shop, /catalog-categories/);
+assert.match(shop, /catalog-filters/);
+assert.match(shop, /price_slider/);
+const filtered = await page('/shop/?min_price=999999999');
+assert.doesNotMatch(filtered, /class="woocommerce-loop-product__title"/);
+const brands = await page('/brands/');
+assert.match(brands, /brand-directory/);
+const brandUrl = brands.match(/class="brand-card" href="([^"]+)"/)?.[1];
+assert.ok(brandUrl);
+assert.match(await page(brandUrl), /woocommerce-loop-product__title/);
+assert.match(await page('/help/'), /<details>/);
+assert.match(await page('/order-tracking/'), /woocommerce-form-track-order/);
+const journal = await page('/journal/');
+assert.match(journal, /entry-list/);
+const articleUrl = journal.match(/class="entry-media" href="([^"]+)"/)?.[1];
+assert.ok(articleUrl);
+const article = await page(articleUrl);
+assert.match(article, /article-header/);
+assert.match(article, /related-reading/);
+assert.match(await page('/'), /journal-heading/);
+console.log('PASS: catalog/filter empty state, brand directory/detail, help, order tracking, article and homepage guide layouts.');

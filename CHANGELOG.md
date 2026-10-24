@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0
+
+- Added native WooCommerce catalog navigation/filter area, brand-directory and Help/policies page templates.
+- Expanded article layouts, related reading and homepage guide cards; fixed desktop article grids so sparse rows do not stretch cards.
+- Styled native account/order/cart surfaces without replacing WooCommerce forms.
+- Added disposable brand/help/tracking fixtures and route/filter checks.
+- Removed duplicate Playground plugin activation from preview startup.
+- Brand work and Zarinpal integration remain deferred by owner direction.
+
+
 ## 0.5.0 — 2026-10-24
 
 - Product card images now fill the card width in a square canvas with no default inner padding/background/radius; child variables permit other designs. Tightened original demo vector framing.

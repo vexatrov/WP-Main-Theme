@@ -24,7 +24,7 @@ v0.4.0: prices use tomans (IRT), not rials. The `dev/refresh.php` step adds Abou
 
 The `dev/seed.php` Blueprint step creates a Persian RTL homepage, body tattoo categories, eight simple products, original schematic SVG illustrations, sample toman prices, a menu, and native commerce pages. Per the owner's request there is no development notice above the header. Product content and this documentation still identify sample inventory. No real customer information, brand logos, or stock is included. The local demo enables cash-on-delivery solely to inspect checkout without a payment provider; it sends no payments.
 
-The SVG upload exception exists only during the trusted seed step and does not enable SVG uploads on production. Do not copy `dev/seed.php` or the preview's generated MU-plugin to production. Only `themes/wp-main-theme` and the selected brand child theme are deployable storefront code.
+The SVG upload exception exists only during the trusted seed step and does not enable SVG uploads on production. Do not copy `dev/seed.php` or the preview's generated MU-plugin to production. Deploy the parent and selected child theme, plus `plugins/wp-store-catalog` when using the product guidance features.
 
 ## Persistence and rebuilding
 
@@ -42,3 +42,7 @@ The theme ships `languages/fa_IR.mo`, built from the editable `fa_IR.json`. Afte
 4. Apply actual branding in three child themes; verify real catalog and payment/shipping flows in persistent staging.
 
 The previous PMU site's carousel, illustrations, and interactions are references for discussion, not features already implemented. No analytics or custom catalog API is included yet.
+
+## Shared layout review (0.6.0)
+
+The preview also runs `dev/layout-preview.php`, adding fictional brands, a native price filter, `/brands/`, `/help/` and `/order-tracking/`. Run `pnpm test:layouts` to check these routes, price-filter empty results, brand products and article/homepage sections. Theme/plugin activation is performed by the existing guarded product fixture; avoiding a second Playground activatePlugin step prevents its missing activation-log failure on this Windows environment. The fixture files are never part of production packages.

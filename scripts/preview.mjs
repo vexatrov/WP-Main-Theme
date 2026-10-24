@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 const seed = readFileSync(new URL('../dev/seed.php', import.meta.url), 'utf8');
 const refresh = readFileSync(new URL('../dev/refresh.php', import.meta.url), 'utf8');
 const productPreview = readFileSync(new URL('../dev/product-preview.php', import.meta.url), 'utf8');
+const layoutPreview = readFileSync(new URL('../dev/layout-preview.php', import.meta.url), 'utf8');
 mkdirSync('.local/cache', { recursive: true });
 async function archive(name, url) {
 	const path = resolve('.local/cache', name);
@@ -39,10 +40,10 @@ const site = await runCLI({
 			{ step: 'setSiteOptions', options: { WPLANG: 'fa_IR' } },
 			{ step: 'installPlugin', pluginData: commerce, options: { activate: true } },
 			{ step: 'activateTheme', themeFolderName: 'wp-main-theme' },
-			{ step: 'activatePlugin', pluginPath: 'wp-store-catalog/wp-store-catalog.php' },
 			{ step: 'runPHP', code: seed },
 			{ step: 'runPHP', code: refresh },
 			{ step: 'runPHP', code: productPreview },
+			{ step: 'runPHP', code: layoutPreview },
 		],
 	},
 });
