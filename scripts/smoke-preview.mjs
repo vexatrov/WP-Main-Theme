@@ -15,7 +15,7 @@ const home = await get('/');
 assert.match(home, /dir="rtl"/);
 assert.match(home, /ابزار دقیق/);
 assert.match(home, /بر اساس دسته‌بندی/);
-assert.match(home, /پیش‌نمایش توسعه/);
+assert.ok(!home.includes('preview-notice'), 'No development notice above the header');
 assert.match(home, /wpmain-rtl-css/);
 const productId = home.match(/data-product_id="(\d+)"/)?.[1];
 assert.ok(productId, 'Homepage contains a purchasable sample product');
@@ -46,4 +46,4 @@ assert.ok([200, 201].includes(add.status), `Sample product can be added to cart:
 assert.equal((await add.json()).items_count, 1);
 const freshSession = await fetch(cartApi, { headers: guestHeaders, signal: AbortSignal.timeout(60000) });
 assert.equal((await freshSession.json()).items_count, 0, 'Fresh visitor cart is empty');
-console.log('PASS: RTL/Persian homepage, preview marker, products, product page, search, cart page, add-to-cart and cart-session isolation.');
+console.log('PASS: RTL/Persian homepage without top notice, products, standard pages, toman currency, search, cart and session isolation.');

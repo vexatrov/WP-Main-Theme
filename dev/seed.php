@@ -86,7 +86,4 @@ foreach ( array( 'فروشگاه' => wc_get_page_permalink( 'shop' ), 'دستگ�
 	wp_update_nav_menu_item( $menu, 0, array( 'menu-item-title' => $label, 'menu-item-url' => $url, 'menu-item-status' => 'publish' ) );
 }
 set_theme_mod( 'nav_menu_locations', array( 'primary' => $menu ) );
-// Local preview marker only; no production banner or demo behavior in the theme.
-wp_mkdir_p( WPMU_PLUGIN_DIR );
-file_put_contents( WPMU_PLUGIN_DIR . '/preview-notice.php', '<?php add_action("wp_body_open", function(){ echo \'<div class="preview-notice" role="note">پیش‌نمایش توسعه · محصولات، تصاویر و قیمت‌ها آزمایشی هستند · فروشگاه واقعی نیست</div>\'; });' );
 echo 'Sample body-tattoo storefront created.';

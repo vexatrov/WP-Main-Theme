@@ -2,6 +2,8 @@
 
 The previous non-WordPress PMU site is a functionality reference. It does not define these stores' market: both tattoo brands are primarily body tattoo B2C; the third sells lash/makeup tools. All three share an engine while brand presentation remains independent. This list records the reference features, not a claim that they have all been built or must ship together.
 
+See RESEARCH-2026-10-24.md, STOREFRONT-PLAN.md and PAGE-LAYOUTS.md for the researched proposal, launch priorities, and complete page-family discussion list. Local references are inputs to an original design, not a full design specification.
+
 ## Current review milestone
 
 - Shared classic theme and WooCommerce hook integration.

@@ -12,6 +12,8 @@ Run `pnpm install --frozen-lockfile`, then `pnpm dev` (Node.js 22+). Once boot c
 
 The earlier storefront feature list and implementation boundaries are saved in [roadmap](docs/ROADMAP.md).
 
+New design planning: [reference research](docs/RESEARCH-2026-10-24.md), [storefront plan](docs/STOREFRONT-PLAN.md), and [page/layout discussion inventory](docs/PAGE-LAYOUTS.md). These describe proposed work, not completed features. The development notice above the header has been removed at the owner's request.
+
 See [theming](docs/THEMING.md) for child-theme design hooks, header behavior, grid rules, required pages and toman configuration. Each brand can change its header effects, button/search shapes and hero layout without adding those effects to every store.
 
 No page builder, frontend framework, build step, external font, or JavaScript dependency. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.

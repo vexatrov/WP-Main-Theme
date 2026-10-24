@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-24 — reference research and layout planning
+
+- Removed the development notice above the header from the active demo and from future seed setup; removed its unused CSS and updated the smoke assertion.
+- Researched supplied MRT/Artoo/Boom references plus Killer Ink, Barber DTS and LashBase, with primary UX/accessibility/platform references.
+- Added research findings, proposed storefront architecture/priorities, and a page/layout discussion inventory. No unapproved brand redesign or advanced planned functionality is represented as implemented.
+
 ## 0.4.0 — 2026-10-24
 
 - Added compact sticky header with responsive menu access, focus protection, scroll hysteresis and anchor clearance; no dependencies added.

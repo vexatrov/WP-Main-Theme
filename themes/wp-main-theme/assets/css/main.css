@@ -98,7 +98,6 @@ h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
 .category-card { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; padding: 1.25rem; background: var(--brand-surface); border: 1px solid var(--brand-border); border-radius: var(--brand-radius); text-decoration: none; font-weight: 650; }
 .category-card img { grid-column: 1 / -1; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
 .category-card:hover { border-color: var(--brand-accent); }
-.preview-notice { padding: .55rem 1rem; text-align: center; background: #263d32; color: #fff; font-size: .8rem; }
 @media (max-width: 48rem) {
 	.admin-bar .site-header { top: 46px; }
 	.header-inner { grid-template-columns: minmax(0, 1fr) auto auto; gap: 1rem; }

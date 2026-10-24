@@ -12,3 +12,4 @@
 - Both tattoo shops are primarily body tattoo B2C, not PMU-focused. See `docs/ROADMAP.md` for reference features and `docs/LOCAL-PREVIEW.md` for the review environment.
 - Currency is tomans (IRT/تومان), not USD or rials. Currency configuration and conversions belong outside the theme.
 - Keep responsive/sticky behavior and aligned card layouts shared; brand effects, hero variations and shape choices belong in child themes. See `docs/THEMING.md`.
+- Do not add a development/announcement strip above the header. Research and layout discussion are recorded in `docs/STOREFRONT-PLAN.md` and `docs/PAGE-LAYOUTS.md`; planned features must not be reported as implemented.

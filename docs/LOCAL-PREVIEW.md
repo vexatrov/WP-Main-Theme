@@ -20,7 +20,7 @@ v0.4.0: prices use tomans (IRT), not rials. The `dev/refresh.php` step adds Abou
 
 `pnpm test:navigation` checks desktop/compact/mobile menus, Escape focus, scroll hysteresis and focus preservation without WordPress. `pnpm test:preview` also checks standard pages and IRT currency in the ready demo.
 
-The `dev/seed.php` Blueprint step creates a Persian RTL homepage, body tattoo categories, eight simple products, original schematic SVG illustrations, sample toman prices, a menu, and native commerce pages. A visible notice marks the store as a preview. No real customer information, brand logos, or stock is included. The local demo enables cash-on-delivery solely to inspect checkout without a payment provider; it sends no payments.
+The `dev/seed.php` Blueprint step creates a Persian RTL homepage, body tattoo categories, eight simple products, original schematic SVG illustrations, sample toman prices, a menu, and native commerce pages. Per the owner's request there is no development notice above the header. Product content and this documentation still identify sample inventory. No real customer information, brand logos, or stock is included. The local demo enables cash-on-delivery solely to inspect checkout without a payment provider; it sends no payments.
 
 The SVG upload exception exists only during the trusted seed step and does not enable SVG uploads on production. Do not copy `dev/seed.php` or the preview's generated MU-plugin to production. Only `themes/wp-main-theme` and the selected brand child theme are deployable storefront code.
 
