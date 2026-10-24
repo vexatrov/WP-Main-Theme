@@ -46,3 +46,5 @@ The previous PMU site's carousel, illustrations, and interactions are references
 ## Shared layout review (0.6.0)
 
 The preview also runs `dev/layout-preview.php`, adding fictional brands, a native price filter, `/brands/`, `/help/` and `/order-tracking/`. Run `pnpm test:layouts` to check these routes, price-filter empty results, brand products and article/homepage sections. Theme/plugin activation is performed by the existing guarded product fixture; avoiding a second Playground activatePlugin step prevents its missing activation-log failure on this Windows environment. The fixture files are never part of production packages.
+
+0.7.0 adds `dev/variable-preview.php`: a fictional ink product with two volume options and 300,000/600,000 toman prices. `pnpm test:cards` checks the stacked card range and native variation form. The ready server is verified bound to 127.0.0.1 only.

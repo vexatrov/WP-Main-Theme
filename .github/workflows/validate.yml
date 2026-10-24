@@ -29,6 +29,8 @@ jobs:
       - run: node --check scripts/preview.mjs
       - run: node --check scripts/smoke-preview.mjs
       - run: node --check scripts/test-product-details.mjs
+      - run: node --check scripts/test-layouts.mjs
+      - run: node --check scripts/test-cards.mjs
       - run: node scripts/test-navigation.mjs
       - shell: pwsh
         run: ./scripts/package.ps1

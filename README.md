@@ -4,7 +4,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Version 0.6.0 adds catalog category navigation, a native WooCommerce filter area, brand-directory and help templates, article/related-reading layouts, homepage guides and account/order styling. It retains square full-width product images and editable product guidance: use cases, audience, comparison, FAQs, guide links, compatible products and alternatives. WP Store Catalog stores this data separately from the theme. The Persian RTL preview uses tomans (IRT), with clearly labeled sample inventory. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
+Version 0.7.0 adds compact price/action rows, stacked variation ranges and a refined neutral header. Version 0.6.0 added catalog category navigation, a native WooCommerce filter area, brand-directory and help templates, article/related-reading layouts, homepage guides and account/order styling. It retains square full-width product images and editable product guidance: use cases, audience, comparison, FAQs, guide links, compatible products and alternatives. WP Store Catalog stores this data separately from the theme. The Persian RTL preview uses tomans (IRT), with clearly labeled sample inventory. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 

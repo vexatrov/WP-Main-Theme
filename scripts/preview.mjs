@@ -7,6 +7,7 @@ const seed = readFileSync(new URL('../dev/seed.php', import.meta.url), 'utf8');
 const refresh = readFileSync(new URL('../dev/refresh.php', import.meta.url), 'utf8');
 const productPreview = readFileSync(new URL('../dev/product-preview.php', import.meta.url), 'utf8');
 const layoutPreview = readFileSync(new URL('../dev/layout-preview.php', import.meta.url), 'utf8');
+const variablePreview = readFileSync(new URL('../dev/variable-preview.php', import.meta.url), 'utf8');
 mkdirSync('.local/cache', { recursive: true });
 async function archive(name, url) {
 	const path = resolve('.local/cache', name);
@@ -44,6 +45,7 @@ const site = await runCLI({
 			{ step: 'runPHP', code: refresh },
 			{ step: 'runPHP', code: productPreview },
 			{ step: 'runPHP', code: layoutPreview },
+			{ step: 'runPHP', code: variablePreview },
 		],
 	},
 });

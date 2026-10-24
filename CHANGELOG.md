@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+- Compact product purchase row: small accessible action beside price; two stacked variation prices with one currency unit.
+- Two-line titles and reduced card spacing.
+- Refined header search, account/cart icons and menu control with no new frontend JavaScript.
+- Added fictional variable-product fixture and price-range checks.
+
+
 ## 0.6.0
 
 - Added native WooCommerce catalog navigation/filter area, brand-directory and Help/policies page templates.

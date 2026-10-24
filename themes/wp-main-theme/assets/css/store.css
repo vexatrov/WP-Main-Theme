@@ -83,3 +83,21 @@
 .woocommerce div.product .woocommerce-tabs ul.tabs li a { padding: .9rem .2rem; }
 .woocommerce div.product .woocommerce-tabs ul.tabs::before, .woocommerce div.product .woocommerce-tabs ul.tabs li::before, .woocommerce div.product .woocommerce-tabs ul.tabs li::after { display: none; }
 @media (max-width: 48rem) { .product-guide-links { grid-template-columns: 1fr; } }
+/* A short purchase row, shared by catalog and recommendation cards. */
+.woocommerce ul.products li.product { padding-bottom: .25rem; }
+.woocommerce ul.products li.product a img { margin-bottom: .65rem; }
+.woocommerce ul.products li.product .woocommerce-loop-product__title { padding-block: .25rem; font-size: .94rem; line-height: 1.55; min-height: 3.1em; }
+.card-purchase { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+.woocommerce ul.products li.product .card-purchase .price { margin: 0; padding: 0; min-height: 0; font-size: .87rem; line-height: 1.5; }
+.woocommerce ul.products li.product .card-purchase .button { flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; margin: 0; align-self: center; font-size: 0; border: 1px solid var(--brand-border); background: transparent; color: var(--brand-text); }
+.woocommerce ul.products li.product .card-purchase .button::before { content: '+'; font-size: 1.5rem; font-weight: 400; line-height: 1; }
+.woocommerce ul.products li.product .card-purchase .product_type_variable::before,
+.woocommerce ul.products li.product .card-purchase .button:not(.add_to_cart_button)::before { content: '↗'; font-size: 1.15rem; }
+.woocommerce ul.products li.product .card-purchase .button:hover { background: var(--brand-accent); color: var(--brand-on-accent); border-color: var(--brand-accent); }
+.woocommerce ul.products li.product .card-purchase .button.loading::after,
+.woocommerce ul.products li.product .card-purchase .button.added::after { font-size: .7rem; position: absolute; inset: .2rem .2rem auto auto; margin: 0; }
+.woocommerce ul.products li.product .card-purchase .added_to_cart { flex-basis: 100%; font-size: .8rem; padding-top: .25rem; }
+.woocommerce ul.products li.product .card-price-range { display: inline-flex; align-items: center; gap: .4rem; }
+.card-price-amounts { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
+.card-price-amounts > span:first-child { color: var(--brand-muted); }
+.card-price-unit { font-size: .75rem; font-weight: 400; }

@@ -47,3 +47,7 @@ The plugin protects saves with edit permission and a nonce, caps selections, rem
 - Browser checks passed at 1440/390/320px: contained comparison scrolling, square edge-to-edge recommendation images equal to card width with zero padding, and no document overflow. The classic product editor displayed all selected relationships; guide search returned the matching published article. A normal Update returned the product-updated message and preserved relationship/guide selections.
 
 Real variants, actual compatibility records, production content and payment gateways still require staging validation.
+
+## Compact cards (0.7.0)
+
+The shared catalog card now reserves two title lines and puts price beside a small 44px purchase control. Simple products retain native AJAX add-to-cart; variable products use the native product/option link, never an arbitrary variant. The icon retains WooCommerce's accessible action label. A differing variation price range uses two stacked amounts with one currency symbol; prices are calculated using WooCommerce tax-display rules. Single product purchase controls remain full-size. The demo ink product has 300,000/600,000 toman variations for inspection. `pnpm test:cards` checks the range and native variation data; it does not complete a variable-product checkout.
