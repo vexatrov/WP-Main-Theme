@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 
 // Local disposable WordPress, isolated from production and from real customer data.
 const seed = readFileSync(new URL('../dev/seed.php', import.meta.url), 'utf8');
+const refresh = readFileSync(new URL('../dev/refresh.php', import.meta.url), 'utf8');
 mkdirSync('.local/cache', { recursive: true });
 async function archive(name, url) {
 	const path = resolve('.local/cache', name);
@@ -35,6 +36,7 @@ const site = await runCLI({
 			{ step: 'installPlugin', pluginData: commerce, options: { activate: true } },
 			{ step: 'activateTheme', themeFolderName: 'wp-main-theme' },
 			{ step: 'runPHP', code: seed },
+			{ step: 'runPHP', code: refresh },
 		],
 	},
 });

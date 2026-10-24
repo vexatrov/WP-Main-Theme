@@ -26,5 +26,6 @@ jobs:
       - run: node --check themes/wp-main-theme/assets/js/navigation.js
       - run: node --check scripts/preview.mjs
       - run: node --check scripts/smoke-preview.mjs
+      - run: node scripts/test-navigation.mjs
       - shell: pwsh
         run: ./scripts/package.ps1

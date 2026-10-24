@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — 2026-10-24
+
+- Added compact sticky header with responsive menu access, focus protection, scroll hysteresis and anchor clearance; no dependencies added.
+- Aligned product cards across homepage/shop/search/related loops and blog cards with mixed-length titles or missing images.
+- Added About/Contact templates, demo Magazine page, footer introduction and About link.
+- Extracted hero template part and exposed independent button/input/header tokens for child themes; glass and slider effects stay brand-specific.
+- Corrected currency to tomans (IRT), including demo amounts. Theme never forces currency or converts production prices.
+- Passed local navigation behavior tests and HTTP checks for standard pages, IRT currency, catalog/search, add-to-cart and guest cart isolation. Browser tests at 1440/1366/390/320px found no homepage overflow; product rows had equal image/card dimensions and button alignment. Blog rows aligned, including a missing thumbnail; compact header stayed at top and menus supported Escape. Production performance, gateways and complete accessibility audits remain pending.
+
 ## 0.3.0 — 2026-10-24
 
 - Corrected brand scope: both tattoo shops are B2C and primarily sell body tattoo supplies, not PMU-focused.

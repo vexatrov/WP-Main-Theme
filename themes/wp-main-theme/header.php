@@ -8,7 +8,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip-link screen-reader-text" href="#main-content"><?php esc_html_e( 'Skip to content', 'wp-main-theme' ); ?></a>
-<header class="site-header">
+<header class="site-header" data-sticky-header>
 	<div class="container header-inner">
 		<div class="site-brand">
 			<?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>

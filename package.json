@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "node scripts/preview.mjs",
 		"test:preview": "node scripts/smoke-preview.mjs",
+		"test:navigation": "node scripts/test-navigation.mjs",
 		"check": "node --check scripts/preview.mjs && node --check themes/wp-main-theme/assets/js/navigation.js"
 	},
 	"engines": { "node": ">=22" },

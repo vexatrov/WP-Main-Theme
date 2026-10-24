@@ -4,13 +4,15 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Version 0.3.0 adds a runnable local WordPress/WooCommerce preview, Persian theme translations, RTL styles and a disposable body tattoo sample catalog. The coded homepage includes CMS-editable hero content, category cards, latest arrivals, product search and account/cart links. This is a shared base, not a launch-ready branded shop. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
+Version 0.4.0 adds a compact sticky header, aligned responsive product/blog cards, About/Contact page templates, a configurable footer introduction and a child-overridable hero. The Persian RTL preview uses tomans (IRT), with clearly labeled sample inventory. This is a shared base, not a launch-ready branded shop. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 
 Run `pnpm install --frozen-lockfile`, then `pnpm dev` (Node.js 22+). Once boot completes, open http://127.0.0.1:9400/ . PHP/Docker/MySQL installations are not needed. See [local preview](docs/LOCAL-PREVIEW.md) for demo-data behavior and restart instructions. Development dependencies are not shipped in the theme ZIP.
 
 The earlier storefront feature list and implementation boundaries are saved in [roadmap](docs/ROADMAP.md).
+
+See [theming](docs/THEMING.md) for child-theme design hooks, header behavior, grid rules, required pages and toman configuration. Each brand can change its header effects, button/search shapes and hero layout without adding those effects to every store.
 
 No page builder, frontend framework, build step, external font, or JavaScript dependency. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.
 
@@ -22,6 +24,7 @@ No page builder, frontend framework, build step, external font, or JavaScript de
 4. Install WooCommerce from its official distribution and run store setup. Activate the brand child theme under Appearance > Themes.
 5. Set the site title/logo and assign primary/footer menus. Create Home, set it as the static front page under Settings > Reading. Under Appearance > Customize > Storefront homepage, set the intro label, heading, description, button label and image. Additional Home editor content appears below the hero. With no static front page WordPress shows the post index.
 6. Configure WooCommerce shop/cart/checkout/account pages, currency, tax, shipping, payment provider, and transactional email.
+7. Create About and Contact pages and assign their supplied templates. Create a Blog/Magazine page and select it as the posts page under Settings > Reading. Assign footer navigation and configure the introduction/About link under Customize > Footer information.
 
 Parent theme also activates without WooCommerce for content work. Never edit WordPress or WooCommerce core. See [architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), and [validation](docs/VALIDATION.md).
 

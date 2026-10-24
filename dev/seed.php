@@ -6,7 +6,8 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 update_option( 'blogname', 'ابزار تاتو / پیش‌نمایش' );
 update_option( 'blogdescription', 'فروشگاه آزمایشی تجهیزات تاتو بدن' );
 update_option( 'blog_public', 0 );
-update_option( 'woocommerce_currency', 'IRR' );
+update_option( 'woocommerce_currency', 'IRT' );
+update_option( 'woocommerce_currency_pos', 'right_space' );
 update_option( 'woocommerce_price_num_decimals', 0 );
 update_option( 'woocommerce_default_country', 'IR' );
 update_option( 'woocommerce_store_address', '' );
@@ -58,14 +59,14 @@ foreach ( array( 'machines' => array( 'دستگاه تاتو', 'pen' ), 'cartrid
 	}
 }
 $samples = array(
-	array( 'پن تاتو بی‌سیم — نمونه', 'machines', 'pen', 12500000 ),
-	array( 'کارتریج راند لاینر — نمونه', 'cartridges', 'cartridge', 850000 ),
-	array( 'رنگ مشکی تاتو — نمونه', 'inks', 'ink', 2400000 ),
-	array( 'پد تمرین تاتو — نمونه', 'accessories', 'accessory', 650000 ),
-	array( 'پن تاتو روتاری — نمونه', 'machines', 'pen', 9600000 ),
-	array( 'کارتریج مگنوم — نمونه', 'cartridges', 'cartridge', 950000 ),
-	array( 'رنگ میکس تاتو — نمونه', 'inks', 'ink', 2100000 ),
-	array( 'لوازم محافظتی — نمونه', 'accessories', 'accessory', 450000 ),
+	array( 'پن تاتو بی‌سیم — نمونه', 'machines', 'pen', 1250000 ),
+	array( 'کارتریج راند لاینر — نمونه', 'cartridges', 'cartridge', 85000 ),
+	array( 'رنگ مشکی تاتو — نمونه', 'inks', 'ink', 240000 ),
+	array( 'پد تمرین تاتو — نمونه', 'accessories', 'accessory', 65000 ),
+	array( 'پن تاتو روتاری — نمونه', 'machines', 'pen', 960000 ),
+	array( 'کارتریج مگنوم — نمونه', 'cartridges', 'cartridge', 95000 ),
+	array( 'رنگ میکس تاتو — نمونه', 'inks', 'ink', 210000 ),
+	array( 'لوازم محافظتی — نمونه', 'accessories', 'accessory', 45000 ),
 );
 foreach ( $samples as $index => $sample ) {
 	$product = new WC_Product_Simple();

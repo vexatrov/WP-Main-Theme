@@ -10,3 +10,5 @@
 - Document setup, changes, validation, and deployment limitations. Do not claim live testing without a WordPress environment.
 - See `docs/BRANDS.md` for the three user-provided Instagram references and approved shared-brand architecture.
 - Both tattoo shops are primarily body tattoo B2C, not PMU-focused. See `docs/ROADMAP.md` for reference features and `docs/LOCAL-PREVIEW.md` for the review environment.
+- Currency is tomans (IRT/تومان), not USD or rials. Currency configuration and conversions belong outside the theme.
+- Keep responsive/sticky behavior and aligned card layouts shared; brand effects, hero variations and shape choices belong in child themes. See `docs/THEMING.md`.

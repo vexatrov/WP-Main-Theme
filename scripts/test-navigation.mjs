@@ -1,0 +1,27 @@
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+import assert from 'node:assert/strict';
+
+const handlers = {};
+const button = { hidden: true, expanded: 'false', setAttribute(k, v) { this.expanded = v; }, getAttribute() { return this.expanded; }, addEventListener(k, fn) { handlers[k] = fn; }, focus() { this.focused = true; } };
+const nav = { hidden: false };
+const menu = { hidden: false };
+const media = { matches: false, addEventListener(k, fn) { handlers.resize = fn; } };
+const header = { compact: false, querySelector: () => nav, contains: (element) => element === 'inside', classList: { toggle(k, value) { header.compact = value; } }, addEventListener(k, fn) { handlers[k] = fn; } };
+const document = { activeElement: 'outside', querySelector: (selector) => selector === '.menu-toggle' ? button : header, getElementById: () => menu, addEventListener(k, fn) { handlers[k] = fn; } };
+const window = { scrollY: 0, matchMedia: () => media, addEventListener(k, fn) { handlers[k] = fn; }, requestAnimationFrame: (fn) => fn() };
+runInNewContext(readFileSync('themes/wp-main-theme/assets/js/navigation.js', 'utf8'), { document, window });
+assert.equal(button.hidden, true);
+assert.equal(nav.hidden, false);
+window.scrollY = 500; handlers.scroll();
+assert.equal(header.compact, true);
+assert.equal(button.hidden, false);
+assert.equal(nav.hidden, true);
+handlers.click(); assert.equal(nav.hidden, false);
+handlers.keydown({ key: 'Escape' }); assert.equal(nav.hidden, true); assert.equal(button.focused, true);
+window.scrollY = 100; handlers.scroll(); assert.equal(header.compact, true, 'Header does not flicker near the compact threshold');
+document.activeElement = 'inside'; window.scrollY = 0; handlers.scroll(); assert.equal(header.compact, true, 'Focused header control stays visible');
+document.activeElement = 'outside'; handlers.focusout(); assert.equal(header.compact, false); assert.equal(nav.hidden, false);
+media.matches = true; handlers.resize(); assert.equal(nav.hidden, true); assert.equal(button.hidden, false);
+handlers.click(); assert.equal(nav.hidden, false);
+console.log('PASS: desktop/compact/mobile menus, Escape focus, scroll hysteresis and focus preservation.');

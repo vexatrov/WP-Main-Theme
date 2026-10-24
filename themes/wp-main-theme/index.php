@@ -11,9 +11,10 @@
 		<div class="entry-list">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class( 'entry-card' ); ?>>
-				<?php if ( has_post_thumbnail() ) : ?><a href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true"><?php the_post_thumbnail( 'large' ); ?></a><?php endif; ?>
+				<a class="entry-media" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } else { echo '<span class="entry-image-placeholder" aria-hidden="true"></span>'; } ?></a>
 				<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-				<?php the_excerpt(); ?>
+				<div class="entry-summary"><?php the_excerpt(); ?></div>
+				<a class="entry-read-more" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Read article', 'wp-main-theme' ); ?><span class="screen-reader-text">: <?php the_title(); ?></span></a>
 			</article>
 		<?php endwhile; ?>
 		</div>

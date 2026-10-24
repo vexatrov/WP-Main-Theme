@@ -13,3 +13,5 @@ These handles are reference identifiers, not confirmed business/display names. I
 Agreed direction: three independent shops, one shared custom parent theme, distinct brand child themes, one fixed palette per store, no Elementor, minimal plugins. Brand references remain here for future work; do not rely on conversation memory.
 
 The earlier PMU site is a functionality reference only. Both tattoo stores primarily sell body tattoo equipment to consumers. Do not carry over PMU positioning or wholesale-first messaging. Current preview uses clearly identified sample content, not any brand's actual inventory.
+
+Shared requirements: desktop/laptop/phone responsiveness and speed, compact sticky header, aligned product/blog cards, Home/Shop/About/Contact pages, and a short factual footer introduction. Brand effects (glass, button/input shapes and hero variations) belong in child themes. Prices are in tomans (تومان/IRT); the user's USD reference was explicitly corrected.

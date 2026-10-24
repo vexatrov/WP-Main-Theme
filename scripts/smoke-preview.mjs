@@ -28,12 +28,14 @@ assert.match(search, /woocommerce-loop-product__title/);
 const cartUrl = home.match(/class="cart-link" href="([^"]+)"/)?.[1];
 assert.ok(cartUrl, 'Header cart link exists');
 await get(cartUrl.replaceAll('&amp;', '&'));
+for (const page of ['/about/', '/contact/', '/journal/']) { await get(page); }
 const cartApi = `${base}/?rest_route=/wc/store/v1/cart`;
 console.log('Checking WooCommerce cart API and session isolation');
 const session = await fetch(cartApi, { headers: guestHeaders, signal: AbortSignal.timeout(60000) });
 assert.equal(session.status, 200);
 const token = session.headers.get('cart-token');
 assert.ok(token, 'WooCommerce Store API supplies an isolated cart token');
+assert.equal((await session.json()).totals.currency_code, 'IRT', 'Store uses tomans');
 const add = await fetch(`${base}/?rest_route=/wc/store/v1/cart/add-item`, {
 	method: 'POST',
 	headers: { ...guestHeaders, 'Content-Type': 'application/json', 'Cart-Token': token },
