@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+const origin = 'http://127.0.0.1:9400';
+async function page(path) {
+	const response = await fetch(new URL(path, origin), { headers: { Cookie: 'playground_auto_login_already_happened=1' }, signal: AbortSignal.timeout(60000) });
+	assert.equal(response.status, 200);
+	const html = await response.text();
+	assert.doesNotMatch(html, /Fatal error|Uncaught Error/);
+	return html;
+}
+const shop = await page('/shop/');
+const category = shop.match(/class="catalog-categories"[\s\S]+?<a href="([^"]+)"/)[1];
+assert.match(await page(category), /aria-current="page"/);
+const brand = shop.match(/<select id="catalog-brand"[\s\S]+?<option value="(\d+)"/)[1];
+const filtered = await page(`/shop/?filter_product_brand=${brand}`);
+assert.match(filtered, /catalog-filters" open/);
+assert.match(filtered, /catalog-filter-status/);
+const cards = [...filtered.matchAll(/data-product_id="(\d+)"/g)].map(match => Number(match[1]));
+assert.ok(cards.length > 0);
+const products = JSON.parse(await page(`/?rest_route=/wc/store/v1/products&include=${[...new Set(cards)].join(',')}`));
+assert.ok(products.every(product => product.brands.some(term => term.id === Number(brand))), 'Each filtered card belongs to the selected brand');
+const empty = await page(`/shop/?filter_product_brand=${brand}&min_price=999999999&s=pen&post_type=product&orderby=price`);
+assert.match(empty, /catalog-empty/);
+const reset = empty.match(/class="catalog-filter-status"[\s\S]+?<a href="([^"]+)"/)[1].replace(/&amp;|&#0*38;/g, '&');
+const resetUrl = new URL(reset);
+assert.equal(resetUrl.searchParams.get('s'), 'pen');
+assert.equal(resetUrl.searchParams.get('orderby'), 'price');
+assert.ok(!resetUrl.searchParams.has('filter_product_brand'));
+assert.ok(!resetUrl.searchParams.has('min_price'));
+assert.match(empty, /name="min_price"[^>]*value="999999999"/);
+console.log('PASS: real brand filtering, open active filters, scoped reset preserving search/sort, preserved form values and empty-result recovery.');

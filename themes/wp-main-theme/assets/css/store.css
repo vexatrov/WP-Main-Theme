@@ -101,3 +101,16 @@
 .card-price-amounts { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
 .card-price-amounts > span:first-child { color: var(--brand-muted); }
 .card-price-unit { font-size: .75rem; font-weight: 400; }
+.catalog-categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .75rem; }
+.catalog-categories a { display: flex; align-items: center; gap: .75rem; min-height: 64px; line-height: 1.5; font-size: .9rem; }
+.catalog-categories img { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
+.catalog-categories a[aria-current="page"] { border-color: var(--brand-accent); box-shadow: inset 0 -2px var(--brand-accent); font-weight: 650; }
+.catalog-filter-status { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: .75rem 1rem; background: var(--brand-surface); border-radius: var(--brand-radius); font-size: .9rem; }
+.catalog-filter-status a { font-weight: 600; }
+.catalog-brand-filter { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; }
+.catalog-brand-filter label { font-weight: 650; }
+.catalog-brand-filter button { align-self: start; min-height: 44px; }
+.catalog-empty { clear: both; max-width: 38rem; margin: 2rem auto; padding: 2rem; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); background: var(--brand-surface); }
+.catalog-empty h2 { line-height: 1.5; font-size: 1.5rem; }
+.catalog-empty .product-search { position: relative; margin-block: 1.5rem; max-width: none; }
+@media (max-width: 30rem) { .catalog-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); } .catalog-categories a { flex-direction: column; align-items: start; padding: .75rem; } .catalog-empty { padding: 1.25rem; } }

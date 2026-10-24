@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0
+
+- Category routes now include configured thumbnails, sibling navigation on leaf categories and a current-category marker.
+- Added a native WooCommerce brand selector alongside configurable price/attribute widgets.
+- Keep active filters open and offer a scoped clear action that preserves search/sort.
+- Added empty-result recovery with product search and a full-catalog link.
+- No additional scripts, dependency or WooCommerce template copies.
+
+
 ## 0.7.0
 
 - Compact product purchase row: small accessible action beside price; two stacked variation prices with one currency unit.
