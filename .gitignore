@@ -8,3 +8,4 @@ vendor/
 dist/
 wp-config.php
 *.log
+.local/

@@ -15,7 +15,7 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
       - name: PHP syntax
-        run: find themes -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find themes dev -name '*.php' -print0 | xargs -0 -n1 php -l
   assets-and-package:
     runs-on: windows-latest
     steps:
@@ -24,5 +24,7 @@ jobs:
         with:
           node-version: '22'
       - run: node --check themes/wp-main-theme/assets/js/navigation.js
+      - run: node --check scripts/preview.mjs
+      - run: node --check scripts/smoke-preview.mjs
       - shell: pwsh
         run: ./scripts/package.ps1

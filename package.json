@@ -1,0 +1,14 @@
+{
+	"name": "wp-main-theme-development",
+	"private": true,
+	"packageManager": "pnpm@11.25.0",
+	"scripts": {
+		"dev": "node scripts/preview.mjs",
+		"test:preview": "node scripts/smoke-preview.mjs",
+		"check": "node --check scripts/preview.mjs && node --check themes/wp-main-theme/assets/js/navigation.js"
+	},
+	"engines": { "node": ">=22" },
+	"devDependencies": {
+		"@wp-playground/cli": "3.1.40"
+	}
+}

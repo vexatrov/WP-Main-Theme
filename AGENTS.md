@@ -9,3 +9,4 @@
 - Never commit credentials, customer data, uploads, WordPress core, or installed plugin code.
 - Document setup, changes, validation, and deployment limitations. Do not claim live testing without a WordPress environment.
 - See `docs/BRANDS.md` for the three user-provided Instagram references and approved shared-brand architecture.
+- Both tattoo shops are primarily body tattoo B2C, not PMU-focused. See `docs/ROADMAP.md` for reference features and `docs/LOCAL-PREVIEW.md` for the review environment.

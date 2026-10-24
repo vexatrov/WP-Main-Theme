@@ -8,6 +8,9 @@ function wpmain_asset_version( $relative_path ) {
 
 function wpmain_assets() {
 	wp_enqueue_style( 'wpmain', get_template_directory_uri() . '/assets/css/main.css', array(), wpmain_asset_version( '/assets/css/main.css' ) );
+	if ( is_rtl() ) {
+		wp_enqueue_style( 'wpmain-rtl', get_template_directory_uri() . '/rtl.css', array( 'wpmain' ), wpmain_asset_version( '/rtl.css' ) );
+	}
 	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_style( 'wpmain-store', get_template_directory_uri() . '/assets/css/store.css', array( 'wpmain' ), wpmain_asset_version( '/assets/css/store.css' ) );
 	}

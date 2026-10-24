@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-10-24
+
+- Corrected brand scope: both tattoo shops are B2C and primarily sell body tattoo supplies, not PMU-focused.
+- Added runnable WordPress Playground development server with live-mounted theme, WooCommerce, Persian locale and disposable sample catalog.
+- Added Persian theme translation source/compiled catalog and locale-dependent RTL stylesheet.
+- Refined shared header, mobile search/menu layout, homepage product grid and category cards.
+- Added local preview setup and persistence documentation. Demo products, schematic artwork and prices are explicitly marked as samples.
+- Validated the live local demo: Persian/RTL homepage, product details, product search, cart page, Store API add-to-cart and independent guest carts passed the HTTP smoke check. Browser checks covered desktop/mobile layout, menu toggle/Escape, shop archive, product add-to-cart, rendered block cart and checkout form entry. No order/payment was submitted.
+- Disabled WooCommerce's initial coming-soon mode in demo setup. Cached official language archives directly after Playground's language download step failed. WooCommerce emitted an early-translation notice during activation; no storefront fatal errors were observed.
+
 ## 0.2.0 — 2026-10-24
 
 - Saved all three supplied Instagram references in docs/BRANDS.md; visual review blocked by Instagram fetch restrictions.

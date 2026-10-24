@@ -1,0 +1,6 @@
+/* WordPress locale controls direction; do not force RTL for other locales. */
+body { direction: rtl; text-align: right; }
+.hero-copy h1, h1, h2, h3 { letter-spacing: normal; line-height: 1.5; }
+.eyebrow { letter-spacing: normal; }
+.hero-button span, .section-heading a span { display: inline-block; transform: scaleX(-1); }
+.woocommerce .woocommerce-breadcrumb { text-align: right; }

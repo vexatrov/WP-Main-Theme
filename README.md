@@ -4,7 +4,13 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Version 0.2.0 adds a coded storefront homepage with CMS-editable hero content, real category cards and latest product arrivals, product search, and account/cart links. Includes responsive navigation, accessible skip link, content/search/404/comment templates, and hook-based WooCommerce integration. This is a shared base, not a launch-ready branded shop. Brand identities, advanced filtering, and live-store validation remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
+Version 0.3.0 adds a runnable local WordPress/WooCommerce preview, Persian theme translations, RTL styles and a disposable body tattoo sample catalog. The coded homepage includes CMS-editable hero content, category cards, latest arrivals, product search and account/cart links. This is a shared base, not a launch-ready branded shop. Brand identities, advanced filtering and production verification remain pending. The three supplied Instagram references are saved in [brand references](docs/BRANDS.md).
+
+## See the theme locally
+
+Run `pnpm install --frozen-lockfile`, then `pnpm dev` (Node.js 22+). Once boot completes, open http://127.0.0.1:9400/ . PHP/Docker/MySQL installations are not needed. See [local preview](docs/LOCAL-PREVIEW.md) for demo-data behavior and restart instructions. Development dependencies are not shipped in the theme ZIP.
+
+The earlier storefront feature list and implementation boundaries are saved in [roadmap](docs/ROADMAP.md).
 
 No page builder, frontend framework, build step, external font, or JavaScript dependency. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.
 
