@@ -13,3 +13,4 @@
 - Currency is tomans (IRT/تومان), not USD or rials. Currency configuration and conversions belong outside the theme.
 - Keep responsive/sticky behavior and aligned card layouts shared; brand effects, hero variations and shape choices belong in child themes. See `docs/THEMING.md`.
 - Do not add a development/announcement strip above the header. Research and layout discussion are recorded in `docs/STOREFRONT-PLAN.md` and `docs/PAGE-LAYOUTS.md`; planned features must not be reported as implemented.
+- Product cards use full-width square images with no default inner box/padding. Product guidance, comparisons, FAQs, guide links, verified compatible products and same-use alternatives are specified in `docs/PRODUCT-PAGES.md`; keep durable data in `plugins/wp-store-catalog`.

@@ -15,7 +15,9 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
       - name: PHP syntax
-        run: find themes dev -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find themes plugins dev tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Catalog data and save checks
+        run: php tests/catalog.php
   assets-and-package:
     runs-on: windows-latest
     steps:
@@ -26,6 +28,7 @@ jobs:
       - run: node --check themes/wp-main-theme/assets/js/navigation.js
       - run: node --check scripts/preview.mjs
       - run: node --check scripts/smoke-preview.mjs
+      - run: node --check scripts/test-product-details.mjs
       - run: node scripts/test-navigation.mjs
       - shell: pwsh
         run: ./scripts/package.ps1

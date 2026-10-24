@@ -16,6 +16,8 @@ The parent theme is mounted directly from the repository. Refresh after PHP/CSS/
 
 ## What is sample data?
 
+v0.5.0 also mounts/activates the repository's WP Store Catalog plugin. `dev/product-preview.php` creates fictional model attributes, compatible/alternative relationships, comparison choices, FAQ and guide links on the two demo pens, and guide links on a cartridge. This is a layout fixture, not evidence of real product compatibility. The generated vector artwork has a square, tighter canvas to demonstrate full-width image treatment.
+
 v0.4.0: prices use tomans (IRT), not rials. The `dev/refresh.php` step adds About/Contact/Magazine fixtures, footer information, and mixed-length product/blog content to test alignment. It updates old demo-only rial prices to tomans once; it does not convert any production catalog.
 
 `pnpm test:navigation` checks desktop/compact/mobile menus, Escape focus, scroll hysteresis and focus preservation without WordPress. `pnpm test:preview` also checks standard pages and IRT currency in the ready demo.

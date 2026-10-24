@@ -30,5 +30,21 @@
   "Footer information": "اطلاعات پایین صفحه",
   "Short brand introduction": "معرفی کوتاه برند",
   "A short, useful introduction for visitors. Avoid repeating keywords.": "معرفی کوتاه و مفید برای بازدیدکنندگان. از تکرار کلمات کلیدی خودداری کنید.",
-  "About page": "صفحه درباره ما"
+  "About page": "صفحه درباره ما",
+  "Use cases & suitability": "کاربرد و مخاطب",
+  "Compare specifications": "مقایسه مشخصات",
+  "Product FAQs": "پرسش‌های متداول محصول",
+  "What can you use it for?": "کاربردهای این محصول",
+  "Who is it for?": "این محصول برای چه کسی مناسب است؟",
+  "Compare products for the same task. Missing information is shown as a dash.": "محصولات با کاربرد مشابه را مقایسه کنید. اطلاعات ثبت‌نشده با خط تیره نمایش داده می‌شوند.",
+  "Product specification comparison": "جدول مقایسه مشخصات محصولات",
+  "Specification": "مشخصات",
+  "Current product": "محصول فعلی",
+  "Price": "قیمت",
+  "Availability": "موجودی",
+  "In stock": "موجود",
+  "Out of stock": "ناموجود",
+  "Guides to help you choose": "راهنمای انتخاب و خرید",
+  "Works with this product": "محصولات سازگار با این محصول",
+  "Other options for the same use": "گزینه‌های دیگر با کاربرد مشابه"
 }

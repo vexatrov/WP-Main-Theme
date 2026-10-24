@@ -6,6 +6,8 @@ See RESEARCH-2026-10-24.md, STOREFRONT-PLAN.md and PAGE-LAYOUTS.md for the resea
 
 ## Current review milestone
 
+Product detail/card requirements are approved and implemented as a first foundation in v0.5.0: see PRODUCT-PAGES.md for scope and limitations. The older unchecked reference list below records the original requirements and is not the current feature-status source for those sections.
+
 - Shared classic theme and WooCommerce hook integration.
 - Static homepage with editable hero, live category cards and latest products.
 - Responsive header/menu, product search, account and cart links.

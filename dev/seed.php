@@ -35,11 +35,12 @@ function wpmain_demo_image( $name, $type, $background = '#efeee9' ) {
 		'cartridge' => '<g transform="translate(230 100) rotate(-20 160 200)"><rect x="95" y="80" width="130" height="220" rx="25" fill="#d3d8ce" stroke="#788678" stroke-width="4"/><rect x="108" y="95" width="104" height="70" rx="14" fill="#d36b36"/><path d="M118 300h84l-30 95h-24z" fill="#a6b3a2"/><path d="M160 395v65" stroke="#363e36" stroke-width="5"/><path d="M138 190h44M138 215h44M138 240h44" stroke="#788678" stroke-width="5"/></g>',
 		'accessory' => '<rect x="235" y="210" width="330" height="230" rx="35" fill="#3a443c"/><rect x="265" y="240" width="270" height="170" rx="20" fill="#aebbaa"/><circle cx="400" cy="325" r="58" fill="#e9e9de"/><path d="M380 325h40M400 305v40" stroke="#d36b36" stroke-width="10"/>',
 	);
-	$svg = '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="' . $background . '"/><ellipse cx="400" cy="500" rx="180" ry="18" fill="#000" opacity=".06"/>' . $shapes[ $type ] . '</svg>';
+	$frames = array( 'pen' => '150 80 500 500', 'ink' => '170 40 460 460', 'cartridge' => '150 50 500 500', 'accessory' => '205 130 390 390' );
+	$svg = '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="' . $frames[ $type ] . '"><rect width="800" height="800" fill="' . $background . '"/>' . $shapes[ $type ] . '</svg>';
 	$upload = wp_upload_bits( $name . '.svg', null, $svg );
 	if ( $upload['error'] ) { return 0; }
 	$id = wp_insert_attachment( array( 'post_title' => $name, 'post_mime_type' => 'image/svg+xml', 'post_status' => 'inherit', 'guid' => $upload['url'] ), $upload['file'] );
-	wp_update_attachment_metadata( $id, array( 'width' => 800, 'height' => 600, 'file' => _wp_relative_upload_path( $upload['file'] ) ) );
+	wp_update_attachment_metadata( $id, array( 'width' => 800, 'height' => 800, 'file' => _wp_relative_upload_path( $upload['file'] ) ) );
 	update_post_meta( $id, '_wp_attachment_image_alt', 'تصویر شماتیک آزمایشی محصول' );
 	return $id;
 }

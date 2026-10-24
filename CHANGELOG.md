@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 — 2026-10-24
+
+- Product card images now fill the card width in a square canvas with no default inner padding/background/radius; child variables permit other designs. Tightened original demo vector framing.
+- Added small WP Store Catalog plugin with classic product-editor fields for use cases/audience, FAQs, guide links, compatible items, alternatives and comparison choices; permission/nonce/type/limit checks preserve valid metadata.
+- Added theme sections for product guidance, comparison from visible WooCommerce attributes, FAQs, public article links and two separate curated recommendation groups. Empty sections hide; generic related items remain a fallback.
+- Kept native WooCommerce descriptions, attributes, galleries, variant selection and purchase behavior. Comparison is model-level; no external recommendation service or extra frontend library added.
+- Added plugin packaging, demo fixtures, HTTP feature checks and PHP save/data-contract checks in CI. Product/admin and responsive verification recorded in PRODUCT-PAGES.md.
+- Live preview passed catalog/cart and product-detail HTTP checks. Browser verified comparison controls and full-width square images at desktop/phone sizes; the WordPress product editor saved guidance and kept curated product/article selections.
+
 ## 2026-10-24 — reference research and layout planning
 
 - Removed the development notice above the header from the active demo and from future seed setup; removed its unused CSS and updated the smoke assertion.

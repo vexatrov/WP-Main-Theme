@@ -9,7 +9,7 @@
 .woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover {
 	background: var(--brand-text); color: var(--brand-bg);
 }
-.woocommerce ul.products li.product a img { aspect-ratio: 1; object-fit: contain; background: var(--brand-surface); padding: 1rem; }
+.woocommerce ul.products li.product a img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: var(--product-image-surface); padding: var(--product-image-padding); }
 .woocommerce ul.products li.product .price, .woocommerce div.product p.price, .woocommerce div.product span.price { color: var(--brand-accent); }
 .woocommerce span.onsale { background: var(--brand-accent); color: var(--brand-on-accent); }
 .woocommerce table.shop_table { border-color: var(--brand-border); }
@@ -39,9 +39,26 @@
 .woocommerce ul.products li.product .woocommerce-LoopProduct-link { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .woocommerce ul.products li.product .price { margin-top: auto; padding-top: .5rem; min-height: 3.5em; }
 .woocommerce ul.products li.product .button { display: flex; align-items: center; justify-content: center; align-self: stretch; margin-top: .75rem; max-width: 100%; min-height: 3.5rem; text-align: center; }
-.woocommerce ul.products li.product a img { border-radius: var(--brand-radius); transition: transform .2s ease; }
+.woocommerce ul.products li.product a img { border-radius: var(--product-image-radius); }
 .woocommerce ul.products li.product .woocommerce-loop-product__title { font-weight: 600; min-height: 2.8em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
 .woocommerce ul.products li.product .price { font-weight: 650; font-size: .95rem; }
 @media (max-width: 68rem) { .woocommerce ul.products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 48rem) { .woocommerce ul.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } }
 @media (max-width: 22rem) { .woocommerce ul.products { grid-template-columns: 1fr; } }
+.product-resources { clear: both; padding-block: 1.5rem; }
+.product-resources > h2 { margin-bottom: 1.5rem; font-size: clamp(1.4rem, 3vw, 2rem); }
+.product-faq { border-bottom: 1px solid var(--brand-border); padding-block: 1rem; }
+.product-faq summary { cursor: pointer; font-weight: 650; padding-block: .3rem; }
+.product-guide-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; padding: 0; list-style: none; }
+.product-guide-links a { display: block; border: 1px solid var(--brand-border); padding: 1.25rem; border-radius: var(--brand-radius); }
+.product-comparison-scroll { max-width: 100%; overflow-x: auto; margin-block: 1.5rem; }
+.product-comparison { width: 100%; min-width: 36rem; border-collapse: collapse; text-align: start; }
+.product-comparison th, .product-comparison td { min-width: 10rem; padding: 1rem; vertical-align: top; border: 1px solid var(--brand-border); overflow-wrap: anywhere; }
+.product-comparison thead th { background: var(--brand-surface); }
+.comparison-current { display: block; color: var(--brand-muted); font-size: .85rem; font-weight: 400; padding-top: .5rem; }
+.woocommerce div.product .woocommerce-tabs ul.tabs { display: flex; flex-wrap: nowrap; gap: 1.25rem; padding: 0; overflow-x: auto; border-bottom: 1px solid var(--brand-border); scrollbar-width: thin; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li { flex: 0 0 auto; margin: 0; padding: 0; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; white-space: nowrap; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active { background: transparent; border-bottom-color: var(--brand-accent); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li a { padding: .9rem .2rem; }
+.woocommerce div.product .woocommerce-tabs ul.tabs::before, .woocommerce div.product .woocommerce-tabs ul.tabs li::before, .woocommerce div.product .woocommerce-tabs ul.tabs li::after { display: none; }
+@media (max-width: 48rem) { .product-guide-links { grid-template-columns: 1fr; } }

@@ -10,6 +10,9 @@
 	--brand-radius: .6rem;
 	--button-radius: var(--brand-radius);
 	--input-radius: var(--brand-radius);
+	--product-image-padding: 0;
+	--product-image-surface: transparent;
+	--product-image-radius: 0;
 	--header-surface: var(--brand-surface);
 	--header-shadow: 0 6px 24px rgb(0 0 0 / .06);
 	--brand-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
