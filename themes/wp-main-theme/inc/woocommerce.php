@@ -36,6 +36,7 @@ function wpmain_card_purchase_start() {
 	global $product;
 	echo '<div class="card-purchase">';
 	if ( ! $product ) { return; }
+	if ( '' === $product->get_price() ) { echo '<span class="price">' . esc_html__( 'Enquire for price', 'wp-main-theme' ) . '</span>'; return; }
 	if ( $product->is_type( 'variable' ) && '' !== $product->get_price() ) {
 		$min = $product->get_variation_price( 'min', true );
 		$max = $product->get_variation_price( 'max', true );

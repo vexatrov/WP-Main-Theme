@@ -1,0 +1,28 @@
+# Shared-theme completion and release gates
+
+Release: **1.0.0-rc.1**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+
+| Requested area | Implemented | Validation / remaining gate |
+| --- | --- | --- |
+| Persian search | Stored normalized product documents, Persian/Arabic letters/digits/spacing, product and shared brand aliases, visible variation SKUs, exact-SKU/title preference, grouped suggestions, cancelled stale requests, keyboard/fallback behavior, protected index rebuild admin action. | PHP query contracts, HTTP Persian/SKU/alias results and suggestions pass. Suggestion keyboard/race/error behavior has a focused JS unit test. Real query relevance and a browser/screen-reader pass remain store QA. |
+| Catalog | Child/sibling category routes, category artwork, inherited category-specific native attribute filters, native brand/price facets, buying text and guide links, active/reset and empty states. | Actual filtered membership, empty/reset context, attribute scope and guidance checked over HTTP with fictional data. Real attributes and guidance need the inventory owner. |
+| Product pages | Compact aligned square cards, common-unit stacked variation range, gallery/zoom/native selection, visible key specs and brand, use/audience, comparison, FAQ, guide links, curated compatible/alternative groups, distinct unpriced/out-of-stock paths and sale display. | Product states, variation data and purchase rules checked against WooCommerce fixtures. Compatibility remains an explicit editorial relationship; no automatic inference. |
+| Shopping | Native cart/checkout/account/order forms retained and styled. | Local add/update/remove, coupon/stock/variation/checkout errors, guest isolation, recovery request, tracking denial and fictional COD checkout/receipt protection tested. No real charge or delivery. Zarinpal callbacks, actual email transport, account sign-in and reset-link completion need staging. |
+| Articles/support | Readable articles, collision-safe TOC with preserved anchors, curated product shortcode, related reading, About/Contact/Help/policy templates, actual-page support navigation and footer intro. | PHP anchor contracts and rendered article/product/support links checked. Real copy, contact details and policies must be provided/approved by the owner. No pretend contact form. |
+| Final checks | PHP/JS contracts and syntax, package generation with SHA-256 manifests, custom asset budgets, staging read-only preflight, release/rollback instructions. | Custom CSS approximately 8 KB and JS 2 KB gzip, excluding core/Woo/media. Prior shared layouts were viewed at 320/390/1024/1366/1440px. Fresh browser automation was unavailable in this completion run; the latest visual/200%-zoom/assistive-technology sweep and real hosted performance remain gates. No staging host was supplied. |
+
+## What is deliberately not guessed
+
+No real domain/host, gateway merchant key, shipping prices, tax decisions, return/warranty/privacy/terms text, contact information, production catalog or brand identity is invented. Zarinpal is only the likely gateway, per the owner. Currency remains tomans; integration-specific IRT/IRR conversion stays outside the theme. There is no deployed staging site without hosting access.
+
+Optional wishlist, mini-cart, campaign carousel, automatic dark mode, analytics and notification systems are not needed for this shared release; no such feature is claimed. A model-level curated comparison is included, not a separate shopper-managed shortlist. Each brand can override heroes, header treatment, button shapes and templates in a child theme.
+
+## Reproduce checks
+
+1. `pnpm install --frozen-lockfile` and `pnpm dev`; wait for the ready URL. Preview files now persist in ignored `.local/site`.
+2. `pnpm test:php`, `pnpm test:navigation`, `pnpm test:search-ui`, `pnpm check:assets`.
+3. Against the localhost demo: `pnpm test:preview`, `pnpm test:search`, `pnpm test:catalog`, `pnpm test:products`, `pnpm test:cards`, `pnpm test:layouts`, `pnpm test:features`, `pnpm test:shopping`, `pnpm test:recovery`.
+4. `pnpm test:order` creates a fictional COD order **only** in the guarded localhost sample store. Never point tests at production. Its mail is captured locally by the dev fixture.
+5. `powershell -File scripts/package.ps1`. Install the parent/plugin ZIPs on the host's staging site, configure a child theme, then follow DEPLOYMENT.md and VALIDATION.md. The package hashes and commit are in ignored `dist/release-manifest.json`.
+
+No WordPress core, installed third-party plugins, generated orders, database, uploads, runtime test credentials or local mail capture are part of Git or the deployable ZIPs.

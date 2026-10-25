@@ -1,5 +1,7 @@
 # Page/layout discussion inventory
 
+The current shared release candidate and verification status are recorded in COMPLETION.md. The planning inventory below remains useful for brand-specific review; older progress notes are historical.
+
 Discuss families once, then approve each brand's visual variant. A shared listing template can serve many URLs; every row does not mean a new custom PHP file. This is a planning inventory, not a completed-feature checklist.
 
 | Order | Page or component family | Layout decisions |
@@ -47,7 +49,7 @@ Yes: `header.php`, `footer.php`, `single.php`, archive/page templates and templa
 
 Block Cart/Checkout uses its own styling and extension APIs. Its redesign must respect supported extension points and the chosen gateway; a classic PHP override alone will not change a block checkout. Track any overridden WooCommerce template version and validate it after plugin updates. Transactional email layouts are another separate deliverable if we want them branded consistently.
 
-## Shared implementation progress — 0.6.0
+## Shared implementation progress â€” 0.6.0
 
 Owner direction: finish the main theme before working on any brand identity. Zarinpal is the likely gateway, but integration is deferred at the owner's request.
 
@@ -57,7 +59,7 @@ Still pending: Persian search normalization/alias relevance and suggestions; cat
 
 Setup: use native product brands and assign the Brand directory template to a page. In Appearance > Widgets, add WooCommerce price/attribute/active-filter widgets to Shop filters. The filter disclosure is keyboard accessible; WooCommerce owns filtering and query parameters. The theme does not invent product counts, filter values or verified agency badges. Add Details blocks to Help/policies pages for expandable answers; owners supply policies. Product recommendations in articles can use native WooCommerce product shortcodes in a Shortcode block.
 
-## Catalog iteration — 0.8.0
+## Catalog iteration â€” 0.8.0
 
 The catalog renders category thumbnails where configured, child routes for parent categories and sibling routes on leaves. It adds a single-brand selector using WooCommerce's native `filter_product_brand` parameter; native price/attribute widgets stay configurable under Shop filters. Brand options are populated catalog-wide, so some category/brand combinations can legitimately have no matches. Active query filters keep the disclosure open; Clear filters removes native facet/price parameters and resets pagination while retaining search/sort and the current archive. Empty listings provide a product-search form and all-products route. No invented product counts or custom filtering SQL.
 

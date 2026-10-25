@@ -11,7 +11,14 @@
 		"test:layouts": "node scripts/test-layouts.mjs",
 		"test:cards": "node scripts/test-cards.mjs",
 		"test:search": "node scripts/test-search.mjs",
-		"test:catalog": "node scripts/test-catalog.mjs"
+		"test:catalog": "node scripts/test-catalog.mjs",
+		"test:features": "node scripts/test-features.mjs",
+		"test:shopping": "node scripts/test-shopping.mjs",
+		"test:php": "node scripts/test-php.mjs",
+		"check:assets": "node scripts/measure-assets.mjs",
+		"test:search-ui": "node scripts/test-search-ui.mjs",
+		"test:recovery": "node scripts/test-recovery.mjs",
+		"test:order": "node scripts/test-order.mjs"
 	},
 	"engines": {
 		"node": ">=22"

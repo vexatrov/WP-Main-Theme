@@ -30,12 +30,16 @@ function wpmain_catalog_navigation() {
 	$filters = wpmain_catalog_filter_keys();
 	$brands = taxonomy_exists( 'product_brand' ) && ! is_tax( 'product_brand' ) ? get_terms( array( 'taxonomy' => 'product_brand', 'hide_empty' => true ) ) : array();
 	if ( is_wp_error( $brands ) ) { $brands = array(); }
+	$attributes = is_product_category() && function_exists( 'wpmain_catalog_category_attributes' ) ? wpmain_catalog_category_attributes( get_queried_object_id() ) : array();
 	if ( $filters ) {
 		echo '<div class="catalog-filter-status"><span>' . esc_html__( 'Filters are applied', 'wp-main-theme' ) . '</span><a href="' . esc_url( wpmain_catalog_reset_url() ) . '">' . esc_html__( 'Clear filters', 'wp-main-theme' ) . '</a></div>';
 	}
-	if ( is_active_sidebar( 'shop-filters' ) || $brands ) {
+	if ( is_active_sidebar( 'shop-filters' ) || $brands || $attributes ) {
 		echo '<details class="catalog-filters"' . ( $filters ? ' open' : '' ) . '><summary>' . esc_html__( 'Filter products', 'wp-main-theme' ) . '</summary><div class="catalog-filter-grid">';
 		if ( $brands ) { wpmain_catalog_brand_filter( $brands ); }
+		foreach ( $attributes as $attribute ) {
+			if ( class_exists( 'WC_Widget_Layered_Nav' ) ) { the_widget( 'WC_Widget_Layered_Nav', array( 'title' => wc_attribute_label( 'pa_' . $attribute ), 'attribute' => $attribute, 'display_type' => 'list', 'query_type' => 'or' ), array( 'before_widget' => '<section class="catalog-widget widget_layered_nav">', 'after_widget' => '</section>', 'before_title' => '<h3>', 'after_title' => '</h3>' ) ); }
+		}
 		dynamic_sidebar( 'shop-filters' );
 		echo '</div></details>';
 	}
@@ -75,3 +79,23 @@ function wpmain_catalog_empty_recovery() {
 	echo '<a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">' . esc_html__( 'View all products', 'wp-main-theme' ) . '</a></section>';
 }
 add_action( 'woocommerce_no_products_found', 'wpmain_catalog_empty_recovery', 20 );
+
+function wpmain_catalog_buying_guidance() {
+	if ( ! is_product_category() ) { return; }
+	$id = get_queried_object_id();
+	$copy = get_term_meta( $id, '_wpmain_buying_guide', true );
+	$guides = get_term_meta( $id, '_wpmain_category_guides', true );
+	if ( ! is_string( $copy ) ) { $copy = ''; }
+	$articles = is_array( $guides ) && $guides ? get_posts( array( 'post_type' => 'post', 'post__in' => array_map( 'absint', $guides ), 'orderby' => 'post__in', 'posts_per_page' => 4, 'has_password' => false ) ) : array();
+	if ( ! $copy && ! $articles ) { return; }
+	echo '<section class="category-buying-guide"><h2>' . esc_html__( 'Choosing the right product', 'wp-main-theme' ) . '</h2>';
+	if ( $copy ) { echo '<div class="entry-content">' . wp_kses_post( wpautop( esc_html( $copy ) ) ) . '</div>'; }
+	if ( $articles ) {
+		echo '<ul class="product-guide-links">';
+		foreach ( $articles as $article ) { echo '<li><a href="' . esc_url( get_permalink( $article ) ) . '">' . esc_html( get_the_title( $article ) ) . '</a></li>'; }
+		echo '</ul>';
+	}
+	echo '</section>';
+}
+add_action( 'woocommerce_after_shop_loop', 'wpmain_catalog_buying_guidance', 30 );
+add_action( 'woocommerce_no_products_found', 'wpmain_catalog_buying_guidance', 30 );

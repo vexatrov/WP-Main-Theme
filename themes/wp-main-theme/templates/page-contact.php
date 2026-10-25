@@ -5,7 +5,8 @@
  */
 get_header();
 ?>
-<main id="main-content" class="site-main container reading-width" tabindex="-1">
+<main id="main-content" class="site-main container support-layout" tabindex="-1">
+	<?php wpmain_support_navigation( get_queried_object_id() ); ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 	<article id="post-<?php the_ID(); ?>" <?php post_class( 'contact-page' ); ?>>
 		<h1><?php the_title(); ?></h1>

@@ -1,0 +1,21 @@
+// Read-only checks. No orders, accounts, payments, deployment or configuration changes.
+const supplied = process.argv[2];
+if (!supplied) throw new Error('Usage: node scripts/check-staging.mjs https://your-staging-host.example');
+const base = new URL(supplied);
+if (base.username || base.password || !['http:','https:'].includes(base.protocol)) throw new Error('Use a plain HTTP(S) origin without credentials.');
+const local = ['localhost','127.0.0.1','[::1]'].includes(base.hostname);
+if (!local && base.protocol !== 'https:') throw new Error('Hosted staging must use HTTPS.');
+const headers = local ? {Cookie:'playground_auto_login_already_happened=1'} : {};
+const response = await fetch(base,{headers,signal:AbortSignal.timeout(60000)});
+if (!response.ok) throw new Error(`Homepage HTTP ${response.status}`);
+const html = await response.text();
+if (/Fatal error|Uncaught Error|WordPress is not ready yet/.test(html)) throw new Error('Homepage has a runtime error.');
+if (!html.includes('wpmain-css')) throw new Error('Shared theme stylesheet not detected.');
+if (!local && !/noindex/i.test((response.headers.get('x-robots-tag')||'')+' '+(html.match(/<meta[^>]+name=["']robots["'][^>]*>/i)?.[0]||''))) throw new Error('Staging must be excluded from indexing.');
+const api = await fetch(new URL('/?rest_route=/wc/store/v1/cart',base),{headers,signal:AbortSignal.timeout(60000)});
+if (!api.ok) throw new Error(`Cart API HTTP ${api.status}`);
+const cart = await api.json();
+if (cart.items_count !== 0) throw new Error('Fresh visitor received a non-empty cart; inspect session/cache isolation.');
+if (cart.totals?.currency_code !== 'IRT') throw new Error('Configure tomans in the commerce/currency integration.');
+console.log('PASS: basic staging HTTP, shared assets, search exclusion and fresh IRT cart.');
+console.log('Still requires gateway sandbox callbacks, shipping/tax policy, email delivery, restore test, real media and hosted performance measurements.');

@@ -1,5 +1,9 @@
 # Validation
 
+## Current shared release candidate
+
+See COMPLETION.md for the current implemented scope, command list and remaining release gates. The completion run passed offline PHP syntax/contracts, normalized-search HTTP checks, suggestions/category facets/guidance/product-state/article/support HTTP checks, native recovery/unknown-tracking checks, fictional COD checkout/receipt-key checks, navigation/search interaction units and custom asset budgets. No external payment, email delivery or staging deployment is claimed. Detailed historical viewport results below apply to earlier shared layouts; the new completion-run browser automation could not attach/respond, so a fresh visual/zoom/assistive-technology sweep remains required.
+
 ## Automated
 
 GitHub Actions runs PHP syntax checks on PHP 8.1 and 8.3, JavaScript syntax validation, and a parent-theme packaging check. Syntax checks do not verify WordPress or commerce behavior.
@@ -25,7 +29,7 @@ A disposable WordPress/PHP/SQLite environment is now supplied via `pnpm dev`; se
 
 The v0.3.0 demo passed HTTP checks for RTL/Persian homepage, product detail/search, cart page, Store API add-to-cart and guest cart isolation. Browser checks covered homepage at desktop and 390px mobile viewport, mobile menu toggle and Escape focus, shop archive, product add-to-cart, block cart rendering and checkout form entry. No order was submitted; payment, shipping, variable products, refunds, and complete accessibility audits remain unverified. WooCommerce activation logged an early-translation notice in this environment.
 
-## 0.6.0–0.7.0 local checks
+## 0.6.0â€“0.7.0 local checks
 
 Passed against the restarted WordPress preview: layout routes (shop, brand directory/archive, help, order tracking, magazine/article and homepage guides), price-filter empty result, compact card markup and single-unit 300,000/600,000 toman variation range, native variation form/data, product guidance and the existing RTL/search/cart/session-isolation smoke tests. Navigation unit checks passed. 0.6.0 GitHub Actions passed PHP 8.1/8.3 and asset/package jobs. Browser visual inspection for this iteration was unavailable because browser access to the previous failed-preview tab was rejected; no fresh viewport/visual results are claimed. Native variable checkout and Zarinpal remain untested.
 
@@ -34,7 +38,7 @@ Passed against the restarted WordPress preview: layout routes (shop, brand direc
 Passed pnpm test:catalog against the running WordPress preview: selected-brand cards verified against Store API brand membership; leaf current-category marker; active-filter disclosure; reset preserves search/sort and removes price/brand filters; form preserves existing values; no-results recovery. No new PHP errors appeared in the preview log. Fresh visual/viewport checks were not performed in this iteration. PHP syntax and package validation run in CI.
 
 
-## 0.8.1 browser review — 2026-10-25
+## 0.8.1 browser review â€” 2026-10-25
 
 Reviewed the running preview through the in-app browser. Shop at 390px: header reduced from about 183px to 130px; all eight cards measured 282px high after fixing title line allocation. Shop at 320px had no horizontal overflow; the mobile menu opened and Escape closed it. At 1024px the shop used three equal 307px columns with equal 430px cards and no overflow. Desktop shop was also viewed at 1440px.
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0-rc.1
+
+- Replaced per-request nested SQL search normalization with stored normalized product documents and bounded rebuilds; added brand aliases, variation SKU matching, native suggestions and keyboard/error fallback behavior.
+- Added inherited category-specific native attribute facets, buying guidance and guide-article links.
+- Completed product summary key specifications, actual brand links and distinct unpriced/unavailable recovery actions; kept WooCommerce variation/stock/order logic.
+- Added collision-safe article contents, curated article product links and support navigation/layouts.
+- Expanded PHP/JS/HTTP checks for catalog states, cart changes/errors, recovery, order tracking and fictional COD checkout/receipt security. No Zarinpal callback or live email claim.
+- Added offline PHP-WASM contract/syntax checks, custom asset budgets, staging preflight and release manifests. Preview data now persist locally; no runtime data are committed.
+- Documented unavailable browser automation, real hosting/payment/performance checks and owner-supplied content as release gates in docs/COMPLETION.md.
+
 ## 0.9.0
 
 - Added normalized front-end product search for Persian/Arabic letter and digit variants, spacing and common separators.

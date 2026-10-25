@@ -20,5 +20,7 @@ function wpmain_customize_register( $customizer ) {
 	$customizer->add_control( 'wpmain_footer_about', array( 'label' => __( 'Short brand introduction', 'wp-main-theme' ), 'description' => __( 'A short, useful introduction for visitors. Avoid repeating keywords.', 'wp-main-theme' ), 'section' => 'wpmain_footer', 'type' => 'textarea' ) );
 	$customizer->add_setting( 'wpmain_about_page', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
 	$customizer->add_control( 'wpmain_about_page', array( 'label' => __( 'About page', 'wp-main-theme' ), 'section' => 'wpmain_footer', 'type' => 'dropdown-pages' ) );
+	$customizer->add_setting( 'wpmain_contact_page', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
+	$customizer->add_control( 'wpmain_contact_page', array( 'label' => __( 'Contact and product enquiry page', 'wp-main-theme' ), 'section' => 'wpmain_footer', 'type' => 'dropdown-pages' ) );
 }
 add_action( 'customize_register', 'wpmain_customize_register' );

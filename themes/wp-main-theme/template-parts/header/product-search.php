@@ -1,6 +1,9 @@
-<?php defined( 'ABSPATH' ) || exit; ?>
-<form role="search" method="get" class="search-form product-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+<?php defined( 'ABSPATH' ) || exit;
+$search_id = wp_unique_id( 'product-suggestions-' );
+?>
+<form role="search" method="get" class="search-form product-search" action="<?php echo esc_url( home_url( '/' ) ); ?>" data-product-search data-endpoint="<?php echo esc_url( rest_url( 'wpmain/v1/suggestions' ) ); ?>" data-loading="<?php esc_attr_e( 'Searching…', 'wp-main-theme' ); ?>" data-empty="<?php esc_attr_e( 'No suggestions. Press Enter to search the catalog.', 'wp-main-theme' ); ?>" data-error="<?php esc_attr_e( 'Suggestions unavailable. Press Enter to search.', 'wp-main-theme' ); ?>" data-products="<?php esc_attr_e( 'Products', 'wp-main-theme' ); ?>" data-categories="<?php esc_attr_e( 'Categories', 'wp-main-theme' ); ?>" data-brands="<?php esc_attr_e( 'Brands', 'wp-main-theme' ); ?>" data-results="<?php esc_attr_e( 'Suggestions ready. Use the down arrow to browse.', 'wp-main-theme' ); ?>">
 	<label><span class="screen-reader-text"><?php esc_html_e( 'Search products', 'wp-main-theme' ); ?></span><input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search products…', 'wp-main-theme' ); ?>" required></label>
 	<input type="hidden" name="post_type" value="product">
 	<button type="submit"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="screen-reader-text"><?php esc_html_e( 'Search', 'wp-main-theme' ); ?></span></button>
+	<div id="<?php echo esc_attr( $search_id ); ?>" class="search-suggestions" role="dialog" aria-label="<?php esc_attr_e( 'Search suggestions', 'wp-main-theme' ); ?>" hidden><p class="suggestion-status" role="status" aria-live="polite"></p><div class="suggestion-groups"></div></div>
 </form>

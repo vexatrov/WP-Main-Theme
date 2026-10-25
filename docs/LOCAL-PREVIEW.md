@@ -1,6 +1,6 @@
 # Local WordPress preview
 
-This is a real WordPress + WooCommerce development store using the official WordPress Playground CLI (PHP WebAssembly + SQLite). It is disposable, not production hosting. Both tattoo brands are primarily body tattoo B2C stores; the sample catalog reflects that correction. The preview pins WordPress 7.1.3, WooCommerce 11.2.1, PHP 8.3 and Playground CLI 3.1.40. Upgrade the preview versions together after compatibility checks.
+This is a real WordPress + WooCommerce development store using the official WordPress Playground CLI (PHP WebAssembly + SQLite). It is local test data, not production hosting. Since the completion iteration it keeps its database/files in ignored `.local/site` and resumes them on restart. Both tattoo brands are primarily body tattoo B2C stores. The preview pins WordPress 7.1.3, WooCommerce 11.2.1, PHP 8.3 and Playground CLI 3.1.40. Upgrade the preview versions together after compatibility checks.
 
 ## Start
 
@@ -28,7 +28,9 @@ The SVG upload exception exists only during the trusted seed step and does not e
 
 ## Persistence and rebuilding
 
-Theme code is permanent in Git. This preview intentionally recreates its database and sample inventory on each start. Admin edits, orders, and uploads made within a preview are disposable. For lasting content work, use managed-host staging with a persistent database. Do not enter real orders, customer details, or production credentials here.
+Theme code is permanent in Git. The preview now preserves its local database and sample inventory in `.local/site`; restart with `pnpm dev`. First boot still takes several minutes; subsequent boots reuse the existing files. WordPress cron is disabled here to avoid loopback lockups; tiny fixture indexes are built directly. Keep the recommended six workers. None of `.local/site`, runtime core/plugin code, uploads or the database is committed. For real content work, use managed-host staging with backups. Do not enter real orders, customer details or production credentials here.
+
+`dev/quality-preview.php` supplies fictional unpriced/out-of-stock/sale products, inherited category attribute filters, a long article with duplicate headings and curated products, support pages, a generated-password test customer and free test shipping. Its MU-plugin copy captures `wp_mail` locally and sends nothing. This file must never be deployed. No real gateway is configured. The repository's runtime tests only use localhost and `.invalid` addresses. Keep the preview loopback-only; do not publish the local admin auto-login.
 
 ## Translations
 

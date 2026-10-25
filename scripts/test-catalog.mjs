@@ -9,7 +9,9 @@ async function page(path) {
 }
 const shop = await page('/shop/');
 const category = shop.match(/class="catalog-categories"[\s\S]+?<a href="([^"]+)"/)[1];
-assert.match(await page(category), /aria-current="page"/);
+const categoryHtml = await page(category);
+const leaf = categoryHtml.match(/class="catalog-categories"[\s\S]+?<a href="([^"]+)"/)[1];
+assert.match(await page(leaf), /aria-current="page"/);
 const brand = shop.match(/<select id="catalog-brand"[\s\S]+?<option value="(\d+)"/)[1];
 const filtered = await page(`/shop/?filter_product_brand=${brand}`);
 assert.match(filtered, /catalog-filters" open/);

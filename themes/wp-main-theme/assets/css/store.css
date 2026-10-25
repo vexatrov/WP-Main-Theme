@@ -119,6 +119,10 @@
 .catalog-brand-filter { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; }
 .catalog-brand-filter label { font-weight: 650; }
 .catalog-brand-filter button { align-self: start; min-height: 44px; }
+.category-buying-guide { clear: both; border-top: 1px solid var(--brand-border); margin-top: 3rem; padding-top: 2rem; }
+.category-buying-guide > .entry-content { max-width: 50rem; }
+.category-buying-guide h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.5; }
+.catalog-widget .woocommerce-widget-layered-nav-list__item a { display: inline-flex; align-items: center; min-height: 44px; }
 .catalog-empty { clear: both; max-width: 38rem; margin: 2rem auto; padding: 2rem; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); background: var(--brand-surface); }
 .catalog-empty h2 { line-height: 1.5; font-size: 1.5rem; }
 .catalog-empty .product-search { position: relative; margin-block: 1.5rem; max-width: none; }
