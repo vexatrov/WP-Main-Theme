@@ -90,8 +90,8 @@
 .woocommerce ul.products li.product .woocommerce-loop-product__title { padding-block: .25rem; font-size: .94rem; line-height: 1.55; min-height: 3.1em; }
 .card-purchase { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
 .woocommerce ul.products li.product .card-purchase .price { margin: 0; padding: 0; min-height: 0; font-size: .87rem; line-height: 1.5; }
-.woocommerce ul.products li.product .card-purchase .button { flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; margin: 0; align-self: center; font-size: 0; border: 1px solid var(--brand-border); background: transparent; color: var(--brand-text); }
-.woocommerce ul.products li.product .card-purchase .button::before { content: '+'; font-size: 1.5rem; font-weight: 400; line-height: 1; }
+.woocommerce ul.products li.product .card-purchase .button { position: relative; gap: 0; flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; margin: 0; align-self: center; font-size: 0; border: 1px solid var(--brand-border); background: transparent; color: var(--brand-text); }
+.woocommerce ul.products li.product .card-purchase .button::before { content: '+'; position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: 1.5rem; font-weight: 400; line-height: 1; }
 .woocommerce ul.products li.product .card-purchase .product_type_variable::before,
 .woocommerce ul.products li.product .card-purchase .button:not(.add_to_cart_button)::before { content: '↗'; font-size: 1.15rem; }
 .woocommerce ul.products li.product .card-purchase .button:hover { background: var(--brand-accent); color: var(--brand-on-accent); border-color: var(--brand-accent); }

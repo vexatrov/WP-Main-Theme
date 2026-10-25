@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.2
+
+- Centered product-card plus/option icons independently of hidden button text. Removed the inherited 1.5rem flex gap that shifted the icons sideways.
+- Verified simple and variable buttons in the running browser: 44px targets, zero gap, centered icon layer.
+
+
 ## 0.8.1
 
 - Fixed article excerpt clipping leaking into WooCommerce product summaries and hiding purchase controls.
