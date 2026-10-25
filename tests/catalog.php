@@ -11,8 +11,10 @@ function current_user_can( ...$args ) { return $GLOBALS['allowed'] ?? false; }
 function wp_unslash( $value ) { return $value; }
 function sanitize_text_field( $value ) { return strip_tags( $value ); }
 function sanitize_textarea_field( $value ) { return strip_tags( $value ); }
+function wp_strip_all_tags( $value ) { return strip_tags( $value ); }
 function check( $condition, $message ) { if ( ! $condition ) { throw new RuntimeException( $message ); } }
 require __DIR__ . '/../plugins/wp-store-catalog/wp-store-catalog.php';
+check( 'پنبیسیم123' === wpmain_catalog_normalize_search( 'پن بيسيم ۱۲٣' ), 'Persian/Arabic spelling and digit variants normalize consistently.' );
 check( array( 2, 3 ) === wpmain_catalog_ids( array( 1, 2, 2, 5, 3, 4 ), 1, 'product', 2 ), 'Relationships exclude self, duplicates and wrong types and enforce the limit.' );
 check( array( 5 ) === wpmain_catalog_ids( array( 2, 5, 6 ), 0, 'post' ), 'Guides must reference posts.' );
 $GLOBALS['metadata'] = array( '_wpmain_faq' => array( array( 'question' => 'Valid?', 'answer' => 'Yes' ), array( 'question' => array(), 'answer' => 'Malformed' ), array( 'question' => 'Incomplete', 'answer' => '' ) ), '_wpmain_use_cases' => array( 'malformed' ) );
@@ -30,9 +32,11 @@ $_POST['wpmain_guidance_nonce'] = 'valid'; $GLOBALS['allowed'] = false;
 wpmain_catalog_save( $product ); check( array() === $product->values, 'User without edit permission cannot change metadata.' );
 $GLOBALS['allowed'] = true;
 $_POST['_wpmain_compatible'] = array( 1, 2, 2, 5 );
+$_POST['_wpmain_search_aliases'] = "Mast\n<script>invalid</script>";
 $_POST['wpmain_faq_question'] = array( 'Question', 'Incomplete' );
 $_POST['wpmain_faq_answer'] = array( 'Answer', '' );
 wpmain_catalog_save( $product );
 check( array( 2 ) === $product->values['_wpmain_compatible'], 'Authorized save still validates relationship IDs.' );
 check( 1 === count( $product->values['_wpmain_faq'] ), 'Authorized save keeps only complete FAQ pairs.' );
-echo "PASS: relationship constraints, malformed data, nonce/capability checks and save contract.\n";
+check( "Mast\ninvalid" === $product->values['_wpmain_search_aliases'], 'Aliases are sanitized before save.' );
+echo "PASS: relationships, search normalization, aliases, malformed data, nonce/capability checks and save contract.\n";

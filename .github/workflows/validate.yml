@@ -31,6 +31,7 @@ jobs:
       - run: node --check scripts/test-product-details.mjs
       - run: node --check scripts/test-layouts.mjs
       - run: node --check scripts/test-cards.mjs
+      - run: node --check scripts/test-search.mjs
       - run: node --check scripts/test-catalog.mjs
       - run: node scripts/test-navigation.mjs
       - shell: pwsh

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Store Catalog
  * Description: Editable product guidance, FAQs, guide links and curated product relationships for the shared storefront.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  * Text Domain: wp-store-catalog
@@ -21,6 +21,58 @@ function wpmain_catalog_ids( $input, $self = 0, $type = 'product', $limit = 4 ) 
 	}
 	return $ids;
 }
+
+/** Normalize common Persian/Arabic spelling and digit variations for search matching. */
+function wpmain_catalog_normalize_search( $value ) {
+	$value = is_scalar( $value ) ? (string) $value : '';
+	$value = wp_strip_all_tags( $value );
+	$value = strtr( $value, array(
+		'ي' => 'ی', 'ى' => 'ی', 'ك' => 'ک', 'ۀ' => 'ه', 'ة' => 'ه',
+		'۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4', '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
+		'٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4', '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
+	) );
+	return strtolower( preg_replace( '/[\s\x{200c}\-\x{2010}-\x{2015}_\/\\.,،؛:]+/u', '', trim( $value ) ) ?? '' );
+}
+
+/** Build the matching SQL expression using database-portable REPLACE calls. */
+function wpmain_catalog_search_sql_field( $field ) {
+	$replacements = array(
+		'ي' => 'ی', 'ى' => 'ی', 'ك' => 'ک', 'ۀ' => 'ه', 'ة' => 'ه',
+		'۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4', '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
+		'٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4', '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
+		' ' => '', "\t" => '', "\n" => '', "\r" => '', '‌' => '', '-' => '', '_' => '', '/' => '', '\\' => '', '.' => '', ',' => '', '،' => '', '؛' => '', ':' => '',
+	);
+	foreach ( $replacements as $from => $to ) {
+		$field = "REPLACE({$field}, '" . esc_sql( $from ) . "', '" . esc_sql( $to ) . "')";
+	}
+	return "LOWER({$field})";
+}
+
+/** Extend only front-end product searches; normal WordPress searches retain their defaults. */
+function wpmain_catalog_product_search( $search, $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! $query->is_search() || 'product' !== $query->get( 'post_type' ) ) { return $search; }
+	$raw = $query->get( 's' );
+	if ( ! is_string( $raw ) || '' === trim( $raw ) ) { return $search; }
+	$terms = array_filter( array_map( 'wpmain_catalog_normalize_search', preg_split( '/\s+/u', trim( $raw ) ) ?: array() ) );
+	if ( ! $terms ) { return $search; }
+	global $wpdb;
+	$post_value = wpmain_catalog_search_sql_field( "{$wpdb->posts}.post_title" );
+	$content_value = wpmain_catalog_search_sql_field( "{$wpdb->posts}.post_content" );
+	$meta_value = wpmain_catalog_search_sql_field( 'wpmain_search_meta.meta_value' );
+	$clauses = array();
+	foreach ( $terms as $term ) {
+		$like = '%' . $wpdb->esc_like( $term ) . '%';
+		$clauses[] = $wpdb->prepare(
+			"({$post_value} LIKE %s OR {$content_value} LIKE %s OR EXISTS ( SELECT 1 FROM {$wpdb->postmeta} AS wpmain_search_meta WHERE wpmain_search_meta.post_id = {$wpdb->posts}.ID AND wpmain_search_meta.meta_key IN ('_sku', '_wpmain_search_aliases') AND {$meta_value} LIKE %s ))",
+			$like,
+			$like,
+			$like
+		);
+	}
+	$password = is_user_logged_in() ? '' : " AND {$wpdb->posts}.post_password = ''";
+	return ' AND (' . implode( ' AND ', $clauses ) . ')' . $password;
+}
+add_filter( 'posts_search', 'wpmain_catalog_product_search', 20, 2 );
 
 function wpmain_catalog_guidance( $id ) {
 	$raw_faq = get_post_meta( $id, '_wpmain_faq', true );
@@ -52,6 +104,7 @@ function wpmain_catalog_editor() {
 	wp_nonce_field( 'wpmain_save_guidance', 'wpmain_guidance_nonce' );
 	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_use_cases', 'label' => __( 'Use cases', 'wp-store-catalog' ), 'description' => __( 'Explain the applications. One paragraph per line.', 'wp-store-catalog' ) ) );
 	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_audience', 'label' => __( 'Who is it for?', 'wp-store-catalog' ) ) );
+	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_search_aliases', 'label' => __( 'Search aliases', 'wp-store-catalog' ), 'description' => __( 'Brand, model or common spelling aliases. Separate each alias with a new line.', 'wp-store-catalog' ) ) );
 	$fields = array(
 		'compatible' => __( 'Verified compatible products', 'wp-store-catalog' ),
 		'alternatives' => __( 'Alternatives for the same use', 'wp-store-catalog' ),
@@ -81,7 +134,7 @@ add_action( 'woocommerce_product_data_panels', 'wpmain_catalog_editor' );
 function wpmain_catalog_save( $product ) {
 	$nonce = isset( $_POST['wpmain_guidance_nonce'] ) && is_string( $_POST['wpmain_guidance_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wpmain_guidance_nonce'] ) ) : '';
 	if ( ! wp_verify_nonce( $nonce, 'wpmain_save_guidance' ) || ! current_user_can( 'edit_post', $product->get_id() ) ) { return; }
-	foreach ( array( 'use_cases', 'audience' ) as $key ) {
+	foreach ( array( 'use_cases', 'audience', 'search_aliases' ) as $key ) {
 		$raw = $_POST[ '_wpmain_' . $key ] ?? '';
 		$product->update_meta_data( '_wpmain_' . $key, is_string( $raw ) ? sanitize_textarea_field( wp_unslash( $raw ) ) : '' );
 	}

@@ -10,6 +10,7 @@
 		"check": "node --check scripts/preview.mjs && node --check themes/wp-main-theme/assets/js/navigation.js",
 		"test:layouts": "node scripts/test-layouts.mjs",
 		"test:cards": "node scripts/test-cards.mjs",
+		"test:search": "node scripts/test-search.mjs",
 		"test:catalog": "node scripts/test-catalog.mjs"
 	},
 	"engines": {

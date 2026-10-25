@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+- Added normalized front-end product search for Persian/Arabic letter and digit variants, spacing and common separators.
+- Extended product matching to title, description, SKU and editable per-product search aliases.
+- Added Search aliases to the Product guidance editor and documented alias governance.
+- Added local preview fixtures and an HTTP search test. Type-ahead suggestions and relevance weighting remain deferred.
+
 ## 0.8.2
 
 - Centered product-card plus/option icons independently of hidden button text. Removed the inherited 1.5rem flex gap that shifted the icons sideways.

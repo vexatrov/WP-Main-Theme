@@ -3,7 +3,7 @@
 require_once '/wordpress/wp-load.php';
 
 function wpmain_preview_product_details() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || '0.5.0' === get_option( 'wpmain_product_preview_version' ) ) { return; }
+	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || '0.6.0' === get_option( 'wpmain_product_preview_version' ) ) { return; }
 	// Also supports updating a demo that was already running before the plugin existed.
 	if ( ! function_exists( 'wpmain_catalog_guidance' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -51,11 +51,12 @@ function wpmain_preview_product_details() {
 			array( 'question' => 'این مشخصات واقعی هستند؟', 'answer' => 'خیر. این‌ها داده‌های فرضی برای بررسی صفحه هستند. در فروشگاه واقعی فقط مشخصات تأییدشده منتشر می‌شوند.' ),
 			array( 'question' => 'چطور ابزار سازگار را انتخاب کنم؟', 'answer' => 'در این پیش‌نمایش، ارتباط محصولات فقط نمونه نمایشی است. در فروشگاه واقعی، سیستم اتصال و مشخصات دقیق محصول باید بررسی و تأیید شوند.' ),
 		) );
+		$item->update_meta_data( '_wpmain_search_aliases', $index ? "روتاری\nrotary pen" : "مست\nMast\nwireless pen\nپن بی سیم" );
 		$item->save();
 	}
 	$needle->update_meta_data( '_wpmain_guides', $guides );
 	$needle->update_meta_data( '_wpmain_use_cases', 'نمونه بخش کاربردهای کارتریج؛ توضیحات واقعی پس از بررسی مشخصات محصول اضافه می‌شوند.' );
 	$needle->save();
-	update_option( 'wpmain_product_preview_version', '0.5.0' );
+	update_option( 'wpmain_product_preview_version', '0.6.0' );
 }
 if ( did_action( 'init' ) ) { wpmain_preview_product_details(); } else { add_action( 'init', 'wpmain_preview_product_details', 40 ); }
