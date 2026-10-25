@@ -41,6 +41,8 @@ function wpmain_catalog_navigation() {
 	}
 }
 add_action( 'woocommerce_before_shop_loop', 'wpmain_catalog_navigation', 5 );
+add_action( 'woocommerce_before_shop_loop', function () { echo '<div class="catalog-toolbar">'; }, 15 );
+add_action( 'woocommerce_before_shop_loop', function () { echo '</div>'; }, 35 );
 add_action( 'woocommerce_no_products_found', 'wpmain_catalog_navigation', 5 );
 
 /** Read-only query keys; values are never output without sanitation/escaping. */

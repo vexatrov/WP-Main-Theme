@@ -41,6 +41,7 @@
 .woocommerce ul.products li.product .button { line-height: 1.4; }
 .woocommerce div.product .product_title { font-size: clamp(2rem, 4vw, 3.25rem); }
 .woocommerce div.product div.summary { line-height: 1.7; }
+.woocommerce div.product form.cart .single_add_to_cart_button { min-height: 44px; }
 .woocommerce div.product form.cart .variations select { width: 100%; }
 .woocommerce .quantity .qty { min-height: 2.7rem; width: 4.5rem; }
 .woocommerce .woocommerce-breadcrumb { color: var(--brand-muted); margin-bottom: 2rem; }
@@ -101,6 +102,14 @@
 .card-price-amounts { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
 .card-price-amounts > span:first-child { color: var(--brand-muted); }
 .card-price-unit { font-size: .75rem; font-weight: 400; }
+.woocommerce ul.products li.product .woocommerce-loop-product__title { min-height: calc(3.1em + .5rem); }
+.store-main { padding-top: 1.5rem; }
+.woocommerce .woocommerce-breadcrumb { margin-bottom: 1rem; }
+.woocommerce-products-header h1 { margin-block: .5rem 1.5rem; font-size: clamp(2rem, 4vw, 3rem); }
+.catalog-toolbar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.woocommerce .catalog-toolbar .woocommerce-result-count, .woocommerce .catalog-toolbar .woocommerce-ordering { float: none; margin: 0; }
+.woocommerce .catalog-toolbar .woocommerce-ordering { max-width: 100%; }
+.catalog-toolbar .orderby { font-size: .85rem; }
 .catalog-categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .75rem; }
 .catalog-categories a { display: flex; align-items: center; gap: .75rem; min-height: 64px; line-height: 1.5; font-size: .9rem; }
 .catalog-categories img { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; }
@@ -114,3 +123,11 @@
 .catalog-empty h2 { line-height: 1.5; font-size: 1.5rem; }
 .catalog-empty .product-search { position: relative; margin-block: 1.5rem; max-width: none; }
 @media (max-width: 30rem) { .catalog-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); } .catalog-categories a { flex-direction: column; align-items: start; padding: .75rem; } .catalog-empty { padding: 1.25rem; } }
+@media (max-width: 48rem) {
+ .catalog-categories { margin-block: 1rem; }
+ .catalog-categories a { flex-direction: row; align-items: center; gap: .5rem; min-height: 60px; padding: .65rem; font-size: .8rem; }
+ .catalog-categories img { width: 32px; height: 32px; }
+ .catalog-filters { padding-block: .5rem; margin-bottom: 1rem; }
+ .catalog-toolbar .woocommerce-result-count { font-size: .8rem; }
+ .catalog-toolbar .orderby { max-width: 11rem; }
+}

@@ -33,3 +33,11 @@ Passed against the restarted WordPress preview: layout routes (shop, brand direc
 
 Passed pnpm test:catalog against the running WordPress preview: selected-brand cards verified against Store API brand membership; leaf current-category marker; active-filter disclosure; reset preserves search/sort and removes price/brand filters; form preserves existing values; no-results recovery. No new PHP errors appeared in the preview log. Fresh visual/viewport checks were not performed in this iteration. PHP syntax and package validation run in CI.
 
+
+## 0.8.1 browser review — 2026-10-25
+
+Reviewed the running preview through the in-app browser. Shop at 390px: header reduced from about 183px to 130px; all eight cards measured 282px high after fixing title line allocation. Shop at 320px had no horizontal overflow; the mobile menu opened and Escape closed it. At 1024px the shop used three equal 307px columns with equal 430px cards and no overflow. Desktop shop was also viewed at 1440px.
+
+Found and fixed generic `.entry-summary` excerpt clamping applied to WooCommerce's `.summary.entry-summary`, which clipped the quantity/purchase controls despite their presence in HTTP tests. Scoped the rules to `.entry-card .entry-summary`. At 1440px and 390px the product summary now has visible overflow and the purchase form measures about 52px high; the main button is 44px high. Product page at 320px had no page overflow. Homepage reviewed at 390/1366px; article reviewed at 390/1366px, with no measured overflow and a 768px desktop reading column. These are representative layout checks, not a full accessibility or checkout audit.
+
+Used one lower-cost agent for a narrow read-only CSS review. Its proposed category aria-current issue was rejected after checking the actual term logic and passing existing integration test. Screenshot evidence is local/ignored at `.local/review/shop-mobile-2026-10-25.jpg`; production source and this report are tracked in Git.

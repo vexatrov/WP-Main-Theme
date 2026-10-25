@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1
+
+- Fixed article excerpt clipping leaking into WooCommerce product summaries and hiding purchase controls.
+- Reduced mobile header/category spacing and grouped catalog sorting/result count.
+- Reserved full two-line title height to align product cards; kept product purchase controls at least 44px tall.
+- Visually reviewed real preview layouts on phone, tablet/laptop and desktop.
+
+
 ## 0.8.0
 
 - Category routes now include configured thumbnails, sibling navigation on leaf categories and a current-category marker.
