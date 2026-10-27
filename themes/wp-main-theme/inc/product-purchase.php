@@ -9,7 +9,18 @@ function wpmain_product_key_specs() {
 	}
 
 	$items = array();
-	foreach ( $product->get_attributes() as $attribute ) {
+	$attributes = $product->get_attributes();
+	$selection = $product->get_meta( '_wpmain_key_specs', true );
+	if ( is_array( $selection ) ) {
+		$ordered = array();
+		foreach ( array_slice( array_unique( array_filter( $selection, 'is_string' ) ), 0, 4 ) as $name ) {
+			foreach ( $attributes as $attribute ) {
+				if ( $name === $attribute->get_name() ) { $ordered[] = $attribute; break; }
+			}
+		}
+		$attributes = $ordered;
+	}
+	foreach ( $attributes as $attribute ) {
 		if ( ! $attribute->get_visible() ) {
 			continue;
 		}

@@ -2,6 +2,8 @@
 
 Audited baseline: `3ea78b1`, parent `1.0.0-rc.1`, catalog plugin `0.3.0`. This is a research and prioritization report; the changes recommended below are **not implemented by this audit**.
 
+Subsequent implementation: **rc.2 / plugin 0.4.0** implements the shared work from this backlog. The findings below describe the audited baseline; see [COMPLETION.md](COMPLETION.md) and [VALIDATION.md](VALIDATION.md) for current behavior, actual test outcomes and remaining host/store/device gates.
+
 ## Assessment
 
 The six agreed feature areas have a working shared foundation. Rebuilding the theme or adding many plugins is unnecessary. However, functional coverage does not mean that every interaction is polished or that the shops are ready for production. This audit identified shared improvements as well as the hosting and real-data gates already recorded in [COMPLETION.md](COMPLETION.md).

@@ -22,7 +22,8 @@ const products = JSON.parse(await page(`/?rest_route=/wc/store/v1/products&inclu
 assert.ok(products.every(product => product.brands.some(term => term.id === Number(brand))), 'Each filtered card belongs to the selected brand');
 const empty = await page(`/shop/?filter_product_brand=${brand}&min_price=999999999&s=pen&post_type=product&orderby=price`);
 assert.match(empty, /catalog-empty/);
-const reset = empty.match(/class="catalog-filter-status"[\s\S]+?<a href="([^"]+)"/)[1].replace(/&amp;|&#0*38;/g, '&');
+const status = empty.match(/class="catalog-filter-status"[\s\S]+?<\/nav>/)[0];
+const reset = [...status.matchAll(/<a href="([^"]+)"/g)].at(-1)[1].replace(/&amp;|&#0*38;/g, '&');
 const resetUrl = new URL(reset);
 assert.equal(resetUrl.searchParams.get('s'), 'pen');
 assert.equal(resetUrl.searchParams.get('orderby'), 'price');

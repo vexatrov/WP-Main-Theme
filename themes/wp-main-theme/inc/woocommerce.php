@@ -36,6 +36,8 @@ function wpmain_card_purchase_start() {
 	global $product;
 	echo '<div class="card-purchase">';
 	if ( ! $product ) { return; }
+	$state = ! $product->is_in_stock() ? __( 'Out of stock', 'wp-main-theme' ) : ( $product->is_on_backorder( 1 ) ? __( 'Available on backorder', 'wp-main-theme' ) : ( $product->is_type( 'variable' ) ? __( 'Select options', 'wp-main-theme' ) : __( 'In stock', 'wp-main-theme' ) ) );
+	echo '<span class="card-stock">' . esc_html( $state ) . '</span>';
 	if ( '' === $product->get_price() ) { echo '<span class="price">' . esc_html__( 'Enquire for price', 'wp-main-theme' ) . '</span>'; return; }
 	if ( $product->is_type( 'variable' ) && '' !== $product->get_price() ) {
 		$min = $product->get_variation_price( 'min', true );

@@ -5,6 +5,7 @@ function add_filter( ...$args ) {}
 function wp_strip_all_tags( $value ) { return strip_tags( $value ); }
 function is_admin() { return false; }
 function check( $value, $message ) { if ( ! $value ) { throw new RuntimeException( $message ); } }
+function get_terms( $args ) { $GLOBALS['term_query'] = $args; return array(); }
 require __DIR__ . '/../plugins/wp-store-catalog/search.php';
 check( wpmain_catalog_normalize_search( 'PREVIEW-۱۲٣' ) === 'preview123', 'SKU letters, separators and mixed digits normalize.' );
 check( wpmain_catalog_normalize_search( 'پِن‌ بيسيم' ) === 'پنبیسیم', 'Marks, zero-width joiners, spaces and Arabic yeh normalize.' );
@@ -26,4 +27,8 @@ check( str_contains( $sql, "meta_key = '_wpmain_search_document'" ) && str_conta
 check( ! str_contains( $sql, 'REPLACE(' ) && str_contains( $sql, "post_password = ''" ), 'No nested SQL normalization or protected products.' );
 $query->type = 'post'; check( 'original' === wpmain_catalog_product_search( 'original', $query ), 'Blog searches retain WordPress behavior.' );
 $query->type = 'product'; $query->text = '!'; check( ' AND 1=0 ' === wpmain_catalog_product_search( 'original', $query ), 'Empty normalized search does not expose the catalog.' );
+wpmain_catalog_matching_terms( 'product_brand', 'مست' );
+check( 3 === $GLOBALS['term_query']['number'] && 'LIKE' === $GLOBALS['term_query']['meta_query'][0]['compare'] && 'مست' === $GLOBALS['term_query']['meta_query'][0]['value'], 'Term suggestions filter all indexed terms in a bounded native prepared meta query.' );
+check( array() === wpmain_catalog_matching_terms( 'category', 'query' ), 'Unsupported taxonomies do not enter suggestion queries.' );
+
 echo "PASS: normalization, zero, query bounds, guarded product searches and safe document matching.\n";

@@ -3,6 +3,7 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 const persistentPath = resolve('.local/site');
 const resume = existsSync(resolve(persistentPath, 'wp-config.php'));
+mkdirSync(persistentPath, { recursive: true });
 
 // Local disposable WordPress, isolated from production and from real customer data.
 const seed = readFileSync(new URL('../dev/seed.php', import.meta.url), 'utf8');
@@ -28,12 +29,15 @@ const commerce = await archive('woocommerce-11.2.1.zip', 'https://downloads.word
 const site = await runCLI({
 	command: 'start',
 	path: persistentPath,
+	// Empty directories are not recognized as WordPress by CLI auto-detection.
+	...(resume ? {} : { 'mount-before-install': [{ hostPath: persistentPath, vfsPath: '/wordpress' }] }),
 	mode: resume ? 'apply-to-existing-site' : 'create-new-site',
 	port: 9400,
 	wp: '7.1.3',
 	php: '8.3',
 	workers: 6,
 	login: true,
+	skipBrowser: true,
 	'define-bool': { WP_DEBUG: true, WP_DEBUG_DISPLAY: false, WP_DEBUG_LOG: true, DISABLE_WP_CRON: true },
 	mount: [
 		{ hostPath: resolve('themes/wp-main-theme'), vfsPath: '/wordpress/wp-content/themes/wp-main-theme' },

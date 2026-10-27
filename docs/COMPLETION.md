@@ -1,8 +1,18 @@
 # Shared-theme completion and release gates
 
-Release: **1.0.0-rc.1**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+Release: **1.0.0-rc.2**, catalog plugin **0.4.0**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
 
-The [2026-10-27 release audit](RELEASE-AUDIT-2026-10-27.md) adds a ranked improvement backlog. It identified a price-widget accessibility gap, styling inconsistencies and an IRT/schema integration risk alongside catalog/cart/editor refinements. Those recommendations are not implemented yet; the six-area feature coverage below must not be read as a full accessibility or production sign-off.
+The [2026-10-27 audit](RELEASE-AUDIT-2026-10-27.md) is a historical findings report. Rc.2 implements the shared backlog: labeled price inputs, named removable selections, scoped category brand routes, compact stock/sale/option states, live cart feedback, submenu controls, editable homepage/key specs, Persian plugin tools and an SEO/schema integration. Search lifecycle fixes and isolated integration CI are included. This is not a full accessibility or production sign-off.
+
+## Rc.2 verification and remaining gates
+
+- Offline PHP syntax and six contract suites pass, as do navigation/submenu, cart request race/error and search suggestion tests. Both Persian bundles pass source coverage, placeholders and committed-MO freshness checks.
+- Custom CSS is approximately **9.34 KB gzip** and JS **3.44 KB gzip**, excluding core/WooCommerce/media. These are asset budgets, not Core Web Vitals results.
+- A read-only runtime release script verifies head/assets, numeric price controls, cache-neutral cart placeholders and IRT-to-IRR schema amounts against the fictional Store API. The fresh integration runner boots an isolated database, captures test mail and runs lifecycle/shopping checks sequentially. See VALIDATION.md for actual run outcomes; the presence of a script is not a passing test claim.
+- Current local Windows/WASM requests have intermittent long startup/WordPress initialization delays. Hosted MySQL/load tests, real Safari/iOS/Android, screen readers, full zoom review, gateway callbacks, actual delivery/reset email and restore remain release gates.
+- Configure any external SEO owner deliberately: the fallback yields to recognized plugins. The schema adapter affects native Woo Product JSON-LD only; feeds and gateway conversion need their own verified integration. See SEO.md.
+
+The table below retains the earlier rc.1 functional evidence; new rc.2 checks are recorded above and in VALIDATION.md.
 
 | Requested area | Implemented | Validation / remaining gate |
 | --- | --- | --- |
@@ -22,9 +32,10 @@ Optional wishlist, mini-cart, campaign carousel, automatic dark mode, analytics 
 ## Reproduce checks
 
 1. `pnpm install --frozen-lockfile` and `pnpm dev`; wait for the ready URL. Preview files now persist in ignored `.local/site`.
-2. `pnpm test:php`, `pnpm test:navigation`, `pnpm test:search-ui`, `pnpm check:assets`.
+2. `pnpm test:php`, `pnpm test:navigation`, `pnpm test:cart-feedback`, `pnpm test:search-ui`, `pnpm test:seo`, `pnpm check:translations`, `pnpm check:assets`.
 3. Against the localhost demo: `pnpm test:preview`, `pnpm test:search`, `pnpm test:catalog`, `pnpm test:products`, `pnpm test:cards`, `pnpm test:layouts`, `pnpm test:features`, `pnpm test:shopping`, `pnpm test:recovery`.
 4. `pnpm test:order` creates a fictional COD order **only** in the guarded localhost sample store. Never point tests at production. Its mail is captured locally by the dev fixture.
 5. `powershell -File scripts/package.ps1`. Install the parent/plugin ZIPs on the host's staging site, configure a child theme, then follow DEPLOYMENT.md and VALIDATION.md. The package hashes and commit are in ignored `dist/release-manifest.json`.
+6. `pnpm test:catalog-polish` and `pnpm test:release` exercise the new read-only local checks. `pnpm test:integration` explicitly starts a fresh isolated fixture database; stop the normal port-9400 preview first. Never use that runner against production.
 
 No WordPress core, installed third-party plugins, generated orders, database, uploads, runtime test credentials or local mail capture are part of Git or the deployable ZIPs.

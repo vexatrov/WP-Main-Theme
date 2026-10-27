@@ -22,6 +22,9 @@ jobs:
         run: |
           php tests/search.php
           php tests/editorial.php
+          php tests/catalog-filters.php
+          php tests/merchandising.php
+          php tests/seo.php
   assets-and-package:
     runs-on: windows-latest
     steps:
@@ -38,12 +41,43 @@ jobs:
       - run: node --check scripts/test-search.mjs
       - run: node --check scripts/test-catalog.mjs
       - run: node --check scripts/test-features.mjs
+      - run: node --check scripts/test-release.mjs
+      - run: node --check scripts/run-preview-suite.mjs
       - run: node --check scripts/test-shopping.mjs
       - run: node --check themes/wp-main-theme/assets/js/search.js
       - run: node scripts/measure-assets.mjs
       - run: node scripts/test-navigation.mjs
       - run: node scripts/test-search-ui.mjs
+      - run: node scripts/test-cart-feedback.mjs
+      - run: python scripts/build-translations.py --check
       - run: node --check scripts/test-recovery.mjs
       - run: node --check scripts/test-order.mjs
       - shell: pwsh
         run: ./scripts/package.ps1
+
+  wordpress-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned development runtime
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Boot fresh WordPress and run sequential shopping suite
+        shell: bash
+        run: |
+          mkdir -p .local/ci-logs
+          node scripts/run-preview-suite.mjs 2>&1 | tee .local/ci-logs/runner.log
+      - name: Preserve integration logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-integration-logs
+          path: |
+            .local/ci-logs/
+            .local/ci-site-*/wp-content/debug.log
+          if-no-files-found: warn
+          retention-days: 7

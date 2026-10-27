@@ -34,7 +34,7 @@ Theme code is permanent in Git. The preview now preserves its local database and
 
 ## Translations
 
-The theme ships `languages/fa_IR.mo`, built from the editable `fa_IR.json`. After changing the translation source run `python scripts/build-translations.py` and commit both files. WordPress/WooCommerce translation packs are downloaded separately on preview boot. The theme supports RTL by locale; other locales retain LTR.
+The theme and catalog plugin ship Persian MO bundles built from editable JSON sources. After changing strings run `python scripts/build-translations.py`; verify coverage, placeholders and committed bytes with `python scripts/build-translations.py --check`. Commit JSON/MO together. WordPress/WooCommerce translation packs are downloaded separately on preview boot. RTL follows the site locale; other locales retain LTR.
 
 ## Next milestones
 

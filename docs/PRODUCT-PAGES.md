@@ -29,7 +29,7 @@ Comparison is currently model-level, not a live selector that synchronizes sever
 
 Install/activate WooCommerce, then install `plugins/wp-store-catalog` as the **WP Store Catalog** plugin. The package script produces `dist/wp-store-catalog.zip` alongside the parent theme ZIP. This small plugin owns the durable data, so changing themes does not lose the product relationships or guidance.
 
-In the classic WooCommerce product editor, open Product data > Product guidance. Enter use cases/audience, search/select compatible items, alternatives and comparison products, select published guides and fill FAQ pairs. Use the normal Description, Short description and Attributes controls for their native content. Update the product normally. The admin panel currently uses English labels; storefront sections have Persian translations. The new block-based product editor is not integrated in this iteration.
+In the classic WooCommerce product editor, open Product data > Product guidance. Enter use cases/audience, search/select compatible items, alternatives and comparison products, select published guides and fill FAQ pairs. Use the normal Description, Short description and Attributes controls for their native content. Update the product normally. The custom admin panel and storefront sections have bundled Persian translations. Key-specification dropdowns select up to four existing visible attributes in display order. The new block-based product editor is not integrated in this iteration.
 
 The theme renders through `inc/product-details.php` and child-overridable `template-parts/product/*`. No WooCommerce plugin template files are copied or modified. There is no new frontend framework, external recommendation service or per-product third-party request.
 

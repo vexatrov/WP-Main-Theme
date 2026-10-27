@@ -4,9 +4,9 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Latest review: [2026-10-27 audit and prioritized remaining work](docs/RELEASE-AUDIT-2026-10-27.md), including shared UX/accessibility fixes and store-specific release gates.
+Latest review: [2026-10-27 audit](docs/RELEASE-AUDIT-2026-10-27.md). Its shared implementation work is included in rc.2; current verification and store-specific gates are recorded in the completion report.
 
-Version **1.0.0-rc.1** is the shared-theme release candidate: Persian product search with aliases/suggestions, inherited category facets and buying guidance, compact product cards, product purchase states/specifications/recommendations, article contents/product links, and support/account/cart/order layouts. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
+Version **1.0.0-rc.2**, with WP Store Catalog **0.4.0**, adds accessible price fields, named removable filters, card states/cart feedback, expandable submenus, editable homepage merchandising/key specs, Persian catalog tools and a lightweight SEO/schema integration to the shared foundation. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 
@@ -34,7 +34,7 @@ No page builder, frontend framework, build step, external font, or JavaScript de
 
 Parent theme also activates without WooCommerce for content work. Never edit WordPress or WooCommerce core. See [architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), and [validation](docs/VALIDATION.md).
 
-Homepage category cards use up to six populated top-level WooCommerce categories, ordered alphabetically, with their configured thumbnails. Latest arrivals use WooCommerce's product shortcode (eight products), respecting catalog visibility and stock settings. No demo inventory or fabricated store promises are inserted. Configure products and category images in WooCommerce; sections naturally reflect that data. Hero image alternative text comes from its Media Library record.
+Homepage defaults to six populated top-level categories and eight newest products. The Customizer can curate category/product order, use native featured products and reorder content/catalog/journal; child templates still control brand-specific layouts. All homepage sources exclude protected products. See [merchandising](docs/MERCHANDISING.md), [cart feedback](docs/SHOPPING-FEEDBACK.md), [SEO ownership and currency](docs/SEO.md), and [search verification](docs/SEARCH-VALIDATION.md). No demo inventory or fabricated store promises ship in the theme.
 
 ## Repository workflow
 

@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 
 const handlers = {};
 const button = { hidden: true, expanded: 'false', setAttribute(k, v) { this.expanded = v; }, getAttribute() { return this.expanded; }, addEventListener(k, fn) { handlers[k] = fn; }, focus() { this.focused = true; } };
-const nav = { hidden: false };
+const nav = { hidden: false, querySelectorAll: () => [] };
 const menu = { hidden: false };
 const media = { matches: false, addEventListener(k, fn) { handlers.resize = fn; } };
 const header = { compact: false, querySelector: () => nav, contains: (element) => element === 'inside', classList: { toggle(k, value) { header.compact = value; } }, addEventListener(k, fn) { handlers[k] = fn; } };
@@ -25,3 +25,26 @@ document.activeElement = 'outside'; handlers.focusout(); assert.equal(header.com
 media.matches = true; handlers.resize(); assert.equal(nav.hidden, true); assert.equal(button.hidden, false);
 handlers.click(); assert.equal(nav.hidden, false);
 console.log('PASS: desktop/compact/mobile menus, Escape focus, scroll hysteresis and focus preservation.');
+
+
+// Branch links remain ordinary links; JS adds a separate disclosure.
+const branchHandlers = {}, toggleHandlers = {};
+const submenu = { hidden: false };
+const branchLink = { textContent: 'Machines', after(value) { this.toggle = value; } };
+const branch = { querySelector(selector) { return selector.endsWith('.sub-menu') ? submenu : branchLink; }, addEventListener(name, fn) { branchHandlers[name] = fn; } };
+const toggle = { setAttribute(key, value) { this[key] = value; }, getAttribute(key) { return this[key]; }, addEventListener(name, fn) { toggleHandlers[name] = fn; }, focus() { this.focused = true; } };
+nav.querySelectorAll = () => [branch]; nav.dataset = { submenuLabel: 'Toggle submenu for %s' };
+document.createElement = () => toggle;
+media.matches = false; window.scrollY = 0;
+runInNewContext(readFileSync('themes/wp-main-theme/assets/js/navigation.js', 'utf8'), { document, window });
+assert.equal(submenu.hidden, true);
+assert.equal(toggle['aria-label'], 'Toggle submenu for Machines');
+assert.equal(toggle['aria-controls'], submenu.id);
+assert.equal(toggle['aria-expanded'], 'false');
+toggleHandlers.click(); assert.equal(submenu.hidden, false);
+let stopped = false;
+branchHandlers.keydown({ key: 'Escape', stopPropagation() { stopped = true; } });
+assert.equal(submenu.hidden, true); assert.equal(toggle.focused, true); assert.equal(stopped, true);
+toggleHandlers.click(); media.matches = true; handlers.resize();
+assert.equal(submenu.hidden, true, 'Closing the containing mobile menu resets branches');
+console.log('PASS: branch disclosure, label, Escape focus and containing-menu reset.');

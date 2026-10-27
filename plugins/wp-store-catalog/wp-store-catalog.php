@@ -1,14 +1,34 @@
 <?php
 /**
  * Plugin Name: WP Store Catalog
- * Description: Editable product guidance, FAQs, guide links and curated product relationships for the shared storefront.
- * Version: 0.3.0
+ * Description: Product guidance, relationships, Persian search and lightweight storefront SEO for the shared storefront.
+ * Version: 0.4.0
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  * Text Domain: wp-store-catalog
  * License: GPL-2.0-or-later
  */
 defined( 'ABSPATH' ) || exit;
+
+add_action( 'init', function () {
+	load_plugin_textdomain( 'wp-store-catalog', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+} );
+
+/** Names are stable WooCommerce attribute keys, never copied specification values. */
+function wpmain_catalog_spec_names( $input, $product ) {
+	$input = is_array( $input ) ? $input : explode( ',', is_string( $input ) ? $input : '' );
+	$available = array();
+	foreach ( $product->get_attributes() as $attribute ) {
+		if ( $attribute->get_visible() ) { $available[] = $attribute->get_name(); }
+	}
+	$names = array();
+	foreach ( $input as $name ) {
+		$name = is_string( $name ) ? trim( $name ) : '';
+		if ( in_array( $name, $available, true ) && ! in_array( $name, $names, true ) ) { $names[] = $name; }
+		if ( count( $names ) >= 4 ) { break; }
+	}
+	return $names;
+}
 
 function wpmain_catalog_ids( $input, $self = 0, $type = 'product', $limit = 4 ) {
 	$values = is_array( $input ) ? $input : explode( ',', (string) $input );
@@ -24,6 +44,7 @@ function wpmain_catalog_ids( $input, $self = 0, $type = 'product', $limit = 4 ) 
 
 require_once __DIR__ . '/search.php';
 require_once __DIR__ . '/categories.php';
+require_once __DIR__ . '/seo.php';
 
 function wpmain_catalog_guidance( $id ) {
 	$raw_faq = get_post_meta( $id, '_wpmain_faq', true );
@@ -53,6 +74,15 @@ function wpmain_catalog_editor() {
 	$data = wpmain_catalog_guidance( $id );
 	echo '<div id="wpmain-guidance-data" class="panel woocommerce_options_panel hidden">';
 	wp_nonce_field( 'wpmain_save_guidance', 'wpmain_guidance_nonce' );
+	$specs = $product_object->get_meta( '_wpmain_key_specs', true );
+	$spec_options = array( '' => __( 'Automatic / unused', 'wp-store-catalog' ) );
+	foreach ( $product_object->get_attributes() as $attribute ) {
+		if ( $attribute->get_visible() ) { $spec_options[ $attribute->get_name() ] = wc_attribute_label( $attribute->get_name(), $product_object ); }
+	}
+	for ( $slot = 0; $slot < 4; $slot++ ) {
+		woocommerce_wp_select( array( 'id' => '_wpmain_key_spec_' . $slot, 'name' => '_wpmain_key_specs[]', 'value' => is_array( $specs ) ? ( $specs[ $slot ] ?? '' ) : '', 'label' => sprintf( __( 'Key specification %d', 'wp-store-catalog' ), $slot + 1 ), 'options' => $spec_options ) );
+	}
+	echo '<p class="form-field description">' . esc_html__( 'Choose up to four visible attributes in display order. Leave all slots empty for the first four visible attributes. Save attribute changes before selecting specifications.', 'wp-store-catalog' ) . '</p>';
 	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_use_cases', 'label' => __( 'Use cases', 'wp-store-catalog' ), 'description' => __( 'Explain the applications. One paragraph per line.', 'wp-store-catalog' ) ) );
 	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_audience', 'label' => __( 'Who is it for?', 'wp-store-catalog' ) ) );
 	woocommerce_wp_textarea_input( array( 'id' => '_wpmain_search_aliases', 'label' => __( 'Search aliases', 'wp-store-catalog' ), 'description' => __( 'Brand, model or common spelling aliases. Separate each alias with a new line.', 'wp-store-catalog' ) ) );
@@ -85,6 +115,12 @@ add_action( 'woocommerce_product_data_panels', 'wpmain_catalog_editor' );
 function wpmain_catalog_save( $product ) {
 	$nonce = isset( $_POST['wpmain_guidance_nonce'] ) && is_string( $_POST['wpmain_guidance_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wpmain_guidance_nonce'] ) ) : '';
 	if ( ! wp_verify_nonce( $nonce, 'wpmain_save_guidance' ) || ! current_user_can( 'edit_post', $product->get_id() ) ) { return; }
+	// Only this panel's field can change the selection; preserve it on partial saves.
+	if ( isset( $_POST['_wpmain_key_specs'] ) && is_array( $_POST['_wpmain_key_specs'] ) ) {
+		$raw_specs = wp_unslash( $_POST['_wpmain_key_specs'] );
+		if ( ! array_filter( $raw_specs ) ) { $product->delete_meta_data( '_wpmain_key_specs' ); }
+		else { $product->update_meta_data( '_wpmain_key_specs', wpmain_catalog_spec_names( $raw_specs, $product ) ); }
+	}
 	foreach ( array( 'use_cases', 'audience', 'search_aliases' ) as $key ) {
 		$raw = $_POST[ '_wpmain_' . $key ] ?? '';
 		$product->update_meta_data( '_wpmain_' . $key, is_string( $raw ) ? sanitize_textarea_field( wp_unslash( $raw ) ) : '' );

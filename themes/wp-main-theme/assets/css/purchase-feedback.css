@@ -1,0 +1,14 @@
+/* Shared purchase feedback; brand tokens continue to own colour and shape. */
+.cart-count { display: inline-flex; min-width: 1.5em; justify-content: center; font-variant-numeric: tabular-nums; }
+.cart-count[hidden], .primary-navigation .sub-menu[hidden] { display: none; }
+.submenu-toggle { min-width: 44px; min-height: 44px; margin-inline-start: .25rem; padding: .25rem; color: var(--brand-text); background: var(--brand-bg); border: 1px solid var(--brand-border); border-radius: var(--button-radius); }
+.woocommerce ul.products li.product .card-purchase { display: grid; grid-template-columns: minmax(0, 1fr) 44px; grid-template-rows: 1.5em minmax(44px, auto); align-items: center; column-gap: .4rem; row-gap: .15rem; }
+.card-stock { grid-column: 1 / -1; grid-row: 1; font-size: .75rem; color: var(--brand-muted); }
+.woocommerce ul.products li.product .card-purchase .price { grid-column: 1; grid-row: 2; min-width: 0; overflow-wrap: anywhere; }
+.woocommerce ul.products li.product .card-purchase .price del, .woocommerce ul.products li.product .card-purchase .price ins { display: block; }
+.woocommerce ul.products li.product .card-purchase .button { grid-column: 2; grid-row: 2; min-width: 44px; }
+.woocommerce ul.products li.product .card-purchase .added_to_cart { grid-column: 1 / -1; grid-row: 1; padding: 0; font-size: .75rem; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-purchase:has(.added_to_cart) .card-stock { visibility: hidden; }
+.woocommerce ul.products li.product .card-purchase .button.loading::before { content: '…'; }
+.woocommerce ul.products li.product .card-purchase .button.added::before { content: '✓'; }
+.woocommerce ul.products li.product .card-purchase .button.loading::after, .woocommerce ul.products li.product .card-purchase .button.added::after { display: none; }

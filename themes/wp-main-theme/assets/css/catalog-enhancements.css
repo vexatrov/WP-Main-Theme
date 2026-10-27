@@ -1,0 +1,14 @@
+/* Shared catalog density and native GET controls; child themes supply the palette. */
+.catalog-categories { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .5rem; margin-block: .5rem .75rem; padding-block: .2rem; }
+.catalog-categories a { flex: 0 0 auto; min-height: 44px; padding: .4rem .65rem; gap: .5rem; }
+.catalog-categories img { width: 28px; height: 28px; }
+.catalog-filters { margin-bottom: .75rem; padding-block: .25rem; }
+.catalog-filter-grid { gap: 1rem; padding-block: .5rem; }
+.catalog-filter-status { align-items: center; gap: .5rem; padding: .35rem .65rem; margin-block: .5rem; }
+.catalog-filter-chips { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; list-style: none; }
+.catalog-filter-chips a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .35rem .65rem; border: 1px solid var(--brand-border); border-radius: var(--button-radius); text-decoration: none; }
+.catalog-filter-chips a:hover { border-color: var(--brand-accent); }
+.catalog-price-filter { display: grid; gap: .4rem; }
+.catalog-price-filter input { width: 100%; min-width: 0; min-height: 44px; background: var(--brand-surface); color: var(--brand-text); border: 1px solid var(--brand-border); border-radius: var(--button-radius); padding: .5rem; }
+.catalog-price-filter button { justify-self: start; min-height: 44px; margin-block-start: .35rem; }
+@media (max-width: 48rem) { .catalog-categories a { flex-direction: row; min-height: 44px; padding: .35rem .55rem; } .catalog-categories img { width: 24px; height: 24px; } }

@@ -1,6 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
+require_once __DIR__ . '/catalog-price-widget.php';
+
 function wpmain_catalog_widgets() {
 	register_sidebar( array( 'name' => __( 'Shop filters', 'wp-main-theme' ), 'id' => 'shop-filters', 'description' => __( 'Add WooCommerce price, attribute and active-filter widgets here.', 'wp-main-theme' ), 'before_widget' => '<section id="%1$s" class="catalog-widget %2$s">', 'after_widget' => '</section>', 'before_title' => '<h3>', 'after_title' => '</h3>' ) );
 }
@@ -20,6 +22,8 @@ function wpmain_catalog_navigation() {
 		foreach ( $categories as $category ) {
 			$url = get_term_link( $category );
 			if ( is_wp_error( $url ) ) { continue; }
+			$brand = is_tax( 'product_brand' ) ? get_queried_object_id() : wpmain_catalog_query_value( 'filter_product_brand' );
+			if ( $brand ) { $url = add_query_arg( 'filter_product_brand', $brand, $url ); }
 			echo '<a href="' . esc_url( $url ) . '"' . ( $parent === $category->term_id ? ' aria-current="page"' : '' ) . '>';
 			$image = absint( get_term_meta( $category->term_id, 'thumbnail_id', true ) );
 			if ( $image ) { echo wp_get_attachment_image( $image, 'thumbnail', false, array( 'alt' => '', 'loading' => 'lazy' ) ); }
@@ -28,11 +32,11 @@ function wpmain_catalog_navigation() {
 		echo '</nav>';
 	}
 	$filters = wpmain_catalog_filter_keys();
-	$brands = taxonomy_exists( 'product_brand' ) && ! is_tax( 'product_brand' ) ? get_terms( array( 'taxonomy' => 'product_brand', 'hide_empty' => true ) ) : array();
+	$brands = wpmain_catalog_available_brands();
 	if ( is_wp_error( $brands ) ) { $brands = array(); }
 	$attributes = is_product_category() && function_exists( 'wpmain_catalog_category_attributes' ) ? wpmain_catalog_category_attributes( get_queried_object_id() ) : array();
 	if ( $filters ) {
-		echo '<div class="catalog-filter-status"><span>' . esc_html__( 'Filters are applied', 'wp-main-theme' ) . '</span><a href="' . esc_url( wpmain_catalog_reset_url() ) . '">' . esc_html__( 'Clear filters', 'wp-main-theme' ) . '</a></div>';
+		wpmain_catalog_filter_chips();
 	}
 	if ( is_active_sidebar( 'shop-filters' ) || $brands || $attributes ) {
 		echo '<details class="catalog-filters"' . ( $filters ? ' open' : '' ) . '><summary>' . esc_html__( 'Filter products', 'wp-main-theme' ) . '</summary><div class="catalog-filter-grid">';
@@ -61,6 +65,73 @@ function wpmain_catalog_reset_url() {
 	return remove_query_arg( array_merge( wpmain_catalog_filter_keys(), array( 'paged', 'product-page' ) ), get_pagenum_link( 1, false ) );
 }
 
+/** Scalar query values only; WooCommerce uses comma-separated facet values. */
+function wpmain_catalog_query_value( $key ) {
+	return isset( $_GET[ $key ] ) && is_scalar( $_GET[ $key ] ) ? sanitize_text_field( wp_unslash( (string) $_GET[ $key ] ) ) : '';
+}
+
+/** Use WP's descendant-aware taxonomy query, never a separate SQL catalog scan. */
+function wpmain_catalog_available_brands() {
+	if ( ! taxonomy_exists( 'product_brand' ) || is_tax( 'product_brand' ) ) { return array(); }
+	$args = array( 'taxonomy' => 'product_brand', 'hide_empty' => true );
+	if ( is_product_category() ) {
+		$tax_query = array( array( 'taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => get_queried_object_id(), 'include_children' => true ) );
+		if ( function_exists( 'wc_get_product_visibility_term_ids' ) ) {
+			$visibility = wc_get_product_visibility_term_ids();
+			$tax_query[] = array( 'taxonomy' => 'product_visibility', 'field' => 'term_taxonomy_id', 'terms' => array( $visibility['exclude-from-catalog'] ), 'operator' => 'NOT IN' );
+		}
+		// Bound memory; large categories retain catalog-wide choices and recovery guidance.
+		$ids = get_posts( array( 'post_type' => 'product', 'post_status' => 'publish', 'has_password' => false, 'fields' => 'ids', 'posts_per_page' => 251, 'no_found_rows' => true, 'tax_query' => $tax_query ) );
+		if ( ! $ids ) { return array(); }
+		if ( count( $ids ) <= 250 ) { $args['object_ids'] = $ids; }
+	}
+	return get_terms( $args );
+}
+
+/** Remove one selection, retaining the route, search, ordering and other facets. */
+function wpmain_catalog_remove_filter_url( $key, $value = null ) {
+	$url = remove_query_arg( array( 'paged', 'product-page' ), get_pagenum_link( 1, false ) );
+	$remaining = null === $value ? array() : array_values( array_diff( explode( ',', wpmain_catalog_query_value( $key ) ), array( (string) $value ) ) );
+	if ( $remaining ) { return add_query_arg( $key, implode( ',', $remaining ), $url ); }
+	$keys = array( $key );
+	if ( 0 === strpos( $key, 'filter_' ) ) { $keys[] = 'query_type_' . substr( $key, 7 ); }
+	return remove_query_arg( $keys, $url );
+}
+
+function wpmain_catalog_filter_chips() {
+	$chips = array();
+	foreach ( wpmain_catalog_filter_keys() as $key ) {
+		$value = wpmain_catalog_query_value( $key );
+		if ( '' === $value || 0 === strpos( $key, 'query_type_' ) ) { continue; }
+		if ( in_array( $key, array( 'min_price', 'max_price' ), true ) ) {
+			if ( ! is_numeric( $value ) ) { continue; }
+			$label = sprintf( 'min_price' === $key ? __( 'Minimum price: %s', 'wp-main-theme' ) : __( 'Maximum price: %s', 'wp-main-theme' ), wp_strip_all_tags( wc_price( (float) $value ) ) );
+			$chips[] = array( $label, wpmain_catalog_remove_filter_url( $key ) );
+			continue;
+		}
+		foreach ( array_filter( explode( ',', $value ) ) as $selection ) {
+			if ( 'rating_filter' === $key ) {
+				if ( ! in_array( $selection, array( '1', '2', '3', '4', '5' ), true ) ) { continue; }
+				$label = sprintf( __( 'Rating: %s stars', 'wp-main-theme' ), $selection );
+			} else {
+				$is_brand = 'filter_product_brand' === $key;
+				$taxonomy = $is_brand ? 'product_brand' : 'pa_' . substr( $key, 7 );
+				if ( ! taxonomy_exists( $taxonomy ) ) { continue; }
+				$term = get_term_by( $is_brand ? 'id' : 'slug', $is_brand ? absint( $selection ) : $selection, $taxonomy );
+				if ( ! $term || is_wp_error( $term ) ) { continue; }
+				$label = ( $is_brand ? __( 'Brand', 'wp-main-theme' ) : wc_attribute_label( $taxonomy ) ) . ': ' . $term->name;
+			}
+			$chips[] = array( $label, wpmain_catalog_remove_filter_url( $key, $selection ) );
+		}
+	}
+	if ( ! $chips ) { return; }
+	echo '<nav class="catalog-filter-status" aria-label="' . esc_attr__( 'Applied filters', 'wp-main-theme' ) . '"><ul class="catalog-filter-chips">';
+	foreach ( $chips as $chip ) {
+		echo '<li><a href="' . esc_url( $chip[1] ) . '" aria-label="' . esc_attr( sprintf( __( 'Remove %s', 'wp-main-theme' ), $chip[0] ) ) . '">' . esc_html( $chip[0] ) . ' <span aria-hidden="true">×</span></a></li>';
+	}
+	echo '</ul><a href="' . esc_url( wpmain_catalog_reset_url() ) . '">' . esc_html__( 'Clear filters', 'wp-main-theme' ) . '</a></nav>';
+}
+
 function wpmain_catalog_brand_filter( $brands ) {
 	$selected = isset( $_GET['filter_product_brand'] ) && is_scalar( $_GET['filter_product_brand'] ) ? absint( $_GET['filter_product_brand'] ) : 0;
 	echo '<form method="get" class="catalog-brand-filter" action="' . esc_url( get_pagenum_link( 1, false ) ) . '"><label for="catalog-brand">' . esc_html__( 'Brand', 'wp-main-theme' ) . '</label><select id="catalog-brand" name="filter_product_brand"><option value="">' . esc_html__( 'All brands', 'wp-main-theme' ) . '</option>';
@@ -70,7 +141,11 @@ function wpmain_catalog_brand_filter( $brands ) {
 	echo '</select>';
 	// Keep the search, category context, price, attributes and sorting on submit.
 	wc_query_string_form_fields( null, array( 'filter_product_brand', 'paged', 'product-page', 'submit' ) );
-	echo '<button type="submit">' . esc_html__( 'Apply brand', 'wp-main-theme' ) . '</button></form>';
+	echo '<button type="submit">' . esc_html__( 'Apply brand', 'wp-main-theme' ) . '</button>';
+	if ( ! wc_get_loop_prop( 'total' ) ) {
+		echo '<p class="catalog-brand-note">' . esc_html__( 'Some brand and filter combinations may have no matching products. Remove a selection to broaden results.', 'wp-main-theme' ) . '</p>';
+	}
+	echo '</form>';
 }
 
 function wpmain_catalog_empty_recovery() {

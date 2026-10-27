@@ -19,33 +19,86 @@ function wpmain_catalog_index_product( $id ) {
 	if ( ! function_exists( 'wc_get_product' ) || 'product' !== get_post_type( $id ) ) { return; }
 	$post = get_post( $id );
 	if ( ! $post ) { return; }
-	$brands = wp_get_post_terms( $id, 'product_brand' );
-	$brand_text = '';
-	if ( ! is_wp_error( $brands ) ) {
-		foreach ( $brands as $brand ) { $brand_text .= ' ' . $brand->name . ' ' . get_term_meta( $brand->term_id, '_wpmain_search_aliases', true ); }
-	}
-	$title = wpmain_catalog_normalize_search( $post->post_title );
-	$sku = wpmain_catalog_normalize_search( get_post_meta( $id, '_sku', true ) );
-	$variation_skus = array();
-	$product = wc_get_product( $id );
-	if ( $product && $product->is_type( 'variable' ) ) {
-		foreach ( $product->get_visible_children() as $variation_id ) { $variation_skus[] = wpmain_catalog_normalize_search( get_post_meta( $variation_id, '_sku', true ) ); }
-	}
-	$aliases = get_post_meta( $id, '_wpmain_search_aliases', true );
-	$aliases = is_string( $aliases ) ? $aliases : '';
-	// Newlines between fields prevent accidental phrase matches spanning fields.
-	$document = implode( "\n", array_map( 'wpmain_catalog_normalize_search', array( $post->post_title, $post->post_excerpt, $post->post_content, $sku, $aliases, $brand_text ) ) ) . "\n" . implode( "\n", $variation_skus );
-	update_post_meta( $id, '_wpmain_search_document', $document );
-	update_post_meta( $id, '_wpmain_search_title', $title );
-	update_post_meta( $id, '_wpmain_search_sku', $sku );
+	static $indexing = array();
+	if ( isset( $indexing[ $id ] ) ) { return; }
+	$indexing[ $id ] = true;
+	try {
+		$brands = wp_get_post_terms( $id, 'product_brand' );
+		$brand_text = '';
+		if ( ! is_wp_error( $brands ) ) {
+			foreach ( $brands as $brand ) { $brand_text .= ' ' . $brand->name . ' ' . get_term_meta( $brand->term_id, '_wpmain_search_aliases', true ); }
+		}
+		$title = wpmain_catalog_normalize_search( $post->post_title );
+		$sku = wpmain_catalog_normalize_search( get_post_meta( $id, '_sku', true ) );
+		$variation_skus = array();
+		$product = wc_get_product( $id );
+		if ( $product && $product->is_type( 'variable' ) ) {
+			foreach ( $product->get_visible_children() as $variation_id ) { $variation_skus[] = wpmain_catalog_normalize_search( get_post_meta( $variation_id, '_sku', true ) ); }
+		}
+		$aliases = get_post_meta( $id, '_wpmain_search_aliases', true );
+		$aliases = is_string( $aliases ) ? $aliases : '';
+		// Newlines between fields prevent accidental phrase matches spanning fields.
+		$document = implode( "\n", array_map( 'wpmain_catalog_normalize_search', array( $post->post_title, $post->post_excerpt, $post->post_content, $sku, $aliases, $brand_text ) ) ) . "\n" . implode( "\n", $variation_skus );
+		update_post_meta( $id, '_wpmain_search_document', $document );
+		update_post_meta( $id, '_wpmain_search_title', $title );
+		update_post_meta( $id, '_wpmain_search_sku', $sku );
+	} finally { unset( $indexing[ $id ] ); }
 }
 add_action( 'woocommerce_new_product', 'wpmain_catalog_index_product', 30 );
 add_action( 'woocommerce_update_product', 'wpmain_catalog_index_product', 30 );
-function wpmain_catalog_index_variation_parent( $id ) { $parent = wp_get_post_parent_id( $id ); if ( $parent ) { wpmain_catalog_index_product( $parent ); } }
+function wpmain_catalog_index_variation_parent( $id, $post = null ) {
+	$parent = $post && 'product_variation' === $post->post_type ? $post->post_parent : wp_get_post_parent_id( $id );
+	if ( $parent ) {
+		// A changed/deleted child must not be read from WooCommerce's child cache.
+		if ( function_exists( 'wc_delete_product_transients' ) ) { wc_delete_product_transients( $parent ); }
+		wpmain_catalog_index_product( $parent );
+	}
+}
 add_action( 'woocommerce_new_product_variation', 'wpmain_catalog_index_variation_parent', 30 );
 add_action( 'woocommerce_update_product_variation', 'wpmain_catalog_index_variation_parent', 30 );
+
+/** WordPress/editor/import paths that do not save through WC_Product. */
+function wpmain_catalog_index_saved_post( $id, $post ) {
+	if ( 'product' === $post->post_type ) { wpmain_catalog_index_product( $id ); }
+	elseif ( 'product_variation' === $post->post_type ) { wpmain_catalog_index_variation_parent( $id, $post ); }
+}
+add_action( 'wp_after_insert_post', 'wpmain_catalog_index_saved_post', 30, 2 );
+add_action( 'deleted_post', function ( $id, $post ) {
+	if ( 'product_variation' === $post->post_type ) { wpmain_catalog_index_variation_parent( $id, $post ); }
+}, 30, 2 );
+// Meta imports may run after wp_after_insert_post; normalized fields never recurse.
+function wpmain_catalog_index_changed_meta( $meta_id, $id, $key ) {
+	if ( in_array( $key, array( '_sku', '_wpmain_search_aliases', '_price', '_stock_status' ), true ) ) {
+		$post = get_post( $id );
+		if ( $post ) { wpmain_catalog_index_saved_post( $id, $post ); }
+	}
+}
+add_action( 'added_post_meta', 'wpmain_catalog_index_changed_meta', 30, 3 );
+add_action( 'updated_post_meta', 'wpmain_catalog_index_changed_meta', 30, 3 );
+add_action( 'deleted_post_meta', 'wpmain_catalog_index_changed_meta', 30, 3 );
+
+/** Persist normalized term names/aliases once, then bound matching in SQL. */
+function wpmain_catalog_index_term( $id ) {
+	$term = get_term( $id );
+	if ( ! $term || is_wp_error( $term ) || ! in_array( $term->taxonomy, array( 'product_cat', 'product_brand' ), true ) ) { return; }
+	$aliases = 'product_brand' === $term->taxonomy ? get_term_meta( $id, '_wpmain_search_aliases', true ) : '';
+	update_term_meta( $id, '_wpmain_search_document', wpmain_catalog_normalize_search( $term->name ) . "\n" . wpmain_catalog_normalize_search( $aliases ) );
+}
+add_action( 'created_product_cat', 'wpmain_catalog_index_term', 30 );
+add_action( 'edited_product_cat', 'wpmain_catalog_index_term', 30 );
+add_action( 'created_product_brand', 'wpmain_catalog_index_term', 30 );
+add_action( 'edited_product_brand', 'wpmain_catalog_index_term', 30 );
+function wpmain_catalog_index_term_meta( $meta_id, $id, $key ) {
+	if ( '_wpmain_search_aliases' === $key ) { wpmain_catalog_index_term( $id ); wpmain_catalog_queue_reindex(); }
+}
+add_action( 'added_term_meta', 'wpmain_catalog_index_term_meta', 30, 3 );
+add_action( 'updated_term_meta', 'wpmain_catalog_index_term_meta', 30, 3 );
+add_action( 'deleted_term_meta', 'wpmain_catalog_index_term_meta', 30, 3 );
 add_action( 'set_object_terms', function ( $id, $terms, $tt_ids, $taxonomy ) {
-	if ( in_array( $taxonomy, array( 'product_brand', 'product_cat' ), true ) ) { wpmain_catalog_index_product( $id ); }
+	if ( in_array( $taxonomy, array( 'product_brand', 'product_cat', 'product_visibility' ), true ) ) {
+		$post = get_post( $id );
+		if ( $post ) { wpmain_catalog_index_saved_post( $id, $post ); }
+	}
 }, 30, 4 );
 
 /** Bounded background rebuild, also useful after imports or brand edits. */
@@ -54,30 +107,37 @@ function wpmain_catalog_reindex_batch() {
 	global $wpdb;
 	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND ID > %d ORDER BY ID ASC LIMIT 50", $cursor ) );
 	foreach ( $ids as $id ) { wpmain_catalog_index_product( (int) $id ); }
-	if ( count( $ids ) === 50 ) {
-		update_option( 'wpmain_search_cursor', (int) end( $ids ), false );
+	$term_cursor = absint( get_option( 'wpmain_search_term_cursor', 0 ) );
+	$term_ids = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT term_id FROM {$wpdb->term_taxonomy} WHERE taxonomy IN ('product_cat', 'product_brand') AND term_id > %d ORDER BY term_id ASC LIMIT 50", $term_cursor ) );
+	foreach ( $term_ids as $term_id ) { wpmain_catalog_index_term( (int) $term_id ); }
+	if ( $ids ) { update_option( 'wpmain_search_cursor', (int) end( $ids ), false ); }
+	if ( $term_ids ) { update_option( 'wpmain_search_term_cursor', (int) end( $term_ids ), false ); }
+	if ( count( $ids ) === 50 || count( $term_ids ) === 50 ) {
 		if ( ! wp_next_scheduled( 'wpmain_search_reindex' ) ) { wp_schedule_single_event( time() + 5, 'wpmain_search_reindex' ); }
 	} else {
 		delete_option( 'wpmain_search_cursor' );
-		update_option( 'wpmain_search_index_version', '1', false );
+		delete_option( 'wpmain_search_term_cursor' );
+		update_option( 'wpmain_search_index_version', '2', false );
 	}
 }
 add_action( 'wpmain_search_reindex', 'wpmain_catalog_reindex_batch' );
 add_action( 'init', function () {
-	if ( '1' !== get_option( 'wpmain_search_index_version' ) && ! wp_next_scheduled( 'wpmain_search_reindex' ) ) { wp_schedule_single_event( time(), 'wpmain_search_reindex' ); }
+	if ( '2' !== get_option( 'wpmain_search_index_version' ) && ! wp_next_scheduled( 'wpmain_search_reindex' ) ) { wp_schedule_single_event( time(), 'wpmain_search_reindex' ); }
 } );
 function wpmain_catalog_queue_reindex() {
 	delete_option( 'wpmain_search_index_version' );
+	delete_option( 'wpmain_search_term_cursor' );
 	delete_option( 'wpmain_search_cursor' );
 	if ( ! wp_next_scheduled( 'wpmain_search_reindex' ) ) { wp_schedule_single_event( time(), 'wpmain_search_reindex' ); }
 }
 add_action( 'edited_product_brand', 'wpmain_catalog_queue_reindex', 30 );
+add_action( 'delete_product_brand', 'wpmain_catalog_queue_reindex', 30 );
 add_action( 'admin_init', function () {
-	if ( current_user_can( 'manage_woocommerce' ) && '1' !== get_option( 'wpmain_search_index_version' ) ) { wpmain_catalog_reindex_batch(); }
+	if ( current_user_can( 'manage_woocommerce' ) && '2' !== get_option( 'wpmain_search_index_version' ) ) { wpmain_catalog_reindex_batch(); }
 } );
 add_action( 'admin_menu', function () {
 	add_submenu_page( 'woocommerce', __( 'Search index', 'wp-store-catalog' ), __( 'Search index', 'wp-store-catalog' ), 'manage_woocommerce', 'wpmain-search-index', function () {
-		echo '<div class="wrap"><h1>' . esc_html__( 'Product search index', 'wp-store-catalog' ) . '</h1><p>' . esc_html( '1' === get_option( 'wpmain_search_index_version' ) ? __( 'Search index is ready. Products update automatically when saved through WooCommerce.', 'wp-store-catalog' ) : __( 'Search indexing is in progress. Reload this admin page to process another batch, or let WordPress cron finish it.', 'wp-store-catalog' ) ) . '</p><form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
+		echo '<div class="wrap"><h1>' . esc_html__( 'Product search index', 'wp-store-catalog' ) . '</h1><p>' . esc_html( '2' === get_option( 'wpmain_search_index_version' ) ? __( 'Search index is ready. Products update automatically when saved through WooCommerce.', 'wp-store-catalog' ) : __( 'Search indexing is in progress. Reload this admin page to process another batch, or let WordPress cron finish it.', 'wp-store-catalog' ) ) . '</p><form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		echo '<input type="hidden" name="action" value="wpmain_reindex">'; wp_nonce_field( 'wpmain_reindex' ); submit_button( __( 'Rebuild search index', 'wp-store-catalog' ) ); echo '</form></div>';
 	} );
 } );
@@ -128,6 +188,11 @@ add_action( 'edited_product_brand', function ( $id ) {
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'wpmain/v1', '/suggestions', array( 'methods' => 'GET', 'permission_callback' => '__return_true', 'callback' => 'wpmain_catalog_suggestions', 'args' => array( 'q' => array( 'type' => 'string', 'required' => true, 'sanitize_callback' => 'sanitize_text_field', 'validate_callback' => function ( $value ) { return is_string( $value ) && strlen( $value ) <= 240; } ) ) ) );
 } );
+/** WP_Term_Query prepares/escapes meta LIKE values and returns at most three matches. */
+function wpmain_catalog_matching_terms( $taxonomy, $normalized ) {
+	if ( ! in_array( $taxonomy, array( 'product_cat', 'product_brand' ), true ) || '' === $normalized ) { return array(); }
+	return get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => true, 'number' => 3, 'orderby' => 'name', 'meta_query' => array( array( 'key' => '_wpmain_search_document', 'value' => $normalized, 'compare' => 'LIKE' ) ) ) );
+}
 function wpmain_catalog_suggestions( $request ) {
 	if ( ! function_exists( 'wc_get_product' ) ) { return new WP_Error( 'catalog_unavailable', __( 'Catalog unavailable.', 'wp-store-catalog' ), array( 'status' => 503 ) ); }
 	$text = $request->get_param( 'q' );
@@ -142,11 +207,9 @@ function wpmain_catalog_suggestions( $request ) {
 	}
 	foreach ( array( 'product_cat' => 'categories', 'product_brand' => 'brands' ) as $taxonomy => $key ) {
 		if ( ! taxonomy_exists( $taxonomy ) ) { continue; }
-		$terms = get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => true, 'number' => 100 ) );
+		$terms = wpmain_catalog_matching_terms( $taxonomy, $normalized );
 		if ( is_wp_error( $terms ) ) { continue; }
 		foreach ( $terms as $term ) {
-			$aliases = 'brands' === $key ? get_term_meta( $term->term_id, '_wpmain_search_aliases', true ) : '';
-			if ( false === strpos( wpmain_catalog_normalize_search( $term->name . ' ' . $aliases ), $normalized ) ) { continue; }
 			$url = get_term_link( $term );
 			if ( ! is_wp_error( $url ) ) { $result[ $key ][] = array( 'label' => $term->name, 'url' => $url ); }
 			if ( count( $result[ $key ] ) >= 3 ) { break; }

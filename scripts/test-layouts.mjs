@@ -10,7 +10,10 @@ async function page(path) {
 const shop = await page('/shop/');
 assert.match(shop, /catalog-categories/);
 assert.match(shop, /catalog-filters/);
-assert.match(shop, /price_slider/);
+assert.match(shop, /catalog-price-filter/);
+assert.match(shop, /name="min_price"[^>]*type="number"/);
+assert.match(shop, /name="max_price"[^>]*type="number"/);
+assert.doesNotMatch(shop, /class="price_slider(?:\s|")|ui-slider-handle/);
 const filtered = await page('/shop/?min_price=999999999');
 assert.doesNotMatch(filtered, /class="woocommerce-loop-product__title"/);
 const brands = await page('/brands/');

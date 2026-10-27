@@ -12,9 +12,13 @@ get_header();
 		<?php if ( post_password_required() ) : ?>
 			<div class="container home-content"><?php the_content(); ?></div>
 		<?php else : ?>
-			<?php if ( trim( get_the_content() ) ) : ?><div class="container entry-content home-content"><?php the_content(); wp_link_pages(); ?></div><?php endif; ?>
-			<?php get_template_part( 'template-parts/storefront/catalog' ); ?>
-			<?php get_template_part( 'template-parts/storefront/journal' ); ?>
+			<?php foreach ( explode( ',', wpmain_sanitize_home_sections( get_theme_mod( 'wpmain_home_sections', '' ) ) ) as $section ) : ?>
+				<?php if ( 'content' === $section ) : ?>
+					<?php if ( trim( get_the_content() ) ) : ?><div class="container entry-content home-content"><?php the_content(); wp_link_pages(); ?></div><?php endif; ?>
+				<?php else : ?>
+					<?php get_template_part( 'template-parts/storefront/' . $section ); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
 		<?php endif; ?>
 	<?php endwhile; ?>
 </main>

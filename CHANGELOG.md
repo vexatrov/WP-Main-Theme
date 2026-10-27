@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0-rc.2 / WP Store Catalog 0.4.0
+
+- Replaced the classic price-slider widget output with labeled native GET fields, added individually removable brand/price/attribute/rating selections and retained brand context through category navigation. Category brand scoping is bounded; large catalogs retain broader choices with empty-result recovery.
+- Added compact card stock/option cues, stacked sale prices, an updating cache-neutral cart count/status, native AJAX/Blocks event handling and per-branch keyboard submenu disclosures. Added-to-cart links reuse the stock row to avoid increasing card height.
+- Added homepage category/product selection, latest/featured sources and section ordering; excluded protected products in all sources. Product editors can select/order four existing visible key specifications.
+- Bundled Persian catalog administration translations and repeatable source-coverage/placeholder/MO checks for both text domains.
+- Added an SEO fallback that yields to recognized SEO owners, preserves canonical pagination/plain routes, handles robots/sitemap utility pages and emits escaped public sharing metadata. WooCommerce remains the Product schema generator; an idempotent plugin adapter converts marked IRT schema money to matching IRR amounts without changing store/order/gateway prices.
+- Extended search indexing for native imports, variation status/deletion and normalized term documents, removing the first-100-term suggestion limit. Added isolated lifecycle fixtures and a booted WordPress CI job, richer read-only release/staging checks and focused regression tests.
+- Offline checks pass. Actual runtime/browser/host evidence and unresolved gates are recorded in docs/VALIDATION.md and docs/COMPLETION.md; no real gateway or production launch is claimed.
+
 ## 1.0.0-rc.1
 
 - Replaced per-request nested SQL search normalization with stored normalized product documents and bounded rebuilds; added brand aliases, variation SKU matching, native suggestions and keyboard/error fallback behavior.

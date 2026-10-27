@@ -1,0 +1,48 @@
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+import assert from 'node:assert/strict';
+const source = readFileSync('themes/wp-main-theme/assets/js/cart-feedback.js', 'utf8');
+const events = {}, jq = {};
+const count = { hidden: true, setAttribute(key, value) { this[key] = value; } };
+const status = {};
+let requests = [], replies = [];
+const config = { url: '/wp-json/wc/store/v1/cart', count: 'Cart items: %s', added: 'Added.', updated: 'Updated.', loading: 'Adding.', error: 'Failed.' };
+const document = { body: { addEventListener(name, fn) { events[name] = fn; } }, querySelector(selector) { return selector === '[data-cart-count]' ? count : status; }, querySelectorAll() { return []; }, addEventListener(name, fn) { events[name] = fn; } };
+const window = { wpmainCartFeedback: config, addEventListener(name, fn) { events[name] = fn; }, jQuery() { return { on(names, fn) { names.split(' ').forEach(name => jq[name] = fn); }, ajaxError(fn) { jq.error = fn; } }; } };
+const fetch = (url, options) => { requests.push({ url, options }); return new Promise(resolve => replies.push(resolve)); };
+const reply = async (index, items_count, ok = true) => { replies[index]({ ok, json: async () => ({ items_count }) }); await new Promise(resolve => setImmediate(resolve)); };
+runInNewContext(source, { window, document, fetch, AbortController, setTimeout, clearTimeout, queueMicrotask });
+assert.equal(count.hidden, true, 'No cached HTML count is displayed');
+assert.equal(requests[0].options.cache, 'no-store');
+assert.equal(requests[0].options.credentials, 'same-origin');
+events.pageshow({ persisted: false });
+assert.equal(requests.length, 1, 'Initial pageshow does not duplicate startup fetch');
+await reply(0, 3);
+assert.equal(count.textContent, '3');
+assert.equal(count['aria-label'], 'Cart items: 3');
+const button = { setAttribute(key, value) { this[key] = value; } };
+jq.adding_to_cart({}, [button]);
+assert.equal(button['aria-busy'], 'true');
+assert.equal(status.textContent, 'Adding.');
+jq.added_to_cart({}, {}, '', [button]);
+assert.equal(button['aria-busy'], 'false');
+events['wc-blocks_added_to_cart']();
+await new Promise(resolve => setImmediate(resolve));
+assert.equal(requests.length, 2, 'Classic and Blocks bridge events coalesce');
+events['wc-blocks_removed_from_cart']();
+await new Promise(resolve => setImmediate(resolve));
+assert.equal(requests[1].options.signal.aborted, true, 'A newer read aborts the previous read');
+await reply(2, 1);
+await reply(1, 4);
+assert.equal(count.textContent, '1', 'Older responses cannot overwrite the latest cart');
+assert.equal(status.textContent, 'Updated. Cart items: 1');
+events.pageshow({ persisted: true }); await reply(3, 0, false);
+assert.equal(count.hidden, true, 'Failed refresh never leaves a stale count');
+jq.error({}, {}, { url: '/?wc-ajax=other' });
+assert.notEqual(status.textContent, 'Failed.');
+jq.error({}, {}, { url: '/?wc-ajax=add_to_cart' });
+assert.equal(status.textContent, 'Failed.');
+console.log('PASS: cache-safe count, native events, latest response, request failure and AJAX feedback.');
+
+
+

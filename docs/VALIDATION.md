@@ -1,5 +1,13 @@
 # Validation
 
+## Rc.2 — 2026-10-27
+
+Offline PHP syntax and all six contract suites pass: catalog sanitation/save permissions, search guards, article anchors, filter selection/removal/price fields, homepage public-product selection/key-spec ordering, and SEO/currency behavior. Navigation/submenu, cart feedback race/abort/error, search UI, translation coverage/MO freshness and asset budgets pass. Five external SEO-owner detection cases pass in the focused SEO runner. Custom assets: CSS 9.34 KB gzip, JS 3.44 KB gzip, excluding WordPress/WooCommerce/media.
+
+Runtime checks have verified the new head/assets/price fields/cache-neutral cart placeholders and exact native JSON-LD IRR amounts for simple, sale and variable products against Store API toman prices. The enquiry check initially assumed Store API serialized an unpriced product as an empty string; this WooCommerce version serializes it as `0`. The test now checks the actual enquiry UI and absence of offers/purchase controls instead of confusing serialization with a free price. Final enquiry and full isolated suite outcomes are recorded below when complete.
+
+Browser review has loaded the updated mobile shop and confirmed explicit Persian labels on native min/max steppers, the compact category rail and product-state cues. This is a partial review, not a full screen-reader/real-device/accessibility certification. Local Windows/WASM PHP initialization has intermittently exceeded test/browser navigation deadlines; static CSS is fast but WordPress initialization itself was slow in diagnostic traces. These local times are not production performance measurements. The fresh integration runner captures test mail, uses a distinct fixture database and never reuses `.local/site`; its CI job must finish successfully before being counted as integration evidence.
+
 ## Current shared release candidate
 
 See COMPLETION.md for the current implemented scope, command list and remaining release gates. The completion run passed offline PHP syntax/contracts, normalized-search HTTP checks, suggestions/category facets/guidance/product-state/article/support HTTP checks, native recovery/unknown-tracking checks, fictional COD checkout/receipt-key checks, navigation/search interaction units and custom asset budgets. No external payment, email delivery or staging deployment is claimed. Detailed historical viewport results below apply to earlier shared layouts; the new completion-run browser automation could not attach/respond, so a fresh visual/zoom/assistive-technology sweep remains required.
