@@ -12,6 +12,8 @@ The fresh isolated lifecycle fixture passed locally, with mail capture, variatio
 
 Final cart review removed a redundant Store API GET after classic add/remove: the native uncached WooCommerce response now supplies an escaped authoritative count fragment. Tests cover replaced DOM elements, zero counts, stale reads, duplicate bridge events and fallback failure. Mobile badge CSS explicitly overrides the older visually-hidden header-label rule. Cached page HTML still contains an empty hidden placeholder and never a session-specific number.
 
+[Linux CI run 40477208401](https://github.com/vexatrov/WP-Main-Theme/actions/runs/40477208401) for commit `c6d862b` also passed all four jobs after the final cart fragment change. The additional `test:cart-fragments` script passed against the restarted persistent localhost preview: native anonymous AJAX add/refresh, visible accessible quantity one, cookie-backed persistence and preservation of WooCommerce's mini-cart fragment/cart hash. It creates no order/account and contacts no gateway. This regression is now included in isolated CI.
+
 [Linux CI run 40475407306](https://github.com/vexatrov/WP-Main-Theme/actions/runs/40475407306) for commit `3e783f5` passed all four jobs: PHP 8.1/8.3, assets/package, and fresh WordPress integration. The integration job verified its guarded lifecycle success marker and sequentially passed smoke/product/layout/card/search/catalog/catalog-polish/features/release/shopping/recovery/order/cart-feedback suites. Fictional COD checkout, receipt-key protection, tracking denial, guest isolation and mail capture were included; no Zarinpal charge, real email delivery or hosted MySQL test occurred. The integration database is separate from `.local/site`.
 
 ## Current shared release candidate

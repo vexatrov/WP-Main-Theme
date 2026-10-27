@@ -43,6 +43,7 @@ jobs:
       - run: node --check scripts/test-catalog.mjs
       - run: node --check scripts/test-features.mjs
       - run: node --check scripts/test-release.mjs
+      - run: node --check scripts/test-cart-fragments.mjs
       - run: node --check scripts/run-preview-suite.mjs
       - run: node --check scripts/test-shopping.mjs
       - run: node --check themes/wp-main-theme/assets/js/search.js

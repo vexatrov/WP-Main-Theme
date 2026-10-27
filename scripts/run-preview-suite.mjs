@@ -69,7 +69,7 @@ try {
 	}
 	assert.ok(ready, 'Isolated demo did not become ready within 120 seconds.');
 	// Each process completes before the next starts; six PHP workers are shared.
-	for (const name of ['smoke-preview', 'test-product-details', 'test-layouts', 'test-cards', 'test-search', 'test-catalog', 'test-catalog-polish', 'test-features', 'test-release', 'test-shopping', 'test-recovery', 'test-order', 'test-cart-feedback']) {
+	for (const name of ['smoke-preview', 'test-product-details', 'test-layouts', 'test-cards', 'test-search', 'test-catalog', 'test-catalog-polish', 'test-features', 'test-release', 'test-shopping', 'test-recovery', 'test-order', 'test-cart-feedback', 'test-cart-fragments']) {
 		console.log(`\nRunning ${name}…`);
 		await new Promise((done, reject) => {
 			const child = spawn(process.execPath, [`scripts/${name}.mjs`], {stdio: 'inherit', timeout: 240000});

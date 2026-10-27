@@ -21,6 +21,7 @@
 		"test:order": "node scripts/test-order.mjs",
 		"test:catalog-polish": "node scripts/test-catalog-polish.mjs",
 		"test:cart-feedback": "node scripts/test-cart-feedback.mjs",
+		"test:cart-fragments": "node scripts/test-cart-fragments.mjs",
 		"test:seo": "node scripts/test-seo.mjs",
 		"test:release": "node scripts/test-release.mjs",
 		"test:integration": "node scripts/run-preview-suite.mjs --isolated",
