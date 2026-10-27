@@ -6,7 +6,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 Latest review: [2026-10-27 audit](docs/RELEASE-AUDIT-2026-10-27.md). Its shared implementation work is included in rc.2; current verification and store-specific gates are recorded in the completion report.
 
-Version **1.0.0-rc.2**, with WP Store Catalog **0.4.0**, adds accessible price fields, named removable filters, card states/cart feedback, expandable submenus, editable homepage merchandising/key specs, Persian catalog tools and a lightweight SEO/schema integration to the shared foundation. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
+Version **1.0.0-rc.3**, with WP Store Catalog **0.4.1**, includes image stock badges, lazy native variation picking from grids, category/brand archive artwork, selectable illustrated comparisons, compact recommendation sliders and editable product information boxes, alongside the shared search/filter/cart/SEO foundation. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 
@@ -18,7 +18,7 @@ New design planning: [reference research](docs/RESEARCH-2026-10-24.md), [storefr
 
 See [theming](docs/THEMING.md) for child-theme design hooks, header behavior, grid rules, required pages and toman configuration. Each brand can change its header effects, button/search shapes and hero layout without adding those effects to every store.
 
-No page builder, frontend framework, build step, external font, or JavaScript dependency. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.
+No page builder, frontend framework, build step, external font or separately bundled JavaScript dependency. Native WooCommerce scripts handle variation selection. WordPress remains the CMS; WooCommerce is the required commerce plugin. Core editor blocks can manage page content inside coded templates.
 
 ## Install
 

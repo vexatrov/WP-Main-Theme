@@ -8,7 +8,7 @@ function wpmain_catalog_seo_enabled() {
 }
 
 function wpmain_catalog_seo_filter_key( $key ) {
-	return is_string( $key ) && ( preg_match( '/^(filter_|query_type_)/', $key ) || in_array( $key, array( 'min_price', 'max_price', 'rating_filter', 'stock_status', 'on_sale', 'orderby', 'products_per_page' ), true ) );
+	return is_string( $key ) && ( preg_match( '/^(filter_|query_type_)/', $key ) || in_array( $key, array( 'min_price', 'max_price', 'rating_filter', 'stock_status', 'on_sale', 'orderby', 'products_per_page', 'compare_product' ), true ) );
 }
 
 function wpmain_catalog_seo_noindex() {

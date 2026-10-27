@@ -1,7 +1,16 @@
 /* Shared catalog density and native GET controls; child themes supply the palette. */
-.catalog-categories { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .5rem; margin-block: .5rem .75rem; padding-block: .2rem; }
+.catalog-route-label { margin-block: .65rem .15rem; font-weight: 650; font-size: .9rem; }
+.catalog-categories { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .5rem; margin-block: .15rem .75rem; padding-block: .2rem .5rem; scrollbar-width: thin; scrollbar-color: var(--brand-accent) var(--brand-surface); }
 .catalog-categories a { flex: 0 0 auto; min-height: 44px; padding: .4rem .65rem; gap: .5rem; }
+.catalog-categories a:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: -2px; }
 .catalog-categories img { width: 28px; height: 28px; }
+.woocommerce-products-header:has(.catalog-archive-thumbnail) { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; column-gap: .75rem; }
+.woocommerce-products-header:has(.catalog-archive-thumbnail) > .page-title { grid-column: 2; grid-row: 1; margin-block: .5rem; }
+.catalog-archive-thumbnail { grid-column: 1; grid-row: 1; }
+.catalog-archive-image { display: block; width: 64px; height: 64px; object-fit: contain; }
+.woocommerce-products-header:has(.catalog-archive-thumbnail) > :not(.page-title, .catalog-archive-thumbnail) { grid-column: 1 / -1; }
+/* WooCommerce can repeat brand artwork in its optional description; retain its text. */
+.woocommerce-products-header:has(.catalog-archive-thumbnail) .brand-description .brand-thumbnail { display: none; }
 .catalog-filters { margin-bottom: .75rem; padding-block: .25rem; }
 .catalog-filter-grid { gap: 1rem; padding-block: .5rem; }
 .catalog-filter-status { align-items: center; gap: .5rem; padding: .35rem .65rem; margin-block: .5rem; }

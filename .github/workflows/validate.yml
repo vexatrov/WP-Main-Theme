@@ -26,6 +26,8 @@ jobs:
           php tests/merchandising.php
           php tests/seo.php
           php tests/cart-feedback.php
+          php tests/product-details.php
+          php tests/card-variations.php
   assets-and-package:
     runs-on: windows-latest
     steps:
@@ -51,6 +53,7 @@ jobs:
       - run: node scripts/test-navigation.mjs
       - run: node scripts/test-search-ui.mjs
       - run: node scripts/test-cart-feedback.mjs
+      - run: node scripts/test-card-variations.mjs
       - run: python scripts/build-translations.py --check
       - run: node --check scripts/test-recovery.mjs
       - run: node --check scripts/test-order.mjs

@@ -8,6 +8,24 @@ function wpmain_catalog_widgets() {
 }
 add_action( 'widgets_init', 'wpmain_catalog_widgets' );
 
+/** Real taxonomy artwork beside the native archive title; absent images add no box. */
+function wpmain_catalog_archive_thumbnail() {
+	if ( ! is_product_category() && ! is_tax( 'product_brand' ) ) { return; }
+	$id = absint( get_term_meta( get_queried_object_id(), 'thumbnail_id', true ) );
+	if ( ! $id ) { return; }
+	$image = wp_get_attachment_image( $id, 'thumbnail', false, array( 'alt' => '', 'class' => 'catalog-archive-image' ) );
+	if ( $image ) { echo '<div class="catalog-archive-thumbnail">' . $image . '</div>'; }
+}
+add_action( 'woocommerce_archive_description', 'wpmain_catalog_archive_thumbnail', 1 );
+
+/** Brand archive and filtered-category routes keep WooCommerce's native brand key. */
+function wpmain_catalog_category_url( $category ) {
+	$url = get_term_link( $category );
+	if ( is_wp_error( $url ) ) { return $url; }
+	$brand = is_tax( 'product_brand' ) ? get_queried_object_id() : absint( wpmain_catalog_query_value( 'filter_product_brand' ) );
+	return $brand ? add_query_arg( 'filter_product_brand', $brand, $url ) : $url;
+}
+
 function wpmain_catalog_navigation() {
 	if ( ! is_shop() && ! is_product_taxonomy() && ! is_search() ) { return; }
 	$parent = is_product_category() ? get_queried_object_id() : 0;
@@ -18,16 +36,20 @@ function wpmain_catalog_navigation() {
 		$categories = get_terms( array( 'taxonomy' => 'product_cat', 'parent' => (int) $current->parent, 'hide_empty' => true ) );
 	}
 	if ( ! is_wp_error( $categories ) && $categories ) {
-		echo '<nav class="catalog-categories" aria-label="' . esc_attr__( 'Product categories', 'wp-main-theme' ) . '">';
+		echo '<p class="catalog-route-label">' . esc_html__( 'Product categories', 'wp-main-theme' ) . '</p><nav class="catalog-categories" aria-label="' . esc_attr__( 'Product categories', 'wp-main-theme' ) . '">';
 		foreach ( $categories as $category ) {
-			$url = get_term_link( $category );
+			$url = wpmain_catalog_category_url( $category );
 			if ( is_wp_error( $url ) ) { continue; }
-			$brand = is_tax( 'product_brand' ) ? get_queried_object_id() : wpmain_catalog_query_value( 'filter_product_brand' );
-			if ( $brand ) { $url = add_query_arg( 'filter_product_brand', $brand, $url ); }
 			echo '<a href="' . esc_url( $url ) . '"' . ( $parent === $category->term_id ? ' aria-current="page"' : '' ) . '>';
 			$image = absint( get_term_meta( $category->term_id, 'thumbnail_id', true ) );
 			if ( $image ) { echo wp_get_attachment_image( $image, 'thumbnail', false, array( 'alt' => '', 'loading' => 'lazy' ) ); }
 			echo '<span>' . esc_html( $category->name ) . '</span></a>';
+		}
+		if ( $parent ) {
+			$url = wc_get_page_permalink( 'shop' );
+			$brand = absint( wpmain_catalog_query_value( 'filter_product_brand' ) );
+			if ( $brand ) { $url = add_query_arg( 'filter_product_brand', $brand, $url ); }
+			echo '<a class="catalog-all-categories" href="' . esc_url( $url ) . '">' . esc_html__( 'All categories', 'wp-main-theme' ) . '</a>';
 		}
 		echo '</nav>';
 	}

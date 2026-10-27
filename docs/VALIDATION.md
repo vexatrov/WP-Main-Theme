@@ -1,5 +1,15 @@
 # Validation
 
+## Rc.3 — 2026-10-27
+
+All nine offline PHP contracts and repository syntax pass, including bounded public comparison choices, escaped message boxes, native variation template/global restoration, private/hidden/malformed picker rejection and unique contextual-help IDs when a model appears in multiple sliders. Navigation, cart feedback, search UI, SEO ownership and the new picker interaction tests pass. Both Persian bundles pass coverage/placeholder/MO checks. Custom asset budgets remain below 30 KB CSS / 8 KB JS gzip.
+
+Local HTTP checks passed for compact range/card markup, lazy native variation forms with AJAX matching, malformed picker 404s, three recommendation groups, four configured sample boxes, Specifications title, illustrated comparison selection and comparison URL noindex. Brand/category navigation checks passed, including actual sample archive images and retained brand scope. A test initially treated repeated `data-product_id` attributes as duplicate HTML IDs; it now checks actual whitespace-prefixed `id` attributes. Real repeated native help-span IDs were separately fixed through WooCommerce args/link filters and covered by contracts.
+
+Browser review at 428px confirmed no horizontal overflow, aligned first-row cards at approximately 290.7px, no available-stock captions, and a single unavailable badge with `brightness(.78)` imagery. The grid picker opened, loaded native size choices, selected 30ml at 300,000 tomans, and completed a fictional native add-to-cart while remaining on `/shop/` with success feedback. Product review confirmed four message boxes, three native scrolling recommendation groups and an illustrated selectable comparison with two model images. Local screenshots remain ignored under `.local/review/rc3-*.png`. This does not certify real-device, third-party add-on or production gateway behavior.
+
+Message defaults are empty in shipped code. `dev/storefront-preview.php` configures the owner's example wording and representative brand artwork only inside the guarded fictional store; neither its database nor fixtures ship in either ZIP.
+
 ## Rc.2 — 2026-10-27
 
 Offline PHP syntax and all seven contract suites pass: catalog sanitation/save permissions, search guards, article anchors, filter selection/removal/price fields, homepage public-product selection/key-spec ordering, SEO/currency behavior and authoritative cart fragments. Navigation/submenu, cart feedback race/abort/error, search UI, translation coverage/MO freshness and asset budgets pass. Five external SEO-owner detection cases pass in the focused SEO runner. Custom assets: CSS 9.49 KB gzip, JS 3.78 KB gzip, excluding WordPress/WooCommerce/media.

@@ -1,6 +1,8 @@
 # Shared-theme completion and release gates
 
-Release: **1.0.0-rc.2**, catalog plugin **0.4.0**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+Release: **1.0.0-rc.3**, catalog plugin **0.4.1**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+
+Rc.3 adds image stock overlays/dimming, native variation picking directly from product grids, current taxonomy artwork, selectable image comparisons, adjacent compatible/alternative/same-brand sliders and editable store-message boxes. Each store controls its own wording and artwork. See PRODUCT-DETAIL-CONTROLS.md for configuration and VALIDATION.md for actual results.
 
 The [2026-10-27 audit](RELEASE-AUDIT-2026-10-27.md) is a historical findings report. Rc.2 implements the shared backlog: labeled price inputs, named removable selections, scoped category brand routes, compact stock/sale/option states, live cart feedback, submenu controls, editable homepage/key specs, Persian plugin tools and an SEO/schema integration. Search lifecycle fixes and isolated integration CI are included. This is not a full accessibility or production sign-off.
 

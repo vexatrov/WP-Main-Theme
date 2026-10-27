@@ -28,6 +28,9 @@ function wpmain_customize_register( $customizer ) {
 	$customizer->add_control( 'wpmain_home_products_first', array( 'label' => __( 'Show products before categories', 'wp-main-theme' ), 'section' => 'wpmain_storefront', 'type' => 'checkbox' ) );
 	$customizer->add_setting( 'wpmain_hero_image', array( 'default' => 0, 'sanitize_callback' => 'absint' ) );
 	$customizer->add_control( new WP_Customize_Media_Control( $customizer, 'wpmain_hero_image', array( 'label' => __( 'Hero image', 'wp-main-theme' ), 'section' => 'wpmain_storefront', 'mime_type' => 'image' ) ) );
+	$customizer->add_section( 'wpmain_product_information', array( 'title' => __( 'Product store information', 'wp-main-theme' ), 'priority' => 36 ) );
+	$customizer->add_setting( 'wpmain_product_reassurance', array( 'default' => '', 'sanitize_callback' => 'wpmain_product_reassurance_messages' ) );
+	$customizer->add_control( 'wpmain_product_reassurance', array( 'label' => __( 'Product information boxes', 'wp-main-theme' ), 'description' => __( 'Up to four messages, one per line. Shown on every product. Examples: Prices are up to date; one-day Tehran / two-day other-city delivery; 100% original products; warranty and support. Enter the statements that apply to your store.', 'wp-main-theme' ), 'section' => 'wpmain_product_information', 'type' => 'textarea' ) );
 	$customizer->add_section( 'wpmain_footer', array( 'title' => __( 'Footer information', 'wp-main-theme' ), 'priority' => 36 ) );
 	$customizer->add_setting( 'wpmain_footer_about', array( 'default' => '', 'sanitize_callback' => 'sanitize_textarea_field' ) );
 	$customizer->add_control( 'wpmain_footer_about', array( 'label' => __( 'Short brand introduction', 'wp-main-theme' ), 'description' => __( 'A short, useful introduction for visitors. Avoid repeating keywords.', 'wp-main-theme' ), 'section' => 'wpmain_footer', 'type' => 'textarea' ) );

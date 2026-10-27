@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-rc.3 / WP Store Catalog 0.4.1
+
+- Show only unavailable stock status over full-width product imagery, dim unavailable images and reduce the area below to title, price and purchase action. Available products have no badge. Variable actions open a lazy native WooCommerce form; no-JavaScript links still open the product.
+- Added current category/brand artwork beside archive headings and clearer category navigation while retaining native brand filters and brand-scoped category links.
+- Renamed additional information to Specifications, added shopper-selected illustrated comparisons with curated recommendations, and grouped compatible/alternative/same-brand native product cards into compact horizontal sliders. Category and brand headings link to their respective archives.
+- Added up to four shared product-message boxes editable in the Customizer; reusable defaults remain empty. Local fictional fixtures demonstrate the owner's example wording and sample archive artwork.
+- Comparison query URLs follow the fallback SEO owner's noindex policy. Real stock, delivery, authenticity and warranty copy remain editable per shop.
+
 ## 1.0.0-rc.2 / WP Store Catalog 0.4.0
 
 - Replaced the classic price-slider widget output with labeled native GET fields, added individually removable brand/price/attribute/rating selections and retained brand context through category navigation. Category brand scoping is bounded; large catalogs retain broader choices with empty-result recovery.

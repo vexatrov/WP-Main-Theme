@@ -11,6 +11,7 @@ async function page(path) {
 	return html;
 }
 const shop = await page('/shop/');
+assert.match(shop, /catalog-route-label/);
 const brand = shop.match(/<select id="catalog-brand"[\s\S]+?<option value="(\d+)"/)?.[1];
 assert.ok(brand, 'Fictional brand fixture exists');
 const html = await page(`/shop/?filter_product_brand=${brand}&min_price=100&max_price=900000&rating_filter=4,5&orderby=price&s=pen&post_type=product`);
@@ -33,10 +34,15 @@ for (const [, href] of chips.matchAll(/href="([^"]+)"/g)) {
 const brandTerm = JSON.parse(await page(`/?rest_route=/wp/v2/product_brand/${brand}`));
 assert.ok(brandTerm.slug, 'Native brand REST fixture is exposed');
 const brandArchive = await page(`/?taxonomy=product_brand&term=${encodeURIComponent(brandTerm.slug)}`);
-const category = brandArchive.match(/class="catalog-categories"[\s\S]+?<a href="([^"]+)"/)?.[1];
+assert.doesNotMatch(brandArchive, /id="catalog-brand"/, 'Brand archives offer category routes without a second brand selector');
+assert.match(brandArchive, /catalog-archive-thumbnail/, 'Fictional brand artwork appears beside its archive heading');
+const category = [...(brandArchive.match(/class="catalog-categories"[\s\S]+?<\/nav>/)?.[0] || '').matchAll(/<a href="([^"]+)"/g)].map(match=>match[1]).find(href=>href.includes('/machines/'));
 assert.ok(category, 'Brand archive category drilldown exists');
 assert.equal(new URL(decode(category)).searchParams.get('filter_product_brand'), brand);
 const scoped = await page(decode(category));
+assert.match(scoped, /id="catalog-brand"/, 'Category archive offers native brand filtering');
+assert.match(scoped, /catalog-archive-thumbnail/, 'Category artwork appears beside the native heading');
+assert.match(scoped, /catalog-all-categories/, 'Category archive has a clear broader-category route');
 for (const [, href] of (scoped.match(/class="catalog-categories"[\s\S]+?<\/nav>/)?.[0] || '').matchAll(/href="([^"]+)"/g)) {
 	assert.equal(new URL(decode(href)).searchParams.get('filter_product_brand'), brand);
 }

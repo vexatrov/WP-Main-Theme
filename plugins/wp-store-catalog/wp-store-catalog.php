@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Store Catalog
  * Description: Product guidance, relationships, Persian search and lightweight storefront SEO for the shared storefront.
- * Version: 0.4.0
+ * Version: 0.4.1
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  * Text Domain: wp-store-catalog

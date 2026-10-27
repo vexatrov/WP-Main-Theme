@@ -2,6 +2,10 @@
 
 Use WooCommerce's native categories, product brands and global attributes. Category artwork comes from the category thumbnail; parent categories show child routes and leaf categories offer sibling routes. WooCommerce owns descendant-aware catalog queries, sorting and pagination.
 
+The shop shows a labeled category rail and brand filter. Brand archives keep the current brand and offer category routes, without a second brand selector; category archives offer the brand filter and an All categories route. These category routes preserve the selected brand. The category rail uses ordinary keyboard-accessible links and a visible horizontal scrollbar when needed.
+
+Category and brand archive headings show their own native `thumbnail_id` image beside the WooCommerce title. Set category artwork in Products > Categories and brand artwork in Products > Brands. A missing attachment or unset thumbnail leaves the title alone; the theme never invents a logo. Heading artwork is decorative because the adjacent heading names the term.
+
 Edit Products > Categories > Edit to configure:
 
 - **Filter attribute slugs**: up to four registered global attribute slugs, e.g. `system, diameter, pack-size`, without the `pa_` prefix. Empty settings inherit the nearest configured parent. A machine category and a beauty-tool category can therefore use different facets. Saving discards unregistered attributes.

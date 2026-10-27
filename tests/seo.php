@@ -70,7 +70,7 @@ foreach ( array( 'search', '404', 'cart', 'checkout', 'account' ) as $scenario )
 $GLOBALS['context'] = array( 'archive' => true, 'paged' => 3 );
 $_GET = array( 'filter_pa_size' => array( 'unexpected' ) );
 check( true === wpmain_catalog_seo_robots( array() )['noindex'], 'Filter keys need not have scalar values to be excluded.' );
-foreach ( array( 'query_type_pa_size', 'min_price', 'max_price', 'rating_filter', 'stock_status', 'on_sale', 'orderby' ) as $key ) {
+foreach ( array( 'query_type_pa_size', 'min_price', 'max_price', 'rating_filter', 'stock_status', 'on_sale', 'orderby', 'compare_product' ) as $key ) {
 	$_GET = array( $key => 'x' ); check( wpmain_catalog_seo_noindex(), $key . ' excludes the parameterized page.' );
 }
 $_GET = array( 'paged' => 3, 'utm_source' => 'newsletter' );

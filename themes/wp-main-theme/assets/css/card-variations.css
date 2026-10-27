@@ -1,0 +1,12 @@
+.card-options { width: min(38rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); padding: 1.25rem; overflow: auto; color: var(--brand-text); background: var(--brand-bg); border: 1px solid var(--brand-border); border-radius: var(--brand-radius); }
+.card-options::backdrop { background: rgb(0 0 0 / .5); }
+.card-options-header { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+.card-options-header h2 { margin: 0; font-size: 1.2rem; }
+.card-options-header button { min-width: 44px; min-height: 44px; padding: .4rem .65rem; background: var(--brand-surface); color: var(--brand-text); border: 1px solid var(--brand-border); }
+.card-options .variations { width: 100%; margin-block: 1rem; border: 0; }
+.card-options .variations th, .card-options .variations td { text-align: start; padding: .35rem; }
+.card-options .variations select { width: 100%; min-height: 44px; }
+.card-options .single_add_to_cart_button { min-height: 44px; margin-block: .75rem; }
+.card-options .quantity input { min-height: 44px; max-width: 7rem; }
+.card-options [data-card-options-link] { display: inline-block; padding-block: .6rem; }
+.card-options [data-card-options-status]:empty { display: none; }
