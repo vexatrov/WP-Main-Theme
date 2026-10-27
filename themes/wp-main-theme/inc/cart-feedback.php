@@ -12,3 +12,13 @@ function wpmain_cart_feedback_settings() {
 		'error' => __( 'Could not add this item. Please try again or open the product.', 'wp-main-theme' ),
 	);
 }
+
+/** Only uncached WooCommerce AJAX responses contain a session-specific count. */
+function wpmain_cart_count_fragment( $fragments ) {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) { return $fragments; }
+	$count = max( 0, (int) WC()->cart->get_cart_contents_count() );
+	$label = sprintf( __( 'Cart items: %s', 'wp-main-theme' ), $count );
+	$fragments['span[data-cart-count]'] = '<span class="cart-count" data-cart-count data-count="' . esc_attr( $count ) . '" aria-label="' . esc_attr( $label ) . '">' . esc_html( $count ) . '</span>';
+	return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'wpmain_cart_count_fragment' );

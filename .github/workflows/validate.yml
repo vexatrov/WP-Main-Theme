@@ -25,6 +25,7 @@ jobs:
           php tests/catalog-filters.php
           php tests/merchandising.php
           php tests/seo.php
+          php tests/cart-feedback.php
   assets-and-package:
     runs-on: windows-latest
     steps:

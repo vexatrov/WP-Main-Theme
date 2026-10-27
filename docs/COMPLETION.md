@@ -6,11 +6,12 @@ The [2026-10-27 audit](RELEASE-AUDIT-2026-10-27.md) is a historical findings rep
 
 ## Rc.2 verification and remaining gates
 
-- Offline PHP syntax and six contract suites pass, as do navigation/submenu, cart request race/error and search suggestion tests. Both Persian bundles pass source coverage, placeholders and committed-MO freshness checks.
-- Custom CSS is approximately **9.34 KB gzip** and JS **3.44 KB gzip**, excluding core/WooCommerce/media. These are asset budgets, not Core Web Vitals results.
+- Offline PHP syntax and seven contract suites pass, as do navigation/submenu, cart request race/error and search suggestion tests. Both Persian bundles pass source coverage, placeholders and committed-MO freshness checks.
+- Custom CSS is approximately **9.49 KB gzip** and JS **3.78 KB gzip**, excluding core/WooCommerce/media. These are asset budgets, not Core Web Vitals results.
 - A read-only runtime release script verifies head/assets, numeric price controls, cache-neutral cart placeholders and IRT-to-IRR schema amounts against the fictional Store API. The fresh integration runner boots an isolated database, captures test mail and runs lifecycle/shopping checks sequentially. See VALIDATION.md for actual run outcomes; the presence of a script is not a passing test claim.
 - Current local Windows/WASM requests have intermittent long startup/WordPress initialization delays. Hosted MySQL/load tests, real Safari/iOS/Android, screen readers, full zoom review, gateway callbacks, actual delivery/reset email and restore remain release gates.
 - Configure any external SEO owner deliberately: the fallback yields to recognized plugins. The schema adapter affects native Woo Product JSON-LD only; feeds and gateway conversion need their own verified integration. See SEO.md.
+- Fresh lifecycle fixtures and the complete Linux integration/commerce CI suite passed for commit `3e783f5`; local release/schema and catalog-polish HTTP checks also passed. The updated shop has been measured across six screen widths and its native add-to-cart status/alignment checked in the browser. See VALIDATION.md for exact evidence and scope.
 
 The table below retains the earlier rc.1 functional evidence; new rc.2 checks are recorded above and in VALIDATION.md.
 

@@ -4,6 +4,7 @@
 
 - Replaced the classic price-slider widget output with labeled native GET fields, added individually removable brand/price/attribute/rating selections and retained brand context through category navigation. Category brand scoping is bounded; large catalogs retain broader choices with empty-result recovery.
 - Added compact card stock/option cues, stacked sale prices, an updating cache-neutral cart count/status, native AJAX/Blocks event handling and per-branch keyboard submenu disclosures. Added-to-cart links reuse the stock row to avoid increasing card height.
+- Reused authoritative native cart-count fragments after classic mutations, avoiding redundant API reads; retained safe initial/Blocks fallbacks and a visible mobile badge.
 - Added homepage category/product selection, latest/featured sources and section ordering; excluded protected products in all sources. Product editors can select/order four existing visible key specifications.
 - Bundled Persian catalog administration translations and repeatable source-coverage/placeholder/MO checks for both text domains.
 - Added an SEO fallback that yields to recognized SEO owners, preserves canonical pagination/plain routes, handles robots/sitemap utility pages and emits escaped public sharing metadata. WooCommerce remains the Product schema generator; an idempotent plugin adapter converts marked IRT schema money to matching IRR amounts without changing store/order/gateway prices.
