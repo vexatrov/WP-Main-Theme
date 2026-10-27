@@ -4,6 +4,8 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
+Latest review: [2026-10-27 audit and prioritized remaining work](docs/RELEASE-AUDIT-2026-10-27.md), including shared UX/accessibility fixes and store-specific release gates.
+
 Version **1.0.0-rc.1** is the shared-theme release candidate: Persian product search with aliases/suggestions, inherited category facets and buying guidance, compact product cards, product purchase states/specifications/recommendations, article contents/product links, and support/account/cart/order layouts. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally

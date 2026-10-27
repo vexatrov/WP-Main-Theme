@@ -2,6 +2,8 @@
 
 Release: **1.0.0-rc.1**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
 
+The [2026-10-27 release audit](RELEASE-AUDIT-2026-10-27.md) adds a ranked improvement backlog. It identified a price-widget accessibility gap, styling inconsistencies and an IRT/schema integration risk alongside catalog/cart/editor refinements. Those recommendations are not implemented yet; the six-area feature coverage below must not be read as a full accessibility or production sign-off.
+
 | Requested area | Implemented | Validation / remaining gate |
 | --- | --- | --- |
 | Persian search | Stored normalized product documents, Persian/Arabic letters/digits/spacing, product and shared brand aliases, visible variation SKUs, exact-SKU/title preference, grouped suggestions, cancelled stale requests, keyboard/fallback behavior, protected index rebuild admin action. | PHP query contracts, HTTP Persian/SKU/alias results and suggestions pass. Suggestion keyboard/race/error behavior has a focused JS unit test. Real query relevance and a browser/screen-reader pass remain store QA. |
