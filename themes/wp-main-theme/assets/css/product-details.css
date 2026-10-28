@@ -1,14 +1,19 @@
 /* Product guidance, selectable model comparisons and native recommendation rails. */
-.product-recommendation-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; clear: both; margin-block: 1.5rem; }
+.product-recommendation-groups { --recommendation-card-width: clamp(10rem, 19vw, 15rem); display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; clear: both; margin-block: 1.5rem; }
 .product-recommendation-groups .product-resources { min-width: 0; padding-block: 0; }
-.product-recommendation-groups .product-resources > h2 { min-height: 3em; margin: 0 0 .75rem; font-size: 1.15rem; line-height: 1.5; }
+.product-recommendation-groups .product-resources > h2 { margin: 0 0 .65rem; padding-block-start: 1rem; border-block-start: 1px solid var(--brand-border); font-size: clamp(1.1rem, 1.8vw, 1.35rem); line-height: 1.5; }
 .product-recommendation-groups .product-resources > h2 a { text-decoration: none; }
-.product-recommendation-slider { overflow-x: auto; max-width: 100%; padding-bottom: .75rem; scroll-snap-type: x proximity; }
-.woocommerce .product-recommendation-slider ul.products { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(9.5rem, 62%); gap: .8rem; margin: 0; }
+.product-recommendation-groups .product-resources > h2 a:hover { text-decoration: underline; }
+.product-recommendation-slider { overflow-x: auto; max-width: 100%; padding-block: .2rem .6rem; padding-inline: .15rem; scroll-snap-type: x proximity; scroll-padding-inline: .15rem; overscroll-behavior-inline: contain; }
+.woocommerce .product-recommendation-slider ul.products { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--recommendation-card-width); align-items: stretch; gap: 1rem; margin: 0; }
 .woocommerce .product-recommendation-slider ul.products::before,
 .woocommerce .product-recommendation-slider ul.products::after { display: none; }
 .woocommerce .product-recommendation-slider ul.products li.product { width: auto; margin: 0; float: none; scroll-snap-align: start; }
 .product-recommendation-slider:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+.product-guides { margin-block: 1rem 1.5rem; padding-block: 0; }
+.product-guides > h2 { margin: 0 0 .75rem; font-size: clamp(1.1rem, 1.8vw, 1.35rem); line-height: 1.5; }
+.product-guides .product-guide-links { margin: 0; gap: .75rem; }
+.product-guides .product-guide-links a { padding: .8rem 1rem; }
 .product-comparison-form { margin-block: 1.5rem; }
 .product-comparison-form fieldset { padding: 0; margin: 0 0 1rem; border: 0; min-width: 0; }
 .product-comparison-form legend { font-weight: 700; }
@@ -20,15 +25,12 @@
 .product-comparison-choice img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .product-comparison-choice small { color: var(--brand-muted); }
 .product-comparison-form button { min-height: 44px; }
+.product-faq summary { min-height: 44px; }
 .product-comparison thead th img { display: block; width: 7rem; height: 7rem; max-width: 100%; object-fit: contain; margin-block-end: .75rem; }
 .product-reassurance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
 .product-reassurance li { padding: .8rem; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); background: var(--brand-bg); font-size: .9rem; line-height: 1.7; overflow-wrap: anywhere; }
-@media (max-width: 64rem) {
-	.product-recommendation-groups { grid-template-columns: 1fr; gap: 1.5rem; }
-	.product-recommendation-groups .product-resources > h2 { min-height: 0; }
-	.woocommerce .product-recommendation-slider ul.products { grid-auto-columns: minmax(10rem, 30%); }
-}
 @media (max-width: 40rem) {
-	.woocommerce .product-recommendation-slider ul.products { grid-auto-columns: minmax(9rem, 43%); }
+	.product-recommendation-groups { gap: 1.25rem; }
+	.woocommerce .product-recommendation-slider ul.products { gap: .75rem; }
 	.product-reassurance { grid-template-columns: 1fr; }
 }

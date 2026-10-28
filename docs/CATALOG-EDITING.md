@@ -6,6 +6,12 @@ The shop shows a labeled category rail and brand filter. Brand archives keep the
 
 Category and brand archive headings show their own native `thumbnail_id` image beside the WooCommerce title. Set category artwork in Products > Categories and brand artwork in Products > Brands. A missing attachment or unset thumbnail leaves the title alone; the theme never invents a logo. Heading artwork is decorative because the adjacent heading names the term.
 
+Both category and brand add/edit forms also provide **Short archive introduction** (320 plain-text characters), **Archive facts** (up to three verified lines, 160 characters each), and **Detailed archive buying guide** (safe HTML). The durable plugin stores `_wpmain_archive_intro` as a string, `_wpmain_archive_highlights` as up to three strings in an array, and `_wpmain_archive_content` as sanitized HTML. Textarea facts are entered one per line. These fields stay with taxonomy data when the theme changes; partial/non-editor saves preserve them.
+
+The short introduction and facts appear beneath the archive heading. A blank introduction uses a shortened plain-text version of the native description; its full text is not duplicated above the grid. Detailed content appears after products and pagination, including no-result pages. Use factual choosing advice, evidence-backed comparisons and `<details><summary>Question</summary><p>Answer</p></details>` for optional FAQs; headings, lists and tables are supported. Do not add a second page-title heading, fabricated supplier claims, shortcode-driven private content or repetitive keyword paragraphs. Blank detailed category content retains the legacy Buying guidance field and article links. Brands do not borrow category guidance.
+
+Parent category pages explicitly show child-category routes and keep WooCommerce's native descendant-aware product query: assigned child products remain in the parent's listing. Leaf pages show siblings instead. Brand scope survives those routes. The theme never replaces this behavior with direct-parent-only custom product queries.
+
 Edit Products > Categories > Edit to configure:
 
 - **Filter attribute slugs**: up to four registered global attribute slugs, e.g. `system, diameter, pack-size`, without the `pa_` prefix. Empty settings inherit the nearest configured parent. A machine category and a beauty-tool category can therefore use different facets. Saving discards unregistered attributes.

@@ -22,7 +22,12 @@ assert.match(html, /product-comparison-choice/, 'Comparison offers selectable il
 assert.match(html, /name="compare_product\[\]"/, 'Comparison uses native GET choices');
 assert.match(html, /id="tab-title-additional_information"[\s\S]*?مشخصات/, 'Native additional-information title is Specifications');
 assert.match(html, /product-same-brand-title/, 'Assigned brand has its own product rail');
-assert.equal((html.match(/class="product-recommendation-slider"/g) || []).length, 3, 'Fixture shows three adjacent recommendation rails');
+assert.equal((html.match(/class="product-recommendation-slider"/g) || []).length, 3, 'Fixture shows three consistent recommendation rails');
+const guidePosition=html.indexOf('id="product-guides-title"');
+const recommendationsPosition=html.indexOf('class="product-recommendation-groups"');
+const lastTabPosition=html.lastIndexOf('id="tab-');
+assert.ok(lastTabPosition>0 && guidePosition>lastTabPosition && recommendationsPosition>guidePosition, 'All detail tabs precede buying guides, followed by recommendations');
+assert.match(html,/product-purchase-layout/, 'Native gallery and summary share one responsive overview');
 const reassurance = html.match(/<ul class="product-reassurance"[^>]*>([\s\S]*?)<\/ul>/)?.[1];
 assert.equal((reassurance?.match(/<li>/g) || []).length, 4, 'Owner sample messages appear in four shared boxes');
 const checkbox = html.match(/type="checkbox" name="compare_product\[\]" value="(\d+)"/)?.[1];

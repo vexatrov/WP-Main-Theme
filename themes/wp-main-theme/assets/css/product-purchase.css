@@ -1,12 +1,34 @@
 /* Single-product purchase information; loaded only on product detail pages. */
+.single-product.woocommerce div.product .product-purchase-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	align-items: stretch;
+	gap: clamp(1.25rem, 3vw, 2.5rem);
+	margin-block: .5rem 2rem;
+}
+.single-product.woocommerce div.product .product-purchase-layout > .woocommerce-product-gallery,
+.single-product.woocommerce div.product .product-purchase-layout > .summary {
+	float: none;
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+}
+.single-product.woocommerce div.product .product-purchase-layout > .woocommerce-product-gallery {
+	align-self: stretch;
+	border: 1px solid var(--brand-border);
+	border-radius: var(--brand-radius);
+	background: var(--product-image-surface);
+}
+.single-product.woocommerce div.product .product-purchase-layout .woocommerce-product-gallery__image img { width: 100%; height: auto; }
 .single-product.woocommerce div.product div.summary {
-	padding: clamp(1.25rem, 3vw, 2rem);
+	padding: clamp(1rem, 2vw, 1.5rem);
 	border: 1px solid var(--brand-border);
 	border-radius: var(--brand-radius);
 	background: var(--brand-surface);
 }
 .single-product.woocommerce div.product .product_title {
 	margin: 0 0 .75rem;
+	font-size: clamp(1.5rem, 2.2vw, 2.25rem);
 	line-height: 1.25;
 }
 .single-product.woocommerce div.product .summary > .price {
@@ -18,7 +40,7 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 0;
-	margin: 1.25rem 0;
+	margin: 1rem 0;
 	border-block: 1px solid var(--brand-border);
 }
 .single-product .wpmain-product-key-specs > .wpmain-product-key-specs__heading {
@@ -62,6 +84,7 @@
 .single-product.woocommerce .summary form.cart .single_add_to_cart_button { float: none; margin: 0; }
 .single-product.woocommerce .summary form.cart .single_add_to_cart_button { max-width: 100%; white-space: normal; line-height: 1.5; }
 @media (max-width: 48rem) {
+	.single-product.woocommerce div.product .product-purchase-layout { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 1.25rem; margin-block-end: 1.5rem; }
 	.single-product.woocommerce div.product div.summary { padding: 1.1rem; }
 	.single-product .wpmain-product-key-specs__item { grid-template-columns: minmax(6rem, .8fr) minmax(0, 1.2fr); gap: .75rem; }
 }

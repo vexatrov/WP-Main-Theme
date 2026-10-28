@@ -1,5 +1,17 @@
 # Validation
 
+## Rc.4 — 2026-10-28
+
+Repository PHP syntax and all eleven offline contracts pass, including native layout hook order and category/brand editorial sanitation, nonce/capability checks, legacy fallback and empty states. Navigation, search, cart feedback, card options and SEO ownership tests pass. Translation checks cover 133 theme and 37 plugin messages. Custom CSS is 11.83 KB gzip and JS 4.98 KB gzip, excluding core/WooCommerce/media; both remain within their budgets.
+
+The guarded complete-catalog fixture ran successfully on the persistent local preview. Read-only checks passed for every one of the ten fictional parent products: descriptions, native specifications, usage/audience, FAQs, sample reviews, galleries, comparison/guide links and preserved variable/sale/unpriced/unavailable states. Product-detail HTTP checks verify actual unique IDs and the order tabs → guides → recommendations. Archive checks passed native parent inclusion of child-only products, child links, brand/category scope, top intro/facts and lower comparison/FAQ content, including an empty filtered result. No fresh PHP errors appeared in the preview debug log.
+
+Browser measurements of the populated product at 320/390/768/1024/1366/1440px showed no horizontal document overflow. Gallery/summary columns share their top/bottom bounds at desktop widths; smaller screens stack them. Product imagery remains square and native gallery controls remain present. All recommendation groups have matching card widths/heights within each viewport and 44px purchase buttons. Reviews/FAQs were checked at phone widths; the mobile comparison scrolls within its own container. Native tabs precede guides and consistent recommendation rows. Measurements and screenshots are local/ignored under `.local/review/rc4-*`.
+
+Category and brand pages were also checked at 320/768/1440px without horizontal overflow. Real term artwork, category routes and both editorial regions were present; brand pages omit a second brand selector. Native category FAQs opened correctly at 320px. A focused native variation-payload check confirmed distinct image IDs/SKUs for 30/60ml and retained prices. The fixture initially read WooCommerce's inherited SKU getter; using the stored `edit` context fixed the sample SKU assignment. The full-demo regression now checks both variation SKUs and image IDs.
+
+This is a responsive review in the in-app browser, not a certification of every physical device, third-party extension, screen reader or production host. All review text and generated images are explicitly fictional preview data. No test content, uploads, database or captured mail is included in the deployable ZIPs.
+
 ## Rc.3 — 2026-10-27
 
 All nine offline PHP contracts and repository syntax pass, including bounded public comparison choices, escaped message boxes, native variation template/global restoration, private/hidden/malformed picker rejection and unique contextual-help IDs when a model appears in multiple sliders. Navigation, cart feedback, search UI, SEO ownership and the new picker interaction tests pass. Both Persian bundles pass coverage/placeholder/MO checks. Custom asset budgets remain below 30 KB CSS / 8 KB JS gzip.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-rc.4 / WP Store Catalog 0.5.0
+
+- Aligned the native gallery and purchase summary in one responsive row with matching desktop column bounds, natural image sizing and stacked phone/tablet layouts.
+- Moved buying guides directly below all product tabs, followed by full-width recommendation rows. All recommendation groups share the same responsive card width and square image sizing.
+- Added protected category/brand editorial fields for short introductions, three optional factual highlights and safe rich buying guidance below products/pagination. Native parent queries retain child products; child navigation and brand filtering remain intact.
+- Completed the guarded fictional catalog: ten descriptions/specification sets, thirty FAQs, ten explicitly fictional reviews, twenty gallery diagrams, guide links and preserved sale/enquiry/unavailable states. Existing 30/60ml variations have distinct sample images and SKUs; their prices and attributes remain native.
+- Added layout hook-order, archive editorial security/rendering and full-demo HTTP regression checks. Actual validation and responsive evidence are recorded in docs/VALIDATION.md.
+
 ## 1.0.0-rc.3 / WP Store Catalog 0.4.1
 
 - Show only unavailable stock status over full-width product imagery, dim unavailable images and reduce the area below to title, price and purchase action. Available products have no badge. Variable actions open a lazy native WooCommerce form; no-JavaScript links still open the product.

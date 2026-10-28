@@ -13,6 +13,7 @@ const layoutPreview = readFileSync(new URL('../dev/layout-preview.php', import.m
 const variablePreview = readFileSync(new URL('../dev/variable-preview.php', import.meta.url), 'utf8');
 const qualityPreview = readFileSync(new URL('../dev/quality-preview.php', import.meta.url), 'utf8');
 const storefrontPreview = readFileSync(new URL('../dev/storefront-preview.php', import.meta.url), 'utf8');
+const completeCatalogPreview = readFileSync(new URL('../dev/complete-catalog-preview.php', import.meta.url), 'utf8');
 mkdirSync('.local/cache', { recursive: true });
 async function archive(name, url) {
 	const path = resolve('.local/cache', name);
@@ -58,6 +59,7 @@ const site = await runCLI({
 			{ step: 'runPHP', code: variablePreview },
 			{ step: 'runPHP', code: qualityPreview },
 			{ step: 'runPHP', code: storefrontPreview },
+			{ step: 'runPHP', code: completeCatalogPreview },
 		],
 	},
 });

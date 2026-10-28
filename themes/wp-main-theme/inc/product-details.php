@@ -30,6 +30,24 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 	return array_merge( $tabs, $custom );
 } );
 
+/** Native gallery and summary share one layout without copying Woo templates. */
+function wpmain_product_purchase_layout_start() {
+	echo '<div class="product-purchase-layout">';
+}
+function wpmain_product_purchase_layout_end() {
+	echo '</div>';
+}
+add_action( 'woocommerce_before_single_product_summary', 'wpmain_product_purchase_layout_start', 5 );
+add_action( 'woocommerce_after_single_product_summary', 'wpmain_product_purchase_layout_end', 1 );
+
+function wpmain_product_guides() {
+	global $product;
+	if ( ! $product || ! function_exists( 'wpmain_catalog_guidance' ) || post_password_required() ) { return; }
+	$data = wpmain_catalog_guidance( $product->get_id() );
+	get_template_part( 'template-parts/product/guides', null, array( 'guides' => $data['guides'] ) );
+}
+add_action( 'woocommerce_after_single_product_summary', 'wpmain_product_guides', 11 );
+
 function wpmain_product_resources() {
 	global $product;
 	if ( ! $product || ! function_exists( 'wpmain_catalog_guidance' ) || post_password_required() ) { return; }
@@ -53,9 +71,8 @@ function wpmain_product_resources() {
 		foreach ( $groups as $group ) { get_template_part( 'template-parts/product/recommendations', null, $group ); }
 		echo '</div>';
 	}
-	get_template_part( 'template-parts/product/guides', null, array( 'guides' => $data['guides'] ) );
 }
-add_action( 'woocommerce_after_single_product_summary', 'wpmain_product_resources', 8 );
+add_action( 'woocommerce_after_single_product_summary', 'wpmain_product_resources', 12 );
 
 // Curated alternatives replace generic related items only when visible choices exist.
 add_filter( 'woocommerce_related_products', function ( $ids, $id ) {

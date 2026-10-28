@@ -6,7 +6,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 Latest review: [2026-10-27 audit](docs/RELEASE-AUDIT-2026-10-27.md). Its shared implementation work is included in rc.2; current verification and store-specific gates are recorded in the completion report.
 
-Version **1.0.0-rc.3**, with WP Store Catalog **0.4.1**, includes image stock badges, lazy native variation picking from grids, category/brand archive artwork, selectable illustrated comparisons, compact recommendation sliders and editable product information boxes, alongside the shared search/filter/cart/SEO foundation. See the [completion report and remaining release gates](docs/COMPLETION.md). Local functional checks use fictional inventory and tomans (IRT). Brand designs, a real staging host, gateway callbacks and real catalog/policy content remain store-specific launch work. The three Instagram references are saved in [brand references](docs/BRANDS.md).
+Version **1.0.0-rc.4**, with WP Store Catalog **0.5.0**, adds aligned gallery/summary columns, buying guides and consistent recommendation rows below the product tabs, and editable category/brand introductions, facts and detailed buying guidance. All ten fictional products have descriptions, specifications, FAQs, reviews and gallery examples. Image stock badges, grid variation picking, comparisons and the shared search/filter/cart/SEO foundation remain included. See the [completion report and remaining release gates](docs/COMPLETION.md). Local checks use fictional inventory and tomans (IRT). Brand designs, hosting, gateway callbacks and real catalog/policy content remain store-specific launch work. The Instagram references are saved in [brand references](docs/BRANDS.md).
 
 ## See the theme locally
 

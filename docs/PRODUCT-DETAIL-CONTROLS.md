@@ -14,13 +14,15 @@ Every submitted ID must belong to the bounded candidate set. Draft/private, cata
 
 ## Compact recommendation groups
 
-Three independent groups sit immediately after the main purchase area, before the detailed tabs:
+The native image gallery and purchase summary share an aligned desktop row, then stack on smaller screens. Images keep their natural aspect ratio; column alignment does not stretch or crop the product photograph.
+
+All native detail tabs come next. Buying guides follow the tabs, followed by three independent full-width recommendation rows:
 
 - **Works with this product:** editor-verified compatible products only.
 - **Other options for the same use:** editor-selected alternatives. Its heading links to the product's most-specific category archive.
 - **More from [brand]:** up to four other public products from the first assigned native brand; its heading links to that brand archive. This group does not claim compatibility or equivalent use.
 
-Empty groups stay hidden. Each uses native WooCommerce cards in a horizontal scrolling rail, preserving images, prices and purchase actions. Rails are keyboard focusable and support touch/trackpad scrolling; they have no autoplay or additional JavaScript. Groups sit alongside each other on desktop and stack below 64rem. Existing curated-alternative suppression of generic related products remains; native related products still provide the fallback when no visible alternatives exist. Buying-guide links follow the groups.
+Empty groups stay hidden. Each uses native WooCommerce cards in a horizontal scrolling rail, preserving images, prices and purchase actions. Rails are keyboard focusable and support touch/trackpad scrolling; they have no autoplay or additional JavaScript. Groups use full-width rows at every screen size, with one consistent responsive card width across all groups. Existing curated-alternative suppression of generic related products remains; native related products still provide the fallback when no visible alternatives exist. Buying-guide links sit above the groups and below all tabs.
 
 ## Shared store information boxes
 

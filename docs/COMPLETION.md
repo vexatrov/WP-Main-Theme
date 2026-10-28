@@ -1,6 +1,8 @@
 # Shared-theme completion and release gates
 
-Release: **1.0.0-rc.3**, catalog plugin **0.4.1**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+Release: **1.0.0-rc.4**, catalog plugin **0.5.0**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+
+Rc.4 aligns the gallery/summary columns, places guides and consistent full-width recommendation rows below the tabs, and adds native category/brand editorial controls for concise top copy and rich lower guidance. Parent categories retain native descendant inclusion. All ten fictional products now have complete test content, galleries, FAQs and clearly labeled reviews; the two native volume choices also demonstrate distinct images and SKUs. See DEMO-CONTENT.md and CATALOG-EDITING.md.
 
 Rc.3 adds image stock overlays/dimming, native variation picking directly from product grids, current taxonomy artwork, selectable image comparisons, adjacent compatible/alternative/same-brand sliders and editable store-message boxes. Each store controls its own wording and artwork. See PRODUCT-DETAIL-CONTROLS.md for configuration and VALIDATION.md for actual results.
 

@@ -18,6 +18,37 @@ function wpmain_catalog_archive_thumbnail() {
 }
 add_action( 'woocommerce_archive_description', 'wpmain_catalog_archive_thumbnail', 1 );
 
+/** Replace long native descriptions with one concise introduction on these routes. */
+function wpmain_catalog_archive_editorial_setup() {
+	if ( ! is_product_category() && ! is_tax( 'product_brand' ) ) { return; }
+	remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+	if ( isset( $GLOBALS['WC_Brands'] ) && is_object( $GLOBALS['WC_Brands'] ) ) { remove_action( 'woocommerce_archive_description', array( $GLOBALS['WC_Brands'], 'brand_description' ), 10 ); }
+}
+add_action( 'wp', 'wpmain_catalog_archive_editorial_setup' );
+
+function wpmain_catalog_archive_intro() {
+	if ( ! is_product_category() && ! is_tax( 'product_brand' ) ) { return; }
+	$id = get_queried_object_id();
+	$intro = get_term_meta( $id, '_wpmain_archive_intro', true );
+	if ( ! is_string( $intro ) || '' === trim( $intro ) ) {
+		$term = get_queried_object();
+		$intro = isset( $term->description ) && is_string( $term->description ) ? $term->description : '';
+	}
+	$intro = trim( wp_html_excerpt( wp_strip_all_tags( strip_shortcodes( $intro ) ), 320, '…' ) );
+	$facts = get_term_meta( $id, '_wpmain_archive_highlights', true );
+	$facts = function_exists( 'wpmain_catalog_archive_highlights' ) ? wpmain_catalog_archive_highlights( $facts ) : array();
+	if ( ! $intro && ! $facts ) { return; }
+	echo '<div class="catalog-archive-intro">';
+	if ( $intro ) { echo '<p>' . esc_html( $intro ) . '</p>'; }
+	if ( $facts ) {
+		echo '<ul class="catalog-archive-facts">';
+		foreach ( $facts as $fact ) { echo '<li>' . esc_html( $fact ) . '</li>'; }
+		echo '</ul>';
+	}
+	echo '</div>';
+}
+add_action( 'woocommerce_archive_description', 'wpmain_catalog_archive_intro', 10 );
+
 /** Brand archive and filtered-category routes keep WooCommerce's native brand key. */
 function wpmain_catalog_category_url( $category ) {
 	$url = get_term_link( $category );
@@ -178,15 +209,18 @@ function wpmain_catalog_empty_recovery() {
 add_action( 'woocommerce_no_products_found', 'wpmain_catalog_empty_recovery', 20 );
 
 function wpmain_catalog_buying_guidance() {
-	if ( ! is_product_category() ) { return; }
+	if ( ! is_product_category() && ! is_tax( 'product_brand' ) ) { return; }
 	$id = get_queried_object_id();
-	$copy = get_term_meta( $id, '_wpmain_buying_guide', true );
-	$guides = get_term_meta( $id, '_wpmain_category_guides', true );
+	$content = get_term_meta( $id, '_wpmain_archive_content', true );
+	$content = is_string( $content ) ? trim( wp_kses_post( $content ) ) : '';
+	$copy = is_product_category() ? get_term_meta( $id, '_wpmain_buying_guide', true ) : '';
+	$guides = is_product_category() ? get_term_meta( $id, '_wpmain_category_guides', true ) : array();
 	if ( ! is_string( $copy ) ) { $copy = ''; }
 	$articles = is_array( $guides ) && $guides ? get_posts( array( 'post_type' => 'post', 'post__in' => array_map( 'absint', $guides ), 'orderby' => 'post__in', 'posts_per_page' => 4, 'has_password' => false ) ) : array();
-	if ( ! $copy && ! $articles ) { return; }
-	echo '<section class="category-buying-guide"><h2>' . esc_html__( 'Choosing the right product', 'wp-main-theme' ) . '</h2>';
-	if ( $copy ) { echo '<div class="entry-content">' . wp_kses_post( wpautop( esc_html( $copy ) ) ) . '</div>'; }
+	if ( ! $content && ! $copy && ! $articles ) { return; }
+	echo '<section class="category-buying-guide catalog-archive-content"><h2>' . esc_html__( 'Choosing the right product', 'wp-main-theme' ) . '</h2>';
+	if ( $content ) { echo '<div class="entry-content">' . $content . '</div>'; }
+	elseif ( $copy ) { echo '<div class="entry-content">' . wp_kses_post( wpautop( esc_html( $copy ) ) ) . '</div>'; }
 	if ( $articles ) {
 		echo '<ul class="product-guide-links">';
 		foreach ( $articles as $article ) { echo '<li><a href="' . esc_url( get_permalink( $article ) ) . '">' . esc_html( get_the_title( $article ) ) . '</a></li>'; }

@@ -30,7 +30,7 @@ async function archive(name, url) {
 const language = await archive('wordpress-7.1.3-fa_IR.zip', 'https://downloads.wordpress.org/translation/core/7.1.3/fa_IR.zip');
 const commerceLanguage = await archive('woocommerce-11.2.1-fa_IR.zip', 'https://downloads.wordpress.org/translation/plugin/woocommerce/11.2.1/fa_IR.zip');
 const commerce = await archive('woocommerce-11.2.1.zip', 'https://downloads.wordpress.org/plugin/woocommerce.11.2.1.zip');
-const fixtures = ['seed', 'refresh', 'product-preview', 'layout-preview', 'variable-preview', 'quality-preview', 'storefront-preview', 'search-lifecycle'];
+const fixtures = ['seed', 'refresh', 'product-preview', 'layout-preview', 'variable-preview', 'quality-preview', 'storefront-preview', 'complete-catalog-preview', 'search-lifecycle'];
 let site;
 try {
 	console.log(`Booting fresh WordPress/WooCommerce at ${sitePath} (port ${port})…`);
@@ -69,7 +69,7 @@ try {
 	}
 	assert.ok(ready, 'Isolated demo did not become ready within 120 seconds.');
 	// Each process completes before the next starts; six PHP workers are shared.
-	for (const name of ['smoke-preview', 'test-product-details', 'test-layouts', 'test-cards', 'test-search', 'test-catalog', 'test-catalog-polish', 'test-features', 'test-release', 'test-shopping', 'test-recovery', 'test-order', 'test-cart-feedback', 'test-cart-fragments']) {
+	for (const name of ['smoke-preview', 'test-product-details', 'test-layouts', 'test-cards', 'test-search', 'test-catalog', 'test-catalog-polish', 'test-archive-content', 'test-features', 'test-release', 'test-shopping', 'test-recovery', 'test-order', 'test-cart-feedback', 'test-cart-fragments', 'test-demo-content']) {
 		console.log(`\nRunning ${name}…`);
 		await new Promise((done, reject) => {
 			const child = spawn(process.execPath, [`scripts/${name}.mjs`], {stdio: 'inherit', timeout: 240000});

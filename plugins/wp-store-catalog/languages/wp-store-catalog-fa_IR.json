@@ -29,5 +29,11 @@
   "Answer": "پاسخ",
   "Automatic / unused": "خودکار / استفاده‌نشده",
   "Key specification %d": "مشخصه کلیدی %d",
-  "Choose up to four visible attributes in display order. Leave all slots empty for the first four visible attributes. Save attribute changes before selecting specifications.": "حداکثر چهار ویژگی قابل‌نمایش را به ترتیب نمایش انتخاب کنید. برای استفاده از چهار ویژگی قابل‌نمایش نخست، همه گزینه‌ها را خالی بگذارید. پیش از انتخاب مشخصات، تغییرات ویژگی‌ها را ذخیره کنید."
+  "Choose up to four visible attributes in display order. Leave all slots empty for the first four visible attributes. Save attribute changes before selecting specifications.": "حداکثر چهار ویژگی قابل‌نمایش را به ترتیب نمایش انتخاب کنید. برای استفاده از چهار ویژگی قابل‌نمایش نخست، همه گزینه‌ها را خالی بگذارید. پیش از انتخاب مشخصات، تغییرات ویژگی‌ها را ذخیره کنید.",
+  "Archive facts": "نکته‌های کوتاه دسته‌بندی یا برند",
+  "Detailed archive buying guide": "راهنمای کامل خرید در دسته‌بندی یا برند",
+  "Short archive introduction": "معرفی کوتاه دسته‌بندی یا برند",
+  "Shown below the products. Safe HTML supports headings, paragraphs, lists, tables and details/summary for FAQs. Do not repeat keywords or invent compatibility claims. Blank categories retain existing buying guidance.": "زیر محصولات نمایش داده می‌شود. می‌توانید از عنوان، پاراگراف، فهرست، جدول و details/summary برای پرسش‌های متداول استفاده کنید. از تکرار کلیدواژه و ادعای تأییدنشده سازگاری پرهیز کنید. اگر خالی باشد، راهنمای قبلی دسته‌بندی حفظ می‌شود.",
+  "Up to 320 characters of factual introductory copy. Leave blank to use a short version of the native description.": "معرفی کوتاه و واقعی، حداکثر ۳۲۰ نویسه. اگر خالی باشد، خلاصه توضیحات اصلی نمایش داده می‌شود.",
+  "Up to three short factual lines, 160 characters each. Use only verified product or brand information.": "حداکثر سه نکته کوتاه، هر کدام تا ۱۶۰ نویسه. فقط اطلاعات تأییدشده محصول یا برند را بنویسید."
 }

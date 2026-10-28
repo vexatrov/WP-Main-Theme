@@ -17,7 +17,7 @@ try {
 		if (response.exitCode || response.errors) throw new Error(`PHP syntax ${file}: ${response.errors}`);
 	}
 	console.log('PASS: PHP syntax for all repository themes, plugins, fixtures and contracts.');
-	for (const file of ['tests/catalog.php', 'tests/search.php', 'tests/editorial.php', 'tests/catalog-filters.php', 'tests/merchandising.php', 'tests/seo.php', 'tests/cart-feedback.php', 'tests/product-details.php', 'tests/card-variations.php']) {
+	for (const file of ['tests/catalog.php', 'tests/search.php', 'tests/editorial.php', 'tests/catalog-filters.php', 'tests/merchandising.php', 'tests/seo.php', 'tests/cart-feedback.php', 'tests/product-details.php', 'tests/card-variations.php', 'tests/product-layout.php', 'tests/archive-content.php']) {
 		const response = await php.run({scriptPath: '/workspace/' + file});
 		console.log(response.text);
 		if (response.exitCode || response.errors || /Fatal error|Warning:|Notice:/.test(response.text)) throw new Error(`${file}: ${response.errors}`);

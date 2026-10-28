@@ -28,6 +28,8 @@ jobs:
           php tests/cart-feedback.php
           php tests/product-details.php
           php tests/card-variations.php
+          php tests/product-layout.php
+          php tests/archive-content.php
   assets-and-package:
     runs-on: windows-latest
     steps:
@@ -46,6 +48,8 @@ jobs:
       - run: node --check scripts/test-features.mjs
       - run: node --check scripts/test-release.mjs
       - run: node --check scripts/test-cart-fragments.mjs
+      - run: node --check scripts/test-demo-content.mjs
+      - run: node --check scripts/test-archive-content.mjs
       - run: node --check scripts/run-preview-suite.mjs
       - run: node --check scripts/test-shopping.mjs
       - run: node --check themes/wp-main-theme/assets/js/search.js
