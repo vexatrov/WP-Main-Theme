@@ -18,7 +18,7 @@ async function get(path) {
 const skus = [...Array.from({length: 8}, (_, index) => `PREVIEW-${index + 1}`), 'QA-ENQUIRY', 'QA-OUT'];
 try {
 	const {text: home} = await get('/');
-	assert.ok(home.includes('ابزار تاتو / پیش‌نمایش'), 'Refuse a store without the exact fictional demo identity');
+	assert.ok(home.includes('ابزار تتو / پیش‌نمایش'), 'Refuse a store without the exact fictional demo identity');
 	const {response, text} = await get('/?rest_route=/wc/store/v1/products&per_page=100');
 	const products = JSON.parse(text);
 	assert.equal(Number(response.headers.get('x-wp-total')), 10, 'Disposable demo has exactly ten public parent products');

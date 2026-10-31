@@ -1,6 +1,8 @@
 # Complete fictional preview catalog
 
-`dev/complete-catalog-preview.php` runs after the other preview fixtures at `init` priority **75** (or immediately when loaded after `init`). It requires the exact demo identity **ابزار تاتو / پیش‌نمایش**, the catalog plugin and all ten existing published parent SKUs before it changes anything. It never creates replacement products or deletes records.
+`dev/spelling-preview.php` performs a guarded one-time correction to «تتو» in fictional titles, text, terms, comments and theme copy. It preserves slugs, links, IDs and SKUs, and runs after taxonomy registration or on preview resume. Future fixtures already use the preferred spelling. It is never packaged. `scripts/check-terminology.mjs` prevents regressions in shared UI, fixtures, translations and docs; only legacy migration identifiers are exempt.
+
+`dev/complete-catalog-preview.php` runs after the other preview fixtures at `init` priority **75** (or immediately when loaded after `init`). It requires the exact demo identity **ابزار تتو / پیش‌نمایش**, the catalog plugin and all ten existing published parent SKUs before it changes anything. It never creates replacement products or deletes records.
 
 Completion flag: `wpmain_complete_catalog_preview = '3'`. A temporary atomic option lock `wpmain_complete_catalog_preview_lock` prevents concurrent preview requests from duplicating fixture work; it is cleared in `finally`, with recovery after fifteen minutes if an interrupted process leaves it behind. Re-running completed content is a no-op. Partial runs reuse attachment/review identifiers and can resume without creating another copy of the same fixture artifacts.
 

@@ -2,7 +2,7 @@
 /** Disposable demo layout fixtures; never deploy this file. */
 require_once '/wordpress/wp-load.php';
 function wpmain_preview_layouts() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_layout_preview' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_layout_preview' ) ) { return; }
 	$pages = array(
 		'brands' => array( 'برندها', 'templates/page-brands.php', '<p>برندهای نمونه برای بررسی چیدمان فهرست برندها.</p>' ),
 		'help' => array( 'راهنمای خرید', 'templates/page-help.php', '<details><summary>چطور محصول مناسب را انتخاب کنم؟</summary><p>مشخصات، راهنمای انتخاب و مقایسه محصولات را در صفحه هر محصول ببینید.</p></details><details><summary>چطور سفارش را پیگیری کنم؟</summary><p>از صفحه پیگیری سفارش یا حساب کاربری استفاده کنید.</p><a href="/order-tracking/">پیگیری سفارش</a></details>' ),

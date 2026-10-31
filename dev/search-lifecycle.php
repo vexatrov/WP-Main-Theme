@@ -1,7 +1,7 @@
 <?php
 /** Booted integration checks, only inside the fresh CI demo database. */
 require_once '/wordpress/wp-load.php';
-if ( ! defined( 'WPMAIN_ISOLATED_CI' ) || ! WPMAIN_ISOLATED_CI || 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) ) {
+if ( ! defined( 'WPMAIN_ISOLATED_CI' ) || ! WPMAIN_ISOLATED_CI || 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) ) {
 	throw new RuntimeException( 'Refusing search lifecycle fixtures outside the isolated CI demo.' );
 }
 function wpmain_lifecycle_check( $condition, $message ) {

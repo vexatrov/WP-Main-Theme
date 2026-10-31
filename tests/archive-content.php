@@ -13,11 +13,12 @@ function current_user_can( $cap ) { return $GLOBALS['allowed'] ?? false; }
 function get_taxonomy( $name ) { return in_array( $name, array( 'product_cat', 'product_brand' ), true ) ? (object) array( 'cap' => (object) array( 'edit_terms' => 'manage_product_terms' ) ) : null; }
 function update_term_meta( $id, $key, $value ) { $GLOBALS['meta'][ $id ][ $key ] = $value; }
 function get_term_meta( $id, $key, $single ) { return $GLOBALS['meta'][ $id ][ $key ] ?? ''; }
-function wp_kses_post( $value ) { $GLOBALS['kses_called'] = true; return strip_tags( $value, '<h2><h3><p><ul><li><details><summary><table><tr><th><td>' ); }
+function wp_kses_post( $value ) { $GLOBALS['kses_called'] = true; return strip_tags( $value, '<a><h2><h3><p><ul><li><details><summary><table><tr><th><td>' ); }
 function is_product_category() { return 'product_cat' === ( $GLOBALS['taxonomy'] ?? '' ); }
 function is_tax( $taxonomy ) { return $taxonomy === ( $GLOBALS['taxonomy'] ?? '' ); }
 function get_queried_object_id() { return 7; }
-function get_queried_object() { return (object) array( 'description' => $GLOBALS['native_description'] ?? '' ); }
+class WP_Term { public $description = ''; }
+function get_queried_object() { $term = new WP_Term(); $term->description = $GLOBALS['native_description'] ?? ''; return $term; }
 function wp_strip_all_tags( $value ) { return strip_tags( $value ); }
 function strip_shortcodes( $value ) { return preg_replace( '/\[[^]]*\]/', '', $value ); }
 function esc_html( $value ) { return htmlspecialchars( $value, ENT_QUOTES ); }
@@ -56,6 +57,10 @@ ob_start(); wpmain_catalog_archive_intro(); $html = ob_get_clean();
 check( str_contains( $html, 'Native category overview' ) && ! str_contains( $html, '<b>' ), 'Blank intro uses a plain native-description excerpt' );
 ob_start(); wpmain_catalog_buying_guidance(); $html = ob_get_clean();
 check( str_contains( $html, 'Legacy category advice' ), 'Blank rich content retains old category guidance' );
+$GLOBALS['meta'][7] = array();
+$GLOBALS['native_description'] = '<p>Full native guidance <a href="/guide/">with a useful link</a>.</p>';
+ob_start(); wpmain_catalog_buying_guidance(); $html = ob_get_clean();
+check( str_contains( $html, 'Full native guidance' ) && str_contains( $html, 'href="/guide/"' ), 'Native long description and safe links survive when custom guidance is blank' );
 $GLOBALS['meta'][7] = array(); $GLOBALS['native_description'] = '';
 ob_start(); wpmain_catalog_archive_intro(); wpmain_catalog_buying_guidance(); $html = ob_get_clean();
 check( '' === $html, 'Empty editorial fields render no empty UI' );

@@ -41,7 +41,11 @@ function remove_query_arg( $remove, $url ) {
 	foreach ( $remove as $key ) { unset( $query[ $key ] ); }
 	return $parts['scheme'] . '://' . $parts['host'] . ( $parts['path'] ?? '/' ) . ( $query ? '?' . http_build_query( $query ) : '' );
 }
-class WP_Term { public $taxonomy = 'product_cat'; public $description = 'Real category <b>description</b>.'; }
+class WP_Term { public $term_id = 7; public $taxonomy = 'product_cat'; public $description = 'Real category <b>description</b>.'; }
+function get_post_meta( $id, $key, $single = true ) { return $GLOBALS['post_meta'][ $id ][ $key ] ?? ''; }
+function get_term_meta( $id, $key, $single = true ) { return $GLOBALS['term_meta'][ $id ][ $key ] ?? ''; }
+function has_shortcode( $text, $tag ) { return str_contains( $text, '[' . $tag . ']' ); }
+function is_shop() { return flag( 'shop' ); }
 function get_taxonomy( $name ) { return (object) array( 'query_var' => 'product_cat' ); }
 function get_post( $id ) { return $GLOBALS['posts'][ $id ] ?? null; }
 function get_option( $key ) { return $GLOBALS['options'][ $key ] ?? ''; }
@@ -52,14 +56,23 @@ function wp_html_excerpt( $text, $limit, $suffix ) { return mb_strlen( $text ) >
 function wp_get_document_title() { return 'Store "Title"'; }
 function get_post_thumbnail_id( $id ) { return 1 === $id ? 10 : 0; }
 function wp_get_attachment_image_url( $id, $size ) { return 10 === $id ? 'https://shop.invalid/real.jpg' : false; }
-function get_theme_mod( $key ) { return 0; }
+function get_theme_mod( $key, $default = false ) { return $GLOBALS['mods'][ $key ] ?? $default; }
+function home_url( $path = '/' ) { return 'https://shop.invalid/'; }
+function is_woocommerce() { return flag( 'shop' ) || flag( 'tax' ) || ( flag( 'singular' ) && 1 === get_queried_object_id() ); }
+function wp_json_encode( $value, $flags ) { return json_encode( $value, $flags ); }
+function get_the_title( $post ) { return 'Article </script><script>unsafe</script>'; }
+function get_post_time( ...$args ) { return '2026-10-31T12:00:00+00:00'; }
+function get_post_modified_time( ...$args ) { return '2026-10-31T13:00:00+00:00'; }
+function get_the_author_meta( ...$args ) { return 'Public author'; }
+function get_author_posts_url( $id ) { return 'https://shop.invalid/author/example/'; }
 function esc_attr( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
 function esc_url( $value ) { return esc_attr( $value ); }
-function wc_get_page_id( $key ) { return array( 'cart' => 10, 'checkout' => 11, 'myaccount' => 12 )[ $key ]; }
+function wc_get_page_id( $key ) { return array( 'cart' => 10, 'checkout' => 11, 'myaccount' => 12, 'shop' => 9 )[ $key ] ?? -1; }
 function get_woocommerce_currency() { return $GLOBALS['currency'] ?? 'IRT'; }
 function check( $condition, $message ) { if ( ! $condition ) { throw new RuntimeException( $message ); } }
 function head() { ob_start(); wpmain_catalog_seo_head(); return ob_get_clean(); }
 require __DIR__ . '/../plugins/wp-store-catalog/seo.php';
+require __DIR__ . '/../plugins/wp-store-catalog/seo-schema.php';
 
 foreach ( array( 'search', '404', 'cart', 'checkout', 'account' ) as $scenario ) {
 	$GLOBALS['context'] = array( $scenario => true );
@@ -114,6 +127,49 @@ check( array() === wpmain_catalog_seo_sitemap( array(), 'product' ), 'Product si
 $GLOBALS['overrides']['wpmain_catalog_seo_enabled'] = false;
 check( '' === head() && array() === wpmain_catalog_seo_sitemap( array(), 'page' ), 'External owner disables fallback metadata/sitemap rules.' );
 unset( $GLOBALS['overrides']['wpmain_catalog_seo_enabled'] );
+
+$GLOBALS['context'] = array( 'tax' => true, 'archive' => true );
+$GLOBALS['term_meta'][7]['_wpmain_archive_intro'] = 'Actual short category introduction.';
+check( str_contains( head(), 'Actual short category introduction.' ), 'Archive introductory copy is a metadata fallback.' );
+$GLOBALS['term_meta'][7]['_wpmain_seo_description'] = 'Custom archive metadata.';
+check( str_contains( head(), 'Custom archive metadata.' ), 'Explicit term metadata takes priority.' );
+unset( $GLOBALS['object'], $GLOBALS['term_meta'] );
+$GLOBALS['context'] = array( 'shop' => true, 'archive' => true );
+$GLOBALS['post_meta'][9]['_wpmain_seo_description'] = 'Assigned shop description.';
+check( str_contains( head(), 'Assigned shop description.' ), 'Shop archive reads assigned page overrides.' );
+unset( $GLOBALS['post_meta'] );
+$GLOBALS['options']['page_on_front'] = 9;
+$GLOBALS['posts'][9]->post_content = '';
+$GLOBALS['context'] = array( 'home' => true, 'paged' => 2 );
+$GLOBALS['post_meta'][9]['_wpmain_seo_title'] = 'Custom journal title';
+foreach ( $GLOBALS['hooks'] as $hook ) {
+	if ( 'document_title_parts' === $hook[0] ) {
+		$parts = $hook[1]( array( 'title' => 'Default', 'page' => 'Page 2', 'site' => 'Store' ) );
+		check( 'Custom journal title' === $parts['title'] && 'Page 2' === $parts['page'] && 'Store' === $parts['site'], 'Title override preserves native pagination and site suffix' );
+	}
+}
+$GLOBALS['posts'][5] = (object) array( 'ID' => 5, 'post_type' => 'post', 'post_status' => 'publish', 'post_password' => '', 'post_author' => 2, 'post_content' => '', 'post_excerpt' => '' );
+$GLOBALS['context'] = array( 'singular' => true, 'id' => 5 );
+ob_start(); wpmain_catalog_seo_schema(); $json_html = ob_get_clean();
+check( 1 === substr_count( $json_html, '</script>' ) && str_contains( $json_html, 'BlogPosting' ), 'Article schema encodes script delimiters safely' );
+$graph = json_decode( substr( $json_html, strpos( $json_html, '>' ) + 1, strrpos( $json_html, '</script>' ) - strpos( $json_html, '>' ) - 1 ), true, 512, JSON_THROW_ON_ERROR );
+check( 'BlogPosting' === $graph['@graph'][2]['@type'] && 'Public author' === $graph['@graph'][2]['author']['name'], 'Article uses factual publication dates and public author' );
+$GLOBALS['context'] = array( 'shop' => true, 'front' => true, 'archive' => true );
+ob_start(); wpmain_catalog_seo_schema(); $json_html = ob_get_clean();
+check( ! str_contains( $json_html, 'WebSite' ) && ! str_contains( $json_html, 'Product' ), 'Native WooCommerce schema owners are not duplicated' );
+$GLOBALS['overrides']['wpmain_catalog_seo_enabled'] = false;
+ob_start(); wpmain_catalog_seo_schema(); $json_html = ob_get_clean();
+check( '' === $json_html, 'External SEO owner disables fallback graph' );
+unset( $GLOBALS['overrides']['wpmain_catalog_seo_enabled'] );
+$GLOBALS['context'] = array( 'front' => true, 'singular' => true, 'id' => 9 );
+$GLOBALS['mods']['wpmain_hero_description'] = 'Visible homepage introduction.';
+check( str_contains( head(), 'Visible homepage introduction.' ), 'Empty homepage content uses visible hero copy.' );
+$GLOBALS['context'] = array( 'home' => true );
+check( str_contains( head(), 'Real store tagline.' ), 'Empty journal page uses actual tagline.' );
+$GLOBALS['posts'][9]->post_content = '[woocommerce_order_tracking]';
+$GLOBALS['context'] = array( 'singular' => true, 'id' => 9 );
+check( wpmain_catalog_seo_noindex() && '' === head(), 'Tracking shortcode pages are utility pages regardless of slug.' );
+$GLOBALS['posts'][9]->post_content = '';
 
 $schema = array(
 	'@type' => 'Product', 'sku' => '123',

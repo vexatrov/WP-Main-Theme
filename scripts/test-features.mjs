@@ -12,8 +12,8 @@ const machines = await get('/product-category/machines/');
 assert.match(machines, /filter_system=/);
 assert.match(machines, /category-buying-guide/);
 const narrowed = await get('/product-category/machines/?filter_system=wireless&query_type_system=or');
-assert.match(narrowed, /پن تاتو بی‌سیم/);
-assert.doesNotMatch(narrowed, /<h2 class="woocommerce-loop-product__title">پن تاتو روتاری/);
+assert.match(narrowed, /پن تتو بی‌سیم/);
+assert.doesNotMatch(narrowed, /<h2 class="woocommerce-loop-product__title">پن تتو روتاری/);
 console.log('Checking unpriced, unavailable and sale product states');
 for (const [sku, marker] of [['QA-ENQUIRY','wpmain-product-state--enquiry'],['QA-OUT','wpmain-product-state--unavailable'],['PREVIEW-4','<del']]) {
 	const products = JSON.parse(await get('/?rest_route=/wc/store/v1/products&sku=' + sku));

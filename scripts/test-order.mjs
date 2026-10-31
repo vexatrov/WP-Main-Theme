@@ -8,7 +8,7 @@ async function api(route,{token,method='GET',data}={}) {
 	assert.ok(response.ok,`${route}: ${response.status} ${JSON.stringify(value).slice(0,500)}`);
 	return {value,token:response.headers.get('cart-token')||token};
 }
-const home=await fetch(base,{headers:guest}); assert.ok((await home.text()).includes('ابزار تاتو / پیش‌نمایش'),'Refuse non-demo store');
+const home=await fetch(base,{headers:guest}); assert.ok((await home.text()).includes('ابزار تتو / پیش‌نمایش'),'Refuse non-demo store');
 const product=(await api('products&sku=PREVIEW-1')).value[0];
 const {token}=await api('cart');
 await api('cart/add-item',{token,method:'POST',data:{id:product.id,quantity:1}});

@@ -2,7 +2,7 @@
 /** Disposable sample variations to review range prices and option selection. */
 require_once '/wordpress/wp-load.php';
 function wpmain_preview_variations() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_variable_preview' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_variable_preview' ) ) { return; }
 	$id = wc_get_product_id_by_sku( 'PREVIEW-3' );
 	if ( ! $id ) { return; }
 	wp_set_object_terms( $id, 'variable', 'product_type' );

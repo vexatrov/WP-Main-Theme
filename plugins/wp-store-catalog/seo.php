@@ -13,6 +13,8 @@ function wpmain_catalog_seo_filter_key( $key ) {
 
 function wpmain_catalog_seo_noindex() {
 	if ( is_search() || is_404() || ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) || ( function_exists( 'is_account_page' ) && is_account_page() ) ) { return true; }
+	$post = is_singular() ? wpmain_catalog_seo_public_post( get_queried_object_id() ) : null;
+	if ( $post && has_shortcode( $post->post_content, 'woocommerce_order_tracking' ) ) { return true; }
 	foreach ( array_keys( $_GET ) as $key ) {
 		if ( wpmain_catalog_seo_filter_key( $key ) ) { return true; }
 	}
@@ -53,19 +55,61 @@ function wpmain_catalog_seo_public_post( $id ) {
 }
 
 function wpmain_catalog_seo_description( $post = null ) {
+	$post = $post ?: wpmain_catalog_seo_page();
 	$text = '';
 	if ( $post ) {
-		$text = '' !== trim( $post->post_excerpt ) ? $post->post_excerpt : $post->post_content;
+		$text = wpmain_catalog_seo_value( 'description' );
+		if ( ! $text ) { $text = '' !== trim( $post->post_excerpt ) ? $post->post_excerpt : $post->post_content; }
 	} elseif ( is_tax() || is_category() || is_tag() ) {
 		$term = get_queried_object();
-		$text = $term instanceof WP_Term ? $term->description : '';
-	} elseif ( is_front_page() || is_home() ) {
-		$page = wpmain_catalog_seo_public_post( (int) get_option( is_home() ? 'page_for_posts' : 'page_on_front' ) );
-		$text = $page ? ( $page->post_excerpt ?: $page->post_content ) : get_bloginfo( 'description' );
+		$text = wpmain_catalog_seo_value( 'description' );
+		if ( ! $text && $term instanceof WP_Term ) {
+			$intro = get_term_meta( $term->term_id, '_wpmain_archive_intro', true );
+			$text = is_string( $intro ) && trim( $intro ) ? $intro : $term->description;
+		}
 	}
+	if ( ! trim( wp_strip_all_tags( strip_shortcodes( (string) $text ) ) ) && is_front_page() ) { $text = get_theme_mod( 'wpmain_hero_description', '' ); }
+	if ( ! trim( wp_strip_all_tags( strip_shortcodes( (string) $text ) ) ) ) { $text = get_bloginfo( 'description' ); }
 	$text = html_entity_decode( wp_strip_all_tags( strip_shortcodes( $text ), true ), ENT_QUOTES, get_bloginfo( 'charset' ) ?: 'UTF-8' );
 	$text = trim( preg_replace( '/\s+/u', ' ', $text ) ?? '' );
 	return wp_html_excerpt( $text, 160, '…' );
+}
+
+/** Assigned shop/journal pages are archives, but their saved metadata is authoritative. */
+function wpmain_catalog_seo_page() {
+	if ( is_front_page() ) { return wpmain_catalog_seo_public_post( (int) get_option( 'page_on_front' ) ); }
+	if ( is_home() ) { return wpmain_catalog_seo_public_post( (int) get_option( 'page_for_posts' ) ); }
+	if ( function_exists( 'is_shop' ) && is_shop() ) { return wpmain_catalog_seo_public_post( wc_get_page_id( 'shop' ) ); }
+	return is_singular() ? wpmain_catalog_seo_public_post( get_queried_object_id() ) : null;
+}
+
+function wpmain_catalog_seo_value( $key ) {
+	$term = get_queried_object();
+	if ( ( is_tax() || is_category() || is_tag() ) && $term instanceof WP_Term ) {
+		$value = get_term_meta( $term->term_id, '_wpmain_seo_' . $key, true );
+	} else {
+		$post = wpmain_catalog_seo_page();
+		$value = $post ? get_post_meta( $post->ID, '_wpmain_seo_' . $key, true ) : '';
+	}
+	return is_scalar( $value ) ? (string) $value : '';
+}
+
+add_filter( 'document_title_parts', static function ( $parts ) {
+	if ( wpmain_catalog_seo_enabled() && ! wpmain_catalog_seo_noindex() ) {
+		$title = wpmain_catalog_seo_value( 'title' );
+		if ( '' !== $title ) { $parts['title'] = wp_strip_all_tags( $title ); }
+	}
+	return $parts;
+} );
+
+function wpmain_catalog_seo_image( $post = null ) {
+	$id = (int) wpmain_catalog_seo_value( 'image' );
+	if ( ! $id && $post ) { $id = get_post_thumbnail_id( $post->ID ); }
+	$term = get_queried_object();
+	if ( ! $id && $term instanceof WP_Term ) { $id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true ); }
+	if ( ! $id && is_front_page() ) { $id = (int) get_theme_mod( 'wpmain_hero_image', 0 ); }
+	$image = $id ? wp_get_attachment_image_url( $id, 'large' ) : false;
+	return $image ?: wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'full' );
 }
 
 function wpmain_catalog_seo_head() {
@@ -76,9 +120,7 @@ function wpmain_catalog_seo_head() {
 	if ( ! $url ) { return; }
 	$description = wpmain_catalog_seo_description( $post );
 	$title = wp_get_document_title();
-	$image_id = $post ? get_post_thumbnail_id( $post->ID ) : 0;
-	$image = $image_id ? wp_get_attachment_image_url( $image_id, 'large' ) : false;
-	if ( ! $image ) { $image = wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'full' ); }
+	$image = wpmain_catalog_seo_image( $post ?: wpmain_catalog_seo_page() );
 	// Core owns singular canonicals, including multi-page posts.
 	if ( ! is_singular() ) { echo '<link rel="canonical" href="' . esc_url( $url ) . '" />' . "\n"; }
 	if ( $description ) { echo '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n"; }
@@ -101,9 +143,29 @@ function wpmain_catalog_seo_sitemap( $args, $post_type ) {
 		if ( $id > 0 ) { $exclude[] = $id; }
 	}
 	$args['post__not_in'] = array_values( array_unique( $exclude ) );
+	// Index this utility flag on save; avoid scanning all page bodies on sitemap requests.
+	$utility = array( 'relation' => 'OR', array( 'key' => '_wpmain_seo_utility', 'compare' => 'NOT EXISTS' ), array( 'key' => '_wpmain_seo_utility', 'value' => '1', 'compare' => '!=' ) );
+	$args['meta_query'] = empty( $args['meta_query'] ) ? array( $utility ) : array( 'relation' => 'AND', $args['meta_query'], $utility );
 	return $args;
 }
 add_filter( 'wp_sitemaps_posts_query_args', 'wpmain_catalog_seo_sitemap', 10, 2 );
+
+function wpmain_catalog_seo_index_utility( $id, $post ) {
+	if ( wp_is_post_revision( $id ) || wp_is_post_autosave( $id ) ) { return; }
+	if ( has_shortcode( $post->post_content, 'woocommerce_order_tracking' ) ) { update_post_meta( $id, '_wpmain_seo_utility', '1' ); }
+	else { delete_post_meta( $id, '_wpmain_seo_utility' ); }
+}
+add_action( 'save_post_page', 'wpmain_catalog_seo_index_utility', 10, 2 );
+
+/** Upgrade existing pages in small admin-only batches; no frontend catalogue scan. */
+add_action( 'admin_init', static function () {
+	if ( ! current_user_can( 'manage_options' ) || get_option( 'wpmain_seo_utility_indexed' ) ) { return; }
+	$batch = max( 1, (int) get_option( 'wpmain_seo_utility_batch', 1 ) );
+	$pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'publish', 'posts_per_page' => 50, 'paged' => $batch, 'orderby' => 'ID', 'order' => 'ASC' ) );
+	foreach ( $pages as $page ) { wpmain_catalog_seo_index_utility( $page->ID, $page ); }
+	if ( count( $pages ) < 50 ) { update_option( 'wpmain_seo_utility_indexed', 1, false ); delete_option( 'wpmain_seo_utility_batch' ); }
+	else { update_option( 'wpmain_seo_utility_batch', $batch + 1, false ); }
+} );
 
 /** Multiply a non-negative decimal by ten using strings, never binary arithmetic. */
 function wpmain_catalog_toman_decimal( $value ) {

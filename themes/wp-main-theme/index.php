@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main-content" class="site-main container" tabindex="-1">
-	<?php if ( is_home() && ! is_front_page() ) : ?>
-		<h1><?php single_post_title(); ?></h1>
+	<?php if ( is_home() ) : ?>
+		<h1><?php if ( is_front_page() ) { echo esc_html( get_bloginfo( 'name' ) ); } else { single_post_title(); } ?></h1>
 	<?php elseif ( is_archive() ) : ?>
 		<header class="archive-header"><?php the_archive_title( '<h1>', '</h1>' ); the_archive_description(); ?></header>
 	<?php elseif ( is_search() ) : ?>

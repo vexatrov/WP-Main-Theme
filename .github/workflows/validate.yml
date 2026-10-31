@@ -25,6 +25,7 @@ jobs:
           php tests/catalog-filters.php
           php tests/merchandising.php
           php tests/seo.php
+          php tests/seo-fields.php
           php tests/cart-feedback.php
           php tests/product-details.php
           php tests/card-variations.php
@@ -59,6 +60,7 @@ jobs:
       - run: node scripts/test-cart-feedback.mjs
       - run: node scripts/test-card-variations.mjs
       - run: python scripts/build-translations.py --check
+      - run: node scripts/check-terminology.mjs
       - run: node --check scripts/test-recovery.mjs
       - run: node --check scripts/test-order.mjs
       - shell: pwsh

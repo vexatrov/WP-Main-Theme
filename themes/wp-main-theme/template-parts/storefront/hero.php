@@ -11,5 +11,5 @@ $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 
 			<?php if ( get_theme_mod( 'wpmain_hero_description' ) ) : ?><p class="hero-description"><?php echo esc_html( get_theme_mod( 'wpmain_hero_description' ) ); ?></p><?php endif; ?>
 			<?php if ( $shop_url ) : ?><a class="button hero-button" href="<?php echo esc_url( $shop_url ); ?>"><?php echo esc_html( get_theme_mod( 'wpmain_hero_button', __( 'Explore the shop', 'wp-main-theme' ) ) ); ?> <span aria-hidden="true">&rarr;</span></a><?php endif; ?>
 		</div>
-		<?php if ( $hero_image ) : ?><div class="hero-media"><?php echo wp_get_attachment_image( $hero_image, 'large', false, array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 768px) 100vw, 50vw' ) ); ?></div><?php endif; ?>
+		<?php if ( $hero_image ) : ?><div class="hero-media"><?php echo wp_get_attachment_image( $hero_image, 'large', false, array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 768px) 100vw, (min-width: 1280px) 640px, 50vw' ) ); ?></div><?php endif; ?>
 	</section>

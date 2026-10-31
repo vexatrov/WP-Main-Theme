@@ -3,7 +3,7 @@
 require_once '/wordpress/wp-load.php';
 
 function wpmain_preview_product_details() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || '0.6.0' === get_option( 'wpmain_product_preview_version' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || '0.6.0' === get_option( 'wpmain_product_preview_version' ) ) { return; }
 	// Also supports updating a demo that was already running before the plugin existed.
 	if ( ! function_exists( 'wpmain_catalog_guidance' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';

@@ -4,7 +4,7 @@ require_once '/wordpress/wp-load.php';
 
 function wpmain_refresh_demo() {
 	if ( '0.4.0' === get_option( 'wpmain_preview_version' ) ) { return; }
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) ) { return; }
 	if ( 'IRR' === get_option( 'woocommerce_currency' ) ) {
 		for ( $i = 1; $i <= 8; $i++ ) {
 			$product = wc_get_product( wc_get_product_id_by_sku( 'PREVIEW-' . $i ) );
@@ -16,7 +16,7 @@ function wpmain_refresh_demo() {
 	update_option( 'woocommerce_price_num_decimals', 0 );
 	update_option( 'woocommerce_coming_soon', 'no' );
 	$pages = array(
-		'about' => array( 'درباره ما', 'templates/page-about.php', '<p>این نسخه آزمایشی، پایه مشترک فروشگاه‌های تجهیزات تاتو بدن و ابزار زیبایی است. داستان و اطلاعات واقعی هر برند در طراحی اختصاصی همان فروشگاه قرار می‌گیرد.</p>' ),
+		'about' => array( 'درباره ما', 'templates/page-about.php', '<p>این نسخه آزمایشی، پایه مشترک فروشگاه‌های تجهیزات تتو بدن و ابزار زیبایی است. داستان و اطلاعات واقعی هر برند در طراحی اختصاصی همان فروشگاه قرار می‌گیرد.</p>' ),
 		'contact' => array( 'تماس با ما', 'templates/page-contact.php', '<p>راه‌های ارتباطی تأییدشده هر فروشگاه، شامل تلفن و واتساپ، در این بخش نمایش داده می‌شوند. این نسخه آزمایشی اطلاعات تماس واقعی ندارد.</p><p><a href="/shop/">بازگشت به فروشگاه</a></p>' ),
 		'journal' => array( 'مجله', '', '' ),
 	);
@@ -29,7 +29,7 @@ function wpmain_refresh_demo() {
 	}
 	update_option( 'page_for_posts', $ids['journal'] );
 	set_theme_mod( 'wpmain_about_page', $ids['about'] );
-	set_theme_mod( 'wpmain_footer_about', 'یک پیش‌نمایش از فروشگاه تخصصی ابزار تاتو بدن؛ معرفی کوتاه و واقعی هر برند در این قسمت قرار می‌گیرد.' );
+	set_theme_mod( 'wpmain_footer_about', 'یک پیش‌نمایش از فروشگاه تخصصی ابزار تتو بدن؛ معرفی کوتاه و واقعی هر برند در این قسمت قرار می‌گیرد.' );
 	$footer = wp_create_nav_menu( 'پیوندهای پایین صفحه' );
 	if ( ! is_wp_error( $footer ) ) {
 		foreach ( $ids as $id ) { wp_update_nav_menu_item( $footer, 0, array( 'menu-item-title' => get_the_title( $id ), 'menu-item-object' => 'page', 'menu-item-object-id' => $id, 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish' ) ); }
@@ -37,7 +37,7 @@ function wpmain_refresh_demo() {
 		$locations['footer'] = $footer;
 		set_theme_mod( 'nav_menu_locations', $locations );
 	}
-	$titles = array( 'راهنمای انتخاب تجهیزات تاتو بدن', 'آشنایی با کارتریج‌ها و کاربرد آن‌ها در طراحی‌های مختلف تاتو بدن', 'نگهداری ابزار تاتو' );
+	$titles = array( 'راهنمای انتخاب تجهیزات تتو بدن', 'آشنایی با کارتریج‌ها و کاربرد آن‌ها در طراحی‌های مختلف تتو بدن', 'نگهداری ابزار تتو' );
 	$media = get_posts( array( 'post_type' => 'attachment', 'post_status' => 'inherit', 'posts_per_page' => 1, 'fields' => 'ids' ) );
 	foreach ( $titles as $index => $title ) {
 		$slug = 'preview-guide-' . $index;
@@ -47,7 +47,7 @@ function wpmain_refresh_demo() {
 	}
 	// Long titles stress the shared product layout without altering real catalog data.
 	$product = wc_get_product( wc_get_product_id_by_sku( 'PREVIEW-8' ) );
-	if ( $product ) { $product->set_name( 'لوازم محافظتی و جانبی برای استفاده روزانه در استودیو تاتو — نمونه آزمایشی' ); $product->save(); }
+	if ( $product ) { $product->set_name( 'لوازم محافظتی و جانبی برای استفاده روزانه در استودیو تتو — نمونه آزمایشی' ); $product->save(); }
 	update_option( 'wpmain_preview_version', '0.4.0' );
 }
 if ( did_action( 'init' ) ) { wpmain_refresh_demo(); } else { add_action( 'init', 'wpmain_refresh_demo', 30 ); }

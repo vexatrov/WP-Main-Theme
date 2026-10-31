@@ -63,7 +63,7 @@ try {
 	while (Date.now() < deadline) {
 		try {
 			const response = await fetch(origin, {headers: {Cookie: 'playground_auto_login_already_happened=1'}, signal: AbortSignal.timeout(15000)});
-			if (response.ok && (await response.text()).includes('ابزار تاتو / پیش‌نمایش')) { ready = true; break; }
+			if (response.ok && (await response.text()).includes('ابزار تتو / پیش‌نمایش')) { ready = true; break; }
 		} catch {}
 		await new Promise(done => setTimeout(done, 1000));
 	}

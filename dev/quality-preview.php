@@ -1,17 +1,17 @@
 <?php
 /** Fictional QA content only; safe to rerun, never deploy to a real shop. */
 require_once '/wordpress/wp-load.php';
-if ( 'ابزار تاتو / پیش‌نمایش' === get_option( 'blogname' ) ) {
+if ( 'ابزار تتو / پیش‌نمایش' === get_option( 'blogname' ) ) {
 	// Capture test messages inside the disposable database; never send them.
 	add_filter( 'pre_wp_mail', function ( $sent, $atts ) { update_option( 'wpmain_qa_last_mail', $atts, false ); return true; }, 10, 2 );
 	// Retain the guard for requests after the initial Blueprint finishes.
 	if ( ! file_exists( WPMU_PLUGIN_DIR . '/wpmain-demo-mail.php' ) ) {
 		wp_mkdir_p( WPMU_PLUGIN_DIR );
-		file_put_contents( WPMU_PLUGIN_DIR . '/wpmain-demo-mail.php', '<?php if ( "ابزار تاتو / پیش‌نمایش" === get_option("blogname") ) { add_filter("pre_wp_mail", function($sent,$atts) { update_option("wpmain_qa_last_mail",$atts,false); return true; },10,2); }' );
+		file_put_contents( WPMU_PLUGIN_DIR . '/wpmain-demo-mail.php', '<?php if ( "ابزار تتو / پیش‌نمایش" === get_option("blogname") ) { add_filter("pre_wp_mail", function($sent,$atts) { update_option("wpmain_qa_last_mail",$atts,false); return true; },10,2); }' );
 	}
 }
 function wpmain_quality_preview() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || '2' === get_option( 'wpmain_quality_preview' ) || ! function_exists( 'wpmain_catalog_index_product' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || '2' === get_option( 'wpmain_quality_preview' ) || ! function_exists( 'wpmain_catalog_index_product' ) ) { return; }
 	$pen = wc_get_product( wc_get_product_id_by_sku( 'PREVIEW-1' ) );
 	$rotary = wc_get_product( wc_get_product_id_by_sku( 'PREVIEW-5' ) );
 	if ( ! $pen || ! $rotary ) { return; }

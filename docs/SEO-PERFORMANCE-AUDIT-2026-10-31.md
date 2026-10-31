@@ -1,5 +1,7 @@
 # SEO and performance audit — 2026-10-31
 
+**Historical findings:** rc.5/plugin 0.6.0 subsequently fixes shared metadata source/override coverage, full native archive guidance, tracking utilities, posts-front heading and purchase focus visibility. See [current SEO capabilities](SEO.md) and VALIDATION.md. Hosting/CWV and catalog-scale measurements below remain deployment checks, not content/domain requirements for the theme itself.
+
 Audited source: `237022b`, parent **1.0.0-rc.4**, catalog plugin **0.5.0**. Read-only review of shared theme/plugin behavior and the fictional localhost preview. This report does not implement the recommendations below.
 
 ## Verdict

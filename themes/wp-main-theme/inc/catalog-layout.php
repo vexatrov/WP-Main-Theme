@@ -216,6 +216,11 @@ function wpmain_catalog_buying_guidance() {
 	$copy = is_product_category() ? get_term_meta( $id, '_wpmain_buying_guide', true ) : '';
 	$guides = is_product_category() ? get_term_meta( $id, '_wpmain_category_guides', true ) : array();
 	if ( ! is_string( $copy ) ) { $copy = ''; }
+	// Native term descriptions remain available in full when no custom guide exists.
+	if ( ! $content && ! $copy ) {
+		$term = get_queried_object();
+		$content = $term instanceof WP_Term ? trim( wp_kses_post( $term->description ) ) : '';
+	}
 	$articles = is_array( $guides ) && $guides ? get_posts( array( 'post_type' => 'post', 'post__in' => array_map( 'absint', $guides ), 'orderby' => 'post__in', 'posts_per_page' => 4, 'has_password' => false ) ) : array();
 	if ( ! $content && ! $copy && ! $articles ) { return; }
 	echo '<section class="category-buying-guide catalog-archive-content"><h2>' . esc_html__( 'Choosing the right product', 'wp-main-theme' ) . '</h2>';

@@ -13,11 +13,11 @@ async function search(query) {
 
 for (const query of [ 'پن بی‌سیم', 'پن بيسيم', 'PREVIEW-1' ]) {
 	const html = await search(query);
-	assert.match(html, /پن تاتو بی‌سیم — نمونه/, query);
+	assert.match(html, /پن تتو بی‌سیم — نمونه/, query);
 }
 for (const query of [ 'Mast', 'مست' ]) {
 	const html = await search(query);
-	assert.match(html, /پن تاتو بی‌سیم — نمونه/, query);
+	assert.match(html, /پن تتو بی‌سیم — نمونه/, query);
 }
 assert.doesNotMatch(await search('noSuchSku-9933'), /woocommerce-loop-product__title/);
 console.log('PASS: Persian/Arabic letter variants, SKU and editable aliases return the intended product without false results.');

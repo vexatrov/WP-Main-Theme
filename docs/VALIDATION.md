@@ -1,5 +1,15 @@
 # Validation
 
+## Rc.5 — 2026-10-31
+
+All repository PHP parses and twelve offline behavioral contracts pass. Added coverage verifies SEO override nonce/capability/autosave rules, partial/malformed update preservation, media validation, title pagination/suffix retention, assigned shop/home/journal metadata, archive introductions, full native archive guidance, safe BlogPosting encoding/public author data, native schema ownership and tracking-shortcode policy. Five external SEO-owner detections pass. Existing cart race/error/event tests remain passing. Both translation bundles pass coverage/freshness checks (133 theme, 42 plugin messages). The mandatory Persian terminology check passes.
+
+Own-theme assets measure **11.85 KB gzip CSS** and **4.98 KB gzip JS**, within the existing 30/8 KB budgets. No frontend dependencies, remote fonts or global WooCommerce asset removal were added. Hero image selection now caps at the shared desktop layout width. These figures exclude WordPress/WooCommerce/media and do not establish production Core Web Vitals.
+
+Read-only localhost HTTP checks pass one title/canonical/nonempty description, parseable expected schema and corrected visible spelling on Home, Shop, parent category, child category, brand, Journal and a native product. Store API confirms all ten parent product names use the preferred spelling and the existing encoded product permalink is retained. Browser AX and a saved phone screenshot confirm corrected header, hero, category and product copy. Captures remain ignored under `.local/seo-foundation/`. This targeted foundation review does not repeat rc.4's complete responsive/checkout matrix; those historical results remain below.
+
+The live article check also passes one title/canonical/description and BlogPosting JSON-LD. The order-tracking route renders without fallback sharing metadata. The HTTP foundation script's article selector was corrected to use actual dated article links; the final two routes were then checked with its `--finish` option against the already captured homepage. Core sitemap/indexing behavior remains covered by offline policy contracts because the fictional preview deliberately keeps WordPress public indexing disabled.
+
 ## Rc.4 — 2026-10-28
 
 Repository PHP syntax and all eleven offline contracts pass, including native layout hook order and category/brand editorial sanitation, nonce/capability checks, legacy fallback and empty states. Navigation, search, cart feedback, card options and SEO ownership tests pass. Translation checks cover 133 theme and 37 plugin messages. Custom CSS is 11.83 KB gzip and JS 4.98 KB gzip, excluding core/WooCommerce/media; both remain within their budgets.

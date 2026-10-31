@@ -1,16 +1,26 @@
 # SEO ownership and toman schema
 
-The [2026-10-31 SEO/performance audit](SEO-PERFORMANCE-AUDIT-2026-10-31.md) records current source/runtime evidence and known gaps, including incomplete description sources for visible homepage/shop/archive copy. The capabilities below do not imply complete production optimization.
+The [2026-10-31 SEO/performance audit](SEO-PERFORMANCE-AUDIT-2026-10-31.md) is a historical pre-fix report. Rc.5/plugin 0.6.0 implements its shared metadata, archive-content, utility-indexing, heading and keyboard-focus corrections. This is a reusable foundation; each shop's content/domain strategy is separate.
 
 WP Store Catalog supplies a small fallback SEO owner when Yoast, All in One SEO, Rank Math, SEOPress and The SEO Framework are absent. `wpmain_catalog_seo_enabled` lets the deployment's selected integration disable this fallback. Detection happens when hooks run, after plugins load.
 
 ## Metadata and discovery policy
 
-The fallback emits descriptions and Open Graph/Twitter metadata from public, published, unprotected post excerpts/content, term descriptions or the real site tagline. It strips markup/shortcodes without executing content filters and escapes attributes. Product/post thumbnails and an installed custom logo are the only image sources. Password-protected, private, draft and missing posts receive no fallback metadata. Search, error and commerce utility pages do not receive sharing metadata.
+The fallback emits descriptions and Open Graph/Twitter metadata from saved overrides, public excerpts/content, short archive introductions/native descriptions, visible homepage hero copy and the actual site tagline. Descriptions are plain escaped text limited to 160 characters; shortcodes/content filters are never executed. Sharing images use the explicit library attachment, post thumbnail, term thumbnail, homepage hero or installed logo. Protected/private/draft/missing singular posts receive no fallback metadata. Search, error and commerce utility pages do not receive sharing metadata.
+
+### Editing metadata and archive copy
+
+Edit a page, product or article: **Search and sharing** contains SEO title, description and optional social-image attachment ID. Blank fields restore automatic values. Edit the assigned Home/Shop/Journal page for those routes. Titles retain native page numbers and site suffixes; visible headings remain independent. Native category, product-category, brand and article-tag editors provide the same controls. Invalid images, malformed submissions, unauthorized writes and autosaves cannot overwrite manual values. The durable fields remain in the companion plugin when child themes change. With an external SEO plugin active, use that plugin's controls; bundled fields remain saved but are not automatically imported.
+
+Product categories/brands also have separate short introductions, three factual highlights and rich lower buying guides. Full native descriptions remain the lower fallback when custom rich/legacy guidance is empty. These fields support useful factual copy, not keyword stuffing.
+
+### Schema ownership
+
+WooCommerce owns Product, price, availability, genuine review data and BreadcrumbList. The fallback complements these with Organization from the site's actual name/URL/logo, WebSite except where WooCommerce already outputs it for a shop-as-homepage, and BlogPosting from published headlines, dates, public authors and media. It invents no address, rating, warranty, shipping or return claim. Visible FAQs remain accessible content; indiscriminate FAQ rich-result markup is not injected. `wpmain_catalog_seo_graph` supports explicit integrations. All bundled fallback graphs yield to a detected SEO owner; the currency adapter remains separately controllable.
 
 WordPress retains singular canonical ownership. For home/archive routes, `get_pagenum_link()` supplies the canonical URL, preserving the page number and plain-permalink route/taxonomy variables while removing filters, sorting and tracking parameters. Archive page 2 stays canonical to page 2 and indexable. Existing robots restrictions are never removed.
 
-The `wp_robots` filter adds `noindex` for search, 404, Cart, Checkout and My Account, plus URLs containing `filter_*`, `query_type_*`, `min_price`, `max_price`, `rating_filter`, `stock_status`, `on_sale`, `orderby` or `products_per_page`. Ordinary taxonomy/brand routes remain indexable. Native WordPress sitemap queries exclude assigned Cart, Checkout and My Account page IDs while preserving earlier exclusions and product/category discovery. Do not block these URLs in robots.txt before crawlers can see their noindex directives.
+The `wp_robots` filter adds `noindex` for search, 404, Cart, Checkout, My Account and native order-tracking shortcode pages, plus URLs containing `filter_*`, `query_type_*`, `min_price`, `max_price`, `rating_filter`, `stock_status`, `on_sale`, `orderby`, `compare_product` or `products_per_page`. Normal taxonomy/brand routes remain indexable. Core sitemap queries exclude assigned commerce pages and indexed tracking pages while retaining other exclusions/meta constraints. Tracking flags update on page save; existing sites backfill 50 published pages per administrator dashboard request until complete. Resaving a tracking page updates it immediately. Custom utility implementations can extend native sitemap/robots filters. Do not block utility URLs in robots.txt before crawlers can see noindex.
 
 When another SEO owner is detected/selected, it owns metadata, canonicals, robots and sitemap policy. Confirm equivalent settings there; this plugin does not assume another plugin's sitemap API or schema graph matches WordPress/WooCommerce.
 

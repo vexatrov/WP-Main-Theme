@@ -2,7 +2,7 @@
 /** Fictional artwork and owner-requested sample messages. Never deploy fixtures. */
 require_once '/wordpress/wp-load.php';
 function wpmain_storefront_preview() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_storefront_preview' ) || ! function_exists( 'wc_get_product' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || get_option( 'wpmain_storefront_preview' ) || ! function_exists( 'wc_get_product' ) ) { return; }
 	set_theme_mod( 'wpmain_product_reassurance', "قیمت‌ها به‌روز هستند\nارسال یک‌روزه تهران، دو‌روزه سایر شهرها\nضمانت اصالت کالا — ۱۰۰٪ اورجینال\nگارانتی و پشتیبانی" );
 	// Representative sample artwork, not an actual brand's logo.
 	foreach ( array( 1, 2 ) as $sku ) {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-rc.5 / WP Store Catalog 0.6.0
+
+- Add optional native-editor SEO titles, descriptions and sharing-image overrides for products, posts, pages and product/editorial taxonomies. Assigned Home/Shop/Journal pages retain their own metadata and native title pagination. Yield fallback frontend metadata/schema to the chosen SEO plugin.
+- Resolve automatic descriptions from real archive/page/hero copy and sharing images from actual library/term/hero media. Preserve full native taxonomy descriptions below products when custom buying guidance is blank.
+- Complement native WooCommerce Product/BreadcrumbList with factual Organization, WebSite and BlogPosting markup, retaining the isolated exact IRT-to-IRR schema adapter.
+- Noindex order-tracking shortcodes independently of slug; index utility flags on page save and backfill existing pages in bounded admin batches for sitemap exclusions.
+- Add the posts-as-homepage heading, cap hero image selection to layout width and retain keyboard focus visibility after AJAX cart additions.
+- Correct fictional preview copy to «تتو» while preserving URLs; update future fixtures and enforce terminology in CI. The local migration is never packaged.
+
 ## 1.0.0-rc.4 / WP Store Catalog 0.5.0
 
 - Aligned the native gallery and purchase summary in one responsive row with matching desktop column bounds, natural image sizing and stacked phone/tablet layouts.

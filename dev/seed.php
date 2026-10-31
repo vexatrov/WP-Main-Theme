@@ -3,8 +3,8 @@
 require '/wordpress/wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
-update_option( 'blogname', 'ابزار تاتو / پیش‌نمایش' );
-update_option( 'blogdescription', 'فروشگاه آزمایشی تجهیزات تاتو بدن' );
+update_option( 'blogname', 'ابزار تتو / پیش‌نمایش' );
+update_option( 'blogdescription', 'فروشگاه آزمایشی تجهیزات تتو بدن' );
 update_option( 'blog_public', 0 );
 update_option( 'woocommerce_currency', 'IRT' );
 update_option( 'woocommerce_currency_pos', 'right_space' );
@@ -24,7 +24,7 @@ update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $home );
 set_theme_mod( 'wpmain_hero_eyebrow', 'برای هنر روی پوست' );
 set_theme_mod( 'wpmain_hero_title', 'ابزار دقیق. آزادی در خلق.' );
-set_theme_mod( 'wpmain_hero_description', 'از دستگاه و کارتریج تا رنگ و لوازم جانبی؛ همه‌چیز برای تاتو بدن، در یک فروشگاه تخصصی.' );
+set_theme_mod( 'wpmain_hero_description', 'از دستگاه و کارتریج تا رنگ و لوازم جانبی؛ همه‌چیز برای تتو بدن، در یک فروشگاه تخصصی.' );
 set_theme_mod( 'wpmain_hero_button', 'دیدن همه محصولات' );
 
 // Simple original vector diagrams: sample artwork, not photographs of real products.
@@ -52,7 +52,7 @@ foreach ( array( 'pen', 'ink', 'cartridge', 'accessory' ) as $type ) {
 }
 set_theme_mod( 'wpmain_hero_image', $images['pen'] );
 $categories = array();
-foreach ( array( 'machines' => array( 'دستگاه تاتو', 'pen' ), 'cartridges' => array( 'کارتریج و سوزن', 'cartridge' ), 'inks' => array( 'رنگ تاتو', 'ink' ), 'accessories' => array( 'لوازم جانبی', 'accessory' ) ) as $slug => $data ) {
+foreach ( array( 'machines' => array( 'دستگاه تتو', 'pen' ), 'cartridges' => array( 'کارتریج و سوزن', 'cartridge' ), 'inks' => array( 'رنگ تتو', 'ink' ), 'accessories' => array( 'لوازم جانبی', 'accessory' ) ) as $slug => $data ) {
 	$term = wp_insert_term( $data[0], 'product_cat', array( 'slug' => $slug ) );
 	if ( ! is_wp_error( $term ) ) {
 		$categories[ $slug ] = $term['term_id'];
@@ -60,13 +60,13 @@ foreach ( array( 'machines' => array( 'دستگاه تاتو', 'pen' ), 'cartrid
 	}
 }
 $samples = array(
-	array( 'پن تاتو بی‌سیم — نمونه', 'machines', 'pen', 1250000 ),
+	array( 'پن تتو بی‌سیم — نمونه', 'machines', 'pen', 1250000 ),
 	array( 'کارتریج راند لاینر — نمونه', 'cartridges', 'cartridge', 85000 ),
-	array( 'رنگ مشکی تاتو — نمونه', 'inks', 'ink', 240000 ),
-	array( 'پد تمرین تاتو — نمونه', 'accessories', 'accessory', 65000 ),
-	array( 'پن تاتو روتاری — نمونه', 'machines', 'pen', 960000 ),
+	array( 'رنگ مشکی تتو — نمونه', 'inks', 'ink', 240000 ),
+	array( 'پد تمرین تتو — نمونه', 'accessories', 'accessory', 65000 ),
+	array( 'پن تتو روتاری — نمونه', 'machines', 'pen', 960000 ),
 	array( 'کارتریج مگنوم — نمونه', 'cartridges', 'cartridge', 95000 ),
-	array( 'رنگ میکس تاتو — نمونه', 'inks', 'ink', 210000 ),
+	array( 'رنگ میکس تتو — نمونه', 'inks', 'ink', 210000 ),
 	array( 'لوازم محافظتی — نمونه', 'accessories', 'accessory', 45000 ),
 );
 foreach ( $samples as $index => $sample ) {
@@ -83,7 +83,7 @@ foreach ( $samples as $index => $sample ) {
 	$product->save();
 }
 $menu = wp_create_nav_menu( 'ناوبری اصلی' );
-foreach ( array( 'فروشگاه' => wc_get_page_permalink( 'shop' ), 'دستگاه تاتو' => get_term_link( $categories['machines'] ), 'کارتریج و سوزن' => get_term_link( $categories['cartridges'] ), 'رنگ تاتو' => get_term_link( $categories['inks'] ) ) as $label => $url ) {
+foreach ( array( 'فروشگاه' => wc_get_page_permalink( 'shop' ), 'دستگاه تتو' => get_term_link( $categories['machines'] ), 'کارتریج و سوزن' => get_term_link( $categories['cartridges'] ), 'رنگ تتو' => get_term_link( $categories['inks'] ) ) as $label => $url ) {
 	wp_update_nav_menu_item( $menu, 0, array( 'menu-item-title' => $label, 'menu-item-url' => $url, 'menu-item-status' => 'publish' ) );
 }
 set_theme_mod( 'nav_menu_locations', array( 'primary' => $menu ) );

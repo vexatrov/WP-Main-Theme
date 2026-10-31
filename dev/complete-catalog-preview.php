@@ -44,7 +44,7 @@ function wpmain_complete_archive_guide( $name, $kind, $guide_id ) {
 }
 
 function wpmain_complete_catalog_preview() {
-	if ( 'ابزار تاتو / پیش‌نمایش' !== get_option( 'blogname' ) || '3' === get_option( 'wpmain_complete_catalog_preview' ) || ! function_exists( 'wpmain_catalog_guidance' ) ) { return; }
+	if ( 'ابزار تتو / پیش‌نمایش' !== get_option( 'blogname' ) || '3' === get_option( 'wpmain_complete_catalog_preview' ) || ! function_exists( 'wpmain_catalog_guidance' ) ) { return; }
 	$copy = array(
 		'PREVIEW-1' => array( 'machines', 'پن بی‌سیم آموزشی', 'برای مقایسه بدنه جمع‌وجور، نمایش وضعیت باتری و چیدمان کنترل‌های یک پن فرضی ساخته شده است.', 'تمرین انتخاب ابزار بدون کابل در یک سناریوی آموزشی؛ داده‌ها راهنمای کار روی پوست نیستند.', 'هنرجویانی که می‌خواهند تفاوت چیدمان پن بی‌سیم و پن کابلی را در صفحه فروشگاه بررسی کنند.', array( 'منبع تغذیه نمایشی' => 'باتری قابل‌تعویض فرضی', 'بسته نمونه' => 'یک بدنه پن و یک پایه نمایشی' ), 'PREVIEW-5', array( 'PREVIEW-2', 'PREVIEW-6' ) ),
 		'PREVIEW-2' => array( 'cartridges', 'کارتریج راند لاینر آموزشی', 'آرایش خطی نوک و خوانایی برچسب بسته‌بندی را در یک مدل کاملاً فرضی نشان می‌دهد.', 'مقایسه آرایش سوزن، نام‌گذاری و تعداد بسته در محیط آموزشی، بدون ادعای استریل‌بودن یا مصرف واقعی.', 'هنرجویان و خریدارانی که تفاوت اطلاعات بسته‌های کارتریج را بررسی می‌کنند.', array( 'آرایش نمایشی' => 'راند لاینر فرضی', 'تعداد بسته نمونه' => '۱۰ عدد نمایشی' ), 'PREVIEW-6', array( 'PREVIEW-1', 'PREVIEW-5' ) ),
