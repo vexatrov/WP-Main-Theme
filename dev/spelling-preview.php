@@ -1,6 +1,6 @@
 <?php
 /** Correct fictional preview copy without changing existing URLs or technical identifiers. */
-defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) { require_once '/wordpress/wp-load.php'; }
 
 function wpmain_preview_correct_spelling() {
 	// The legacy name is intentionally retained only as a migration identity guard.
