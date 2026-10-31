@@ -13,6 +13,10 @@ function esc_attr( $value ) { return esc_html( $value ); }
 function esc_url( $value ) { return esc_attr( $value ); }
 function wp_kses_post( $value ) { return $value; }
 function wp_unslash( $value ) { return $value; }
+function rest_url( $path ) { return 'https://example.test/wp-json/' . $path; }
+function apply_filters( $hook, $value, ...$args ) { $GLOBALS['applied_filters'][] = $hook; return $value; }
+function absint( $value ) { return abs( (int) $value ); }
+function wc_format_weight( $value ) { return $value . ' g'; }
 function sanitize_text_field( $value ) { return trim( strip_tags( $value ) ); }
 function get_post_field( $field, $id ) { return 6 === $id ? 'secret' : ''; }
 function post_password_required() { return false; }
@@ -61,9 +65,12 @@ check( 12 === $GLOBALS['query_args']['posts_per_page'] && false === $GLOBALS['qu
 check( array( 3, 2, 8 ) === array_map( fn( $item ) => $item->get_id(), wpmain_product_comparison_selection( array( '3', '4', '2', '2', '-8', array(), '8', '9' ), $choices ) ), 'GET choices must belong to the public candidate set, remain unique and cap at three.' );
 check( array() === wpmain_product_comparison_selection( '2', $choices ), 'Malformed GET input is not coerced into a selection.' );
 $tabs = $GLOBALS['filters']['woocommerce_product_tabs']( array( 'additional_information' => array( 'title' => 'Additional information' ) ) );
-check( 'Specifications' === $tabs['additional_information']['title'] && isset( $tabs['wpmain_comparison'] ), 'Native specifications tab is renamed and comparison can be available without curated defaults.' );
+check( 'Specifications & comparison' === $tabs['additional_information']['title'] && ! isset( $tabs['wpmain_comparison'] ), 'One native tab combines specifications and comparison.' );
+$extended = wpmain_product_comparison_requested( $choices, $product, array( '20', '4', '6' ) );
+check( isset( $extended[20] ) && ! isset( $extended[4] ) && ! isset( $extended[6] ), 'Search selections outside suggestions require public visibility and reject forged private/password IDs.' );
 $args = array( 'product' => $product, 'guidance' => $data ); $_GET = array( 'compare_product' => array( '4', '6', '3', '2' ) );
 ob_start(); require __DIR__ . '/../themes/wp-main-theme/template-parts/product/comparison.php'; $html = ob_get_clean();
+$comparison_html = $html;
 check( str_contains( $html, 'type="checkbox"' ) && str_contains( $html, 'model-1.jpg' ) && str_contains( $html, 'model-2.jpg' ) && str_contains( $html, 'model-3.jpg' ), 'Selectable thumbnails and selected/current product images render together.' );
 check( ! str_contains( $html, 'Model 4<' ) && ! str_contains( $html, 'Model 6<' ), 'Forged private/password selections never expose names, images or table data.' );
 check( '' === wpmain_product_reassurance_messages( array() ), 'Malformed owner copy is ignored.' );
@@ -72,3 +79,15 @@ $GLOBALS['reassurance'] = ''; ob_start(); wpmain_product_reassurance(); check( '
 $GLOBALS['reassurance'] = '<script>Current & checked</script>'; ob_start(); wpmain_product_reassurance(); $html = ob_get_clean();
 check( ! str_contains( $html, '<script>' ) && str_contains( $html, 'Current &amp; checked' ), 'Configured owner statements are escaped on output.' );
 echo "PASS: bounded public thumbnail comparisons, native tab title, deepest category, visibility constraints and empty/editable store-information boxes.\n";
+require __DIR__ . '/../plugins/wp-store-catalog/comparison-search.php';
+$GLOBALS['query_ids'] = array( 2, 4, 5, 6, 7, 3 );
+check( array( 3 ) === array_map( fn( $p ) => $p->get_id(), wpmain_catalog_comparison_matches( 'pen', 2 ) ), 'Public comparison discovery rejects current, private, password-protected and catalog-hidden products even for privileged visitors' );
+check( 6 === $GLOBALS['query_args']['posts_per_page'] && true === $GLOBALS['query_args']['wpmain_suggestions'] && false === $GLOBALS['query_args']['has_password'], 'Comparison discovery is bounded and reuses stored Persian normalization' );
+check( array() === wpmain_catalog_comparison_matches( 'p', 1 ) && array() === wpmain_catalog_comparison_matches( array(), 1 ), 'Short/malformed searches cannot query catalog' );
+$weighted = new class( 1 ) extends DetailProduct {
+	public function has_weight() { return true; }
+	public function get_weight() { return '180'; }
+};
+check( '180 g' === wpmain_product_specification_rows( $weighted )['weight']['value'] && in_array( 'woocommerce_display_product_attributes', $GLOBALS['applied_filters'], true ), 'Unified specifications retain native measurements and attribute-extension filtering' );
+check( ! str_contains( $comparison_html, 'Compare products for the same task' ) && ! str_contains( $comparison_html, 'Recommended comparisons appear first' ) && str_contains( $comparison_html, 'name="compare_q"' ), 'Search controls replace explanatory comparison paragraphs' );
+echo "PASS: public indexed comparison search and native unified specification row ownership.\n";

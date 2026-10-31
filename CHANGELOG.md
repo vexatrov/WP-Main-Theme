@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc.7 / WP Store Catalog 0.8.0
+
+- Redesign the header with logo plus name, configurable social icons, left-side search, account/cart access and a separate important-pages menu with actual-page fallbacks. Retain desktop navigation in compact mode and add hover/focus/touch child-menu behavior through three native menu levels.
+- Merge specifications/comparison into one native tab and one readable responsive table, retaining native measurements and attribute filters. Remove instructional paragraphs; add bounded public catalog search, illustrated choices and a three-product counter with server revalidation.
+- Preserve native GET/no-JavaScript comparison flows and the legacy comparison fragment, extend comparison noindex handling, and add privacy/search/navigation checks and an idempotent demo-only nested-menu fixture.
+
 ## 1.0.0-rc.6 / WP Store Catalog 0.7.0
 
 - Standardize shared H1/H2/H3 scale, Persian heading line heights, reading-start alignment, section gaps, card headings and footer copy. Article headers align with their reading column; explicit WordPress content alignment remains respected. Child themes can override the heading/spacing tokens.

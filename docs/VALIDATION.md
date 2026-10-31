@@ -1,5 +1,13 @@
 # Validation
 
+## Rc.7 — 2026-10-31
+
+PHP syntax and all thirteen offline contracts pass after the header/comparison changes. Navigation checks now cover desktop compact navigation staying visible, pointer hover, keyboard focus, Escape and mobile disclosures. Comparison checks cover the single native tab, request revalidation, public catalog discovery, six-result/query bounds, missing/malformed input, native measurement/attribute filters and removal of explanatory paragraphs. The live product-details HTTP script passes, including a searched product outside the initial category, illustrated comparison columns and noindex GET URLs. An earlier in-flight test process used the old literal table-tag assertion and failed; the updated attribute-aware semantic check passes.
+
+Native header review confirms search physically left of branding, all real informational destinations, social icons and zero horizontal overflow at 1351px. Real pointer movement opens the category's two native child links. At 375px, the mobile menu/disclosure opens those same children with 44px link targets; the expanded menu scrolls within its own 60vh cap and the document does not overflow. Generic demo social URLs and nested menu items were applied by the guarded fixture; its temporary MU copy was removed afterward. Header screenshots are ignored under `.local/review/rc7-header-desktop.png` and `rc7-header-mobile.png`.
+
+Both translation bundles pass coverage/freshness checks (159 theme / 58 plugin messages), and terminology checks pass. Own-theme CSS/JS remain within the existing 30/8 KB gzip budgets (approximately 14.2/6.8 KB), excluding WordPress/WooCommerce/media. No real-store credentials, contacts or brand social accounts were invented.
+
 ## Rc.6 — 2026-10-31
 
 All PHP parses and thirteen offline contracts pass, including new authenticated admin-search/save boundaries and article recommendation visibility/limits. Navigation-related existing search/cart/card-option behavioral checks remain passing. The HTTP layout suite passes shop/filter/empty/category-brand/help/tracking/article/homepage markup checks. Translations cover 143 theme and 58 plugin messages; coverage/MO freshness and mandatory terminology checks pass. Own-theme assets remain about **12.02 KB gzip CSS / 4.98 KB gzip JS**; new picker/media assets load only in admin/Customizer.

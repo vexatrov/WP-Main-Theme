@@ -15,6 +15,7 @@ const qualityPreview = readFileSync(new URL('../dev/quality-preview.php', import
 const storefrontPreview = readFileSync(new URL('../dev/storefront-preview.php', import.meta.url), 'utf8');
 const completeCatalogPreview = readFileSync(new URL('../dev/complete-catalog-preview.php', import.meta.url), 'utf8');
 const spellingPreview = readFileSync(new URL('../dev/spelling-preview.php', import.meta.url), 'utf8');
+const headerPreview = readFileSync(new URL('../dev/header-preview.php', import.meta.url), 'utf8');
 mkdirSync('.local/cache', { recursive: true });
 async function archive(name, url) {
 	const path = resolve('.local/cache', name);
@@ -47,7 +48,7 @@ const site = await runCLI({
 		{ hostPath: resolve('plugins/wp-store-catalog'), vfsPath: '/wordpress/wp-content/plugins/wp-store-catalog' },
 	],
 	blueprint: {
-		steps: resume ? [{ step: 'runPHP', code: spellingPreview }] : [
+		steps: resume ? [{ step: 'runPHP', code: spellingPreview }, { step: 'runPHP', code: headerPreview }] : [
 			{ step: 'unzip', zipFile: coreLanguage, extractToPath: '/wordpress/wp-content/languages' },
 			{ step: 'unzip', zipFile: commerceLanguage, extractToPath: '/wordpress/wp-content/languages/plugins' },
 			{ step: 'setSiteOptions', options: { WPLANG: 'fa_IR' } },
@@ -61,6 +62,7 @@ const site = await runCLI({
 			{ step: 'runPHP', code: qualityPreview },
 			{ step: 'runPHP', code: storefrontPreview },
 			{ step: 'runPHP', code: completeCatalogPreview },
+			{ step: 'runPHP', code: headerPreview },
 		],
 	},
 });

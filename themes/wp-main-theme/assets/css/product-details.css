@@ -25,6 +25,35 @@
 .product-comparison-choice img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .product-comparison-choice small { color: var(--brand-muted); }
 .product-comparison-form button { min-height: 44px; }
+.product-specification-panel > h2 { margin-block: 0 1.25rem; font-size: var(--heading-section); }
+.comparison-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-block-end: 1.25rem; }
+.comparison-search { display: grid; gap: .5rem; flex: 1; max-width: 30rem; font-weight: 650; }
+.comparison-search input { width: 100%; min-height: 44px; font-weight: 400; }
+.comparison-toolbar .button { flex: 0 0 auto; gap: .65rem; }
+[data-comparison-count] { font-size: .8rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.product-comparison-form legend { font-size: 1rem; margin-block-end: .5rem; }
+.product-comparison-form .product-comparison-choices { grid-auto-columns: minmax(9rem, 11rem); }
+.product-comparison-choice { background: var(--brand-surface); }
+.product-comparison-choice input { position: absolute; inset-block-start: .6rem; inset-inline-start: .6rem; }
+.product-comparison-choice > span { min-height: 3em; font-size: .85rem; }
+.product-comparison-choice > small { font-size: .72rem; }
+.product-comparison-choice:has(input:disabled) { opacity: .6; }
+.comparison-status { min-height: 0; font-size: .85rem; margin: 0; color: var(--brand-muted); }
+.comparison-status:empty { display: none; }
+.product-comparison-scroll { border-radius: var(--brand-radius); scrollbar-width: thin; }
+.product-comparison-scroll .product-comparison { display: table; width: 100%; min-width: calc(8rem + var(--comparison-columns, 1) * 11rem); table-layout: fixed; border-spacing: 0; border-collapse: separate; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); margin: 0; }
+.product-comparison-scroll .product-comparison th, .product-comparison-scroll .product-comparison td { min-width: 0; padding: 1rem; border: 0; border-block-end: 1px solid var(--brand-border); vertical-align: top; text-align: start; font-style: normal; line-height: 1.8; overflow-wrap: anywhere; }
+.product-comparison-scroll .product-comparison thead th { background: var(--brand-surface); font-weight: 650; font-size: .9rem; }
+.product-comparison-scroll .product-comparison th:first-child { width: clamp(8rem, 22%, 12rem); }
+.product-comparison-scroll .product-comparison tbody th { font-weight: 600; background: var(--brand-bg); }
+.product-comparison-scroll .product-comparison tbody th, .product-comparison-scroll .product-comparison thead th:first-child { position: sticky; inset-inline-start: 0; z-index: 1; }
+.product-comparison-scroll .product-comparison tbody td { background: var(--brand-surface); }
+.product-comparison-scroll .product-comparison tr:last-child > * { border-block-end: 0; }
+.product-comparison-scroll .product-comparison thead th a { display: grid; justify-items: start; gap: .5rem; text-decoration: none; }
+.product-comparison-scroll .product-comparison thead th img { width: 72px; height: 72px; margin: 0; object-fit: contain; border-radius: .25rem; }
+.product-comparison-scroll .product-comparison thead th.is-current { box-shadow: inset 0 3px var(--brand-accent); }
+.product-comparison-scroll .comparison-current { display: inline-block; margin-top: .5rem; padding: .15rem .4rem; border-radius: .25rem; background: var(--brand-bg); font-size: .7rem; }
+@media (max-width: 40rem) { .comparison-toolbar { align-items: stretch; flex-direction: column; } .comparison-toolbar .button { align-self: start; } .product-comparison-scroll .product-comparison th, .product-comparison-scroll .product-comparison td { padding: .75rem; } }
 .product-faq summary { min-height: 44px; }
 .product-comparison thead th img { display: block; width: 7rem; height: 7rem; max-width: 100%; object-fit: contain; margin-block-end: .75rem; }
 .product-reassurance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }

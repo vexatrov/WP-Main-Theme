@@ -2,6 +2,11 @@
 defined( 'ABSPATH' ) || exit;
 
 function wpmain_customize_register( $customizer ) {
+	$customizer->add_section( 'wpmain_header', array( 'title' => __( 'Header and social links', 'wp-main-theme' ), 'priority' => 34 ) );
+	foreach ( array( 'instagram' => 'Instagram', 'telegram' => 'Telegram', 'whatsapp' => 'WhatsApp' ) as $network => $label ) {
+		$customizer->add_setting( 'wpmain_social_' . $network, array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
+		$customizer->add_control( 'wpmain_social_' . $network, array( 'label' => $label, 'description' => __( 'Profile URL. Leave blank to hide this link.', 'wp-main-theme' ), 'section' => 'wpmain_header', 'type' => 'url' ) );
+	}
 	if ( class_exists( 'WP_Customize_Control' ) && function_exists( 'wpmain_catalog_editor_picker' ) && ! class_exists( 'WPMain_Catalog_Picker_Control' ) ) {
 		class WPMain_Catalog_Picker_Control extends WP_Customize_Control {
 			public $kind = 'product';

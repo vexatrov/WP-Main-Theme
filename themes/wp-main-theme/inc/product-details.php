@@ -23,7 +23,8 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 	$data = wpmain_catalog_guidance( $product->get_id() );
 	$custom = array();
 	if ( $data['use_cases'] || $data['audience'] ) { $custom['wpmain_usage'] = array( 'title' => __( 'Use cases & suitability', 'wp-main-theme' ), 'priority' => 15 ); }
-	if ( wpmain_product_comparison_candidates( $product, $data ) ) { $custom['wpmain_comparison'] = array( 'title' => __( 'Compare specifications', 'wp-main-theme' ), 'priority' => 25 ); }
+	unset( $tabs['wpmain_comparison'] );
+	$tabs['additional_information'] = array( 'title' => __( 'Specifications & comparison', 'wp-main-theme' ), 'priority' => 20, 'callback' => 'wpmain_product_detail_tab' );
 	if ( $data['faq'] ) { $custom['wpmain_faq'] = array( 'title' => __( 'Product FAQs', 'wp-main-theme' ), 'priority' => 35 ); }
 	foreach ( $custom as &$tab ) { $tab['callback'] = 'wpmain_product_detail_tab'; }
 	unset( $tab );
@@ -127,6 +128,32 @@ function wpmain_product_comparison_selection( $raw, $choices ) {
 	return array_values( $selected );
 }
 
+/** Searched selections may be outside the suggested category; validate every requested ID. */
+function wpmain_product_comparison_requested( $choices, $product, $raw ) {
+	$ids = array();
+	foreach ( is_array( $raw ) ? array_slice( $raw, 0, 30 ) : array() as $value ) {
+		if ( is_scalar( $value ) && ctype_digit( (string) $value ) && (int) $value !== $product->get_id() ) { $ids[] = (int) $value; }
+		if ( count( array_unique( $ids ) ) >= 3 ) { break; }
+	}
+	foreach ( wpmain_visible_recommendations( array_unique( $ids ) ) as $item ) { $choices[ $item->get_id() ] = $item; }
+	return $choices;
+}
+
+/** Shared readable rows; retain native Woo attribute-extension filtering. */
+function wpmain_product_specification_rows( $product ) {
+	$rows = array();
+	$weight = method_exists( $product, 'has_weight' ) && $product->has_weight();
+	$dimensions = method_exists( $product, 'has_dimensions' ) && $product->has_dimensions();
+	$measurements = apply_filters( 'wc_product_enable_dimensions_display', $weight || $dimensions );
+	if ( $measurements && $weight ) { $rows['weight'] = array( 'label' => __( 'Weight', 'wp-main-theme' ), 'value' => wc_format_weight( $product->get_weight() ) ); }
+	if ( $measurements && $dimensions ) { $rows['dimensions'] = array( 'label' => __( 'Dimensions', 'wp-main-theme' ), 'value' => wc_format_dimensions( $product->get_dimensions( false ) ) ); }
+	foreach ( $product->get_attributes() as $name => $attribute ) {
+		if ( $attribute->get_visible() ) { $rows[ 'attribute_' . $name ] = array( 'label' => wc_attribute_label( $name, $product ), 'value' => esc_html( $product->get_attribute( $name ) ) ); }
+	}
+	$rows = apply_filters( 'woocommerce_display_product_attributes', $rows, $product );
+	return is_array( $rows ) ? array_filter( $rows, static function ( $row ) { return is_array( $row ) && isset( $row['label'], $row['value'] ) && is_string( $row['label'] ) && is_string( $row['value'] ); } ) : array();
+}
+
 function wpmain_product_reassurance_messages( $raw ) {
 	if ( ! is_string( $raw ) ) { return ''; }
 	$lines = array_filter( array_map( 'sanitize_text_field', preg_split( '/\R/u', $raw ) ?: array() ), 'strlen' );
@@ -145,5 +172,6 @@ add_action( 'woocommerce_single_product_summary', 'wpmain_product_reassurance', 
 add_action( 'wp_enqueue_scripts', function () {
 	if ( function_exists( 'is_product' ) && is_product() ) {
 		wp_enqueue_style( 'wpmain-product-details', get_template_directory_uri() . '/assets/css/product-details.css', array( 'wpmain-purchase' ), wpmain_asset_version( '/assets/css/product-details.css' ) );
+		wp_enqueue_script( 'wpmain-comparison', get_template_directory_uri() . '/assets/js/comparison.js', array( 'wc-single-product' ), wpmain_asset_version( '/assets/js/comparison.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 	}
 } );

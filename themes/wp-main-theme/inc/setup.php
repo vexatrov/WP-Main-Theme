@@ -12,6 +12,6 @@ function wpmain_setup() {
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 	add_theme_support( 'editor-styles' );
 	add_editor_style( 'assets/css/editor.css' );
-	register_nav_menus( array( 'primary' => __( 'Primary navigation', 'wp-main-theme' ), 'footer' => __( 'Footer navigation', 'wp-main-theme' ) ) );
+	register_nav_menus( array( 'primary' => __( 'Primary navigation', 'wp-main-theme' ), 'header_pages' => __( 'Header pages', 'wp-main-theme' ), 'footer' => __( 'Footer navigation', 'wp-main-theme' ) ) );
 }
 add_action( 'after_setup_theme', 'wpmain_setup' );

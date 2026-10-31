@@ -10,7 +10,7 @@ assert.ok(pen, 'Sample pen is available');
 const response = await fetch(pen.permalink, { headers, signal: AbortSignal.timeout(60000) });
 assert.equal(response.status, 200);
 const html = await response.text();
-for (const marker of ['wpmain_usage', 'wpmain_comparison', 'wpmain_faq', 'product-comparison-scroll', 'product-guide-links', 'product-compatible-title', 'product-alternatives-title', 'single_add_to_cart_button']) {
+for (const marker of ['wpmain_usage', 'additional_information', 'wpmain_faq', 'product-comparison-scroll', 'product-guide-links', 'product-compatible-title', 'product-alternatives-title', 'single_add_to_cart_button']) {
 	assert.ok(html.includes(marker), `${marker} is rendered`);
 }
 assert.match(html, /preview-guide-1/);
@@ -21,6 +21,8 @@ assert.equal(new Set(ids).size, ids.length, `Page IDs are unique: ${ids.filter((
 assert.match(html, /product-comparison-choice/, 'Comparison offers selectable illustrated recommendations');
 assert.match(html, /name="compare_product\[\]"/, 'Comparison uses native GET choices');
 assert.match(html, /id="tab-title-additional_information"[\s\S]*?مشخصات/, 'Native additional-information title is Specifications');
+assert.doesNotMatch(html, /id="tab-title-wpmain_comparison"/, 'There is no duplicate comparison tab');
+assert.match(html, /name="compare_q"/, 'Unified specifications provide product search');
 assert.match(html, /product-same-brand-title/, 'Assigned brand has its own product rail');
 assert.equal((html.match(/class="product-recommendation-slider"/g) || []).length, 3, 'Fixture shows three consistent recommendation rails');
 const guidePosition=html.indexOf('id="product-guides-title"');
@@ -38,7 +40,15 @@ const selectedResponse = await fetch(selectionUrl, {headers, signal: AbortSignal
 assert.equal(selectedResponse.status, 200);
 const selected = await selectedResponse.text();
 assert.match(selected, /name=['"]robots['"][^>]+noindex/, 'Fallback SEO noindexes shopper comparison URLs');
-const table = selected.match(/<table class="product-comparison">([\s\S]*?)<\/table>/)?.[1];
-assert.equal((table?.match(/<th scope="col">/g) || []).length, 3, 'Current product plus one selected model and specification heading');
+const table = selected.match(/<table class="product-comparison"[^>]*>([\s\S]*?)<\/table>/)?.[1];
+assert.equal((table?.match(/<th scope="col"[^>]*>/g) || []).length, 3, 'Current product plus one selected model and specification heading');
 assert.equal((table?.match(/<img\b/g) || []).length, 2, 'Both compared models include images');
+const discovery=await fetch(`${base}/?rest_route=/wpmain/v1/comparison-search&q=${encodeURIComponent('کارتریج')}&exclude=${pen.id}`,{headers,signal:AbortSignal.timeout(90000)});
+assert.equal(discovery.status,200);
+const matches=await discovery.json();assert.ok(matches.products.length>0&&matches.products.length<=6);
+assert.ok(matches.products.every(p=>Number.isInteger(p.id)&&p.id!==pen.id&&p.label&&p.image),'Public comparison search includes bounded illustrated products');
+const foundUrl=new URL(pen.permalink);foundUrl.searchParams.append('compare_product[]',String(matches.products[0].id));
+const foundResponse=await fetch(foundUrl,{headers,signal:AbortSignal.timeout(90000)});assert.equal(foundResponse.status,200);
+const found=await foundResponse.text();const foundTable=found.match(/<table class="product-comparison"[^>]*>([\s\S]*?)<\/table>/)?.[1];
+assert.equal((foundTable?.match(/<th scope="col"[^>]*>/g)||[]).length,3,'A searched product outside the initial category can be compared');
 console.log(`PASS: product guidance, comparison, FAQs, guide links, separate recommendations and buying controls.\nReview: ${pen.permalink}`);

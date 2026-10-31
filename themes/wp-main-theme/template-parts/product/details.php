@@ -13,7 +13,7 @@ $data = $args['guidance'];
 		<?php if ( empty( $faq['question'] ) || empty( $faq['answer'] ) ) { continue; } ?>
 		<details class="product-faq"><summary><?php echo esc_html( $faq['question'] ); ?></summary><div><?php echo wp_kses_post( wpautop( esc_html( $faq['answer'] ) ) ); ?></div></details>
 	<?php endforeach; ?>
-<?php elseif ( 'wpmain_comparison' === $args['kind'] ) : ?>
+<?php elseif ( in_array( $args['kind'], array( 'additional_information', 'wpmain_comparison' ), true ) ) : ?>
 	<?php
 	$choices = wpmain_product_comparison_candidates( $item, $data );
 	$raw = isset( $_GET['compare_product'] ) ? wp_unslash( $_GET['compare_product'] ) : $data['comparison'];

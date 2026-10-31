@@ -56,6 +56,7 @@ jobs:
       - run: node --check scripts/test-shopping.mjs
       - run: node --check themes/wp-main-theme/assets/js/search.js
       - run: node --check plugins/wp-store-catalog/assets/editor-controls.js
+      - run: node --check themes/wp-main-theme/assets/js/comparison.js
       - run: node scripts/measure-assets.mjs
       - run: node scripts/test-navigation.mjs
       - run: node scripts/test-search-ui.mjs

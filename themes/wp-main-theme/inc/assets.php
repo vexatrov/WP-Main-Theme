@@ -26,6 +26,7 @@ function wpmain_assets() {
 	}
 	// Also supplies submenu controls when WooCommerce is inactive.
 	wp_enqueue_style( 'wpmain-feedback', get_template_directory_uri() . '/assets/css/purchase-feedback.css', class_exists( 'WooCommerce' ) ? array( 'wpmain-store' ) : array( 'wpmain' ), wpmain_asset_version( '/assets/css/purchase-feedback.css' ) );
+	wp_enqueue_style( 'wpmain-header', get_template_directory_uri() . '/assets/css/header.css', array( 'wpmain-feedback' ), wpmain_asset_version( '/assets/css/header.css' ) );
 	if ( is_child_theme() ) {
 		wp_enqueue_style( 'wpmain-brand', get_stylesheet_uri(), array( 'wpmain' ), wp_get_theme()->get( 'Version' ) );
 	}

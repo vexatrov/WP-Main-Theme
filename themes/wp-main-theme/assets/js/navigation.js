@@ -7,6 +7,7 @@
 	let compact = false;
 	let scheduled = false;
 	const branches = [];
+	nav?.classList?.add('has-submenu-controls');
 	nav?.querySelectorAll('.menu-item-has-children').forEach((item, index) => {
 		const submenu = item.querySelector(':scope > .sub-menu');
 		const link = item.querySelector(':scope > a');
@@ -19,11 +20,22 @@
 		toggle.setAttribute('aria-controls', submenu.id);
 		toggle.setAttribute('aria-label', nav.dataset.submenuLabel.replace('%s', link.textContent.trim()));
 		const close = () => { toggle.setAttribute('aria-expanded', 'false'); submenu.hidden = true; };
+		const open = () => {
+			toggle.setAttribute('aria-expanded', 'true'); submenu.hidden = false;
+			if (!mobile.matches && submenu.getBoundingClientRect && submenu.style) {
+				submenu.style.setProperty('--submenu-shift', '0px');
+				const rect = submenu.getBoundingClientRect();
+				const shift = rect.left < 8 ? 8 - rect.left : rect.right > window.innerWidth - 8 ? window.innerWidth - 8 - rect.right : 0;
+				submenu.style.setProperty('--submenu-shift', `${shift}px`);
+			}
+		};
 		toggle.addEventListener('click', () => {
-			const open = toggle.getAttribute('aria-expanded') !== 'true';
-			toggle.setAttribute('aria-expanded', String(open));
-			submenu.hidden = !open;
+			if (toggle.getAttribute('aria-expanded') === 'true') close(); else open();
 		});
+		item.addEventListener('pointerenter', (event) => { if (!mobile.matches && event.pointerType !== 'touch') open(); });
+		item.addEventListener('pointerleave', () => { if (!mobile.matches && !item.contains?.(document.activeElement)) close(); });
+		item.addEventListener('focusin', (event) => { if (!mobile.matches && event.target === link) open(); });
+		item.addEventListener('focusout', (event) => { if (!item.contains?.(event.relatedTarget)) close(); });
 		item.addEventListener('keydown', (event) => {
 			if (event.key !== 'Escape' || submenu.hidden) return;
 			event.stopPropagation();
@@ -34,7 +46,7 @@
 		branches.push(close);
 		close();
 	});
-	const collapsible = () => mobile.matches || compact;
+	const collapsible = () => mobile.matches;
 	const setOpen = (open) => {
 		if (!button || !menu || !nav) return;
 		button.setAttribute('aria-expanded', String(open));
