@@ -1,5 +1,7 @@
 # Project instructions
 
+- Mandatory Persian terminology: always write «تتو». The spelling «تاتو» is incorrect and must not appear in newly written or edited customer-facing copy, UI labels, product/category names, documentation prose or replies. Apply this rule in every future task and code review. Preserve existing technical identifiers/URLs until a deliberate migration provides compatibility or redirects.
+
 - Keep this repository as the source of truth. Commit and push completed changes to `main` unless the user requests otherwise.
 - Build a lightweight classic WordPress theme; no page builders, frontend frameworks, bundled dependencies, or remote fonts by default.
 - Share behavior in `themes/wp-main-theme`; keep brand styling and template variations in child themes.
