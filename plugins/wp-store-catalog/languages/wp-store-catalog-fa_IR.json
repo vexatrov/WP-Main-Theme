@@ -40,5 +40,21 @@
   "Meta description": "توضیحات متا",
   "Social image attachment ID": "شناسه تصویر اشتراک‌گذاری در کتابخانه رسانه",
   "Search and sharing": "جستجو و اشتراک‌گذاری",
-  "Optional overrides. Leave blank for automatic values. An active SEO plugin owns frontend metadata instead. Image IDs must refer to images in the media library.": "این تنظیمات اختیاری هستند؛ برای مقادیر خودکار خالی بگذارید. اگر افزونه سئو فعال باشد، خروجی متا را آن افزونه مدیریت می‌کند. شناسه تصویر باید متعلق به تصویری در کتابخانه رسانه باشد."
+  "Optional overrides. Leave blank for automatic values. An active SEO plugin owns frontend metadata instead. Image IDs must refer to images in the media library.": "این تنظیمات اختیاری هستند؛ برای مقادیر خودکار خالی بگذارید. اگر افزونه سئو فعال باشد، خروجی متا را آن افزونه مدیریت می‌کند. شناسه تصویر باید متعلق به تصویری در کتابخانه رسانه باشد.",
+  "Sharing image": "تصویر اشتراک‌گذاری",
+  "Choose image": "انتخاب تصویر",
+  "Remove image": "حذف تصویر",
+  "Use this image": "استفاده از این تصویر",
+  "Search by name": "جستجو بر اساس نام",
+  "Remove %s": "حذف %s",
+  "Move %s earlier": "انتقال %s به بالاتر",
+  "Move %s later": "انتقال %s به پایین‌تر",
+  "Search by name. Selected items appear in this order. Limit: %s.": "با نام جستجو کنید. موارد انتخاب‌شده با همین ترتیب نمایش داده می‌شوند. حداکثر: %s.",
+  "Searching…": "در حال جستجو…",
+  "No matching items.": "موردی پیدا نشد.",
+  "Search failed. Try again.": "جستجو انجام نشد. دوباره تلاش کنید.",
+  "Selection limit reached.": "به حداکثر تعداد انتخاب رسیده‌اید.",
+  "Article product recommendations": "محصولات پیشنهادی نوشته",
+  "Up to four products shown after the article. Leave blank if you already placed product shortcodes in the article.": "حداکثر چهار محصول پس از نوشته نمایش داده می‌شود. اگر محصولات را با کد کوتاه در نوشته قرار داده‌اید، این بخش را خالی بگذارید.",
+  "Leave blank for automatic values. If an SEO plugin is active, manage metadata there. Choose a sharing image from the media library.": "برای مقادیر خودکار خالی بگذارید. اگر افزونه سئو فعال است، اطلاعات سئو را از همان افزونه مدیریت کنید. تصویر اشتراک‌گذاری را از کتابخانه رسانه انتخاب کنید."
 }

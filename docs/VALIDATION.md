@@ -1,5 +1,13 @@
 # Validation
 
+## Rc.6 — 2026-10-31
+
+All PHP parses and thirteen offline contracts pass, including new authenticated admin-search/save boundaries and article recommendation visibility/limits. Navigation-related existing search/cart/card-option behavioral checks remain passing. The HTTP layout suite passes shop/filter/empty/category-brand/help/tracking/article/homepage markup checks. Translations cover 143 theme and 58 plugin messages; coverage/MO freshness and mandatory terminology checks pass. Own-theme assets remain about **12.02 KB gzip CSS / 4.98 KB gzip JS**; new picker/media assets load only in admin/Customizer.
+
+Native browser checks confirm product-name search, media-library selection, image preview/removal, ordered article recommendations and a normal WordPress save/reload. Selections persisted through reload, then the fictional article's optional choices were restored to empty and saved. Category editing displays its existing guide by name; category picker/media controls initialize at phone width with no document overflow. Customizer exposes named category/product picks and the section-order dropdown; product search returned HTTP 200, selecting an item enabled the native Publish button, and the temporary choice was removed/discarded without publishing a homepage change. One cold Customizer search timed out in the Windows/WASM preview; retry succeeded. This does not benchmark production search latency.
+
+Shop measurements at actual 375px and 1351px CSS viewport widths showed zero horizontal overflow and equal product-card widths/heights (within fractional-pixel rounding), including long titles and variable prices. Phone homepage measurements show a 32px/44.8px hero heading, 22.4px section headings and zero overflow. The initial multi-tab viewport batch did not resize the inspected tab and is excluded from responsive evidence. Checks use the native tab actually affected by the viewport override. Screenshots are ignored under `.local/review/rc6-*`; broader prior device matrices are historical evidence below.
+
 ## Rc.5 — 2026-10-31
 
 All repository PHP parses and twelve offline behavioral contracts pass. Added coverage verifies SEO override nonce/capability/autosave rules, partial/malformed update preservation, media validation, title pagination/suffix retention, assigned shop/home/journal metadata, archive introductions, full native archive guidance, safe BlogPosting encoding/public author data, native schema ownership and tracking-shortcode policy. Five external SEO-owner detections pass. Existing cart race/error/event tests remain passing. Both translation bundles pass coverage/freshness checks (133 theme, 42 plugin messages). The mandatory Persian terminology check passes.

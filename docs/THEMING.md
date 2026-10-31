@@ -30,4 +30,6 @@ The requested currency is **tomans (تومان)**. Set WooCommerce's store curre
 
 ## Performance limits
 
+Shared type/spacing tokens and alignment choices are documented in VISUAL-BASELINE.md. Rc.6 supplies `--heading-hero`, `--heading-page`, `--heading-section`, `--heading-subsection` and `--section-spacing`. Parent defaults use reading-start alignment (right for Persian); explicit content alignment and child-theme overrides remain available. Homepage product/category choices are now named, reorderable Customizer controls when the companion plugin is active; source IDs remain a no-JavaScript/plugin-absent fallback.
+
 The new header behavior adds no dependency. Images use WordPress attachment markup/responsive sizes; product images below the fold retain native lazy-loading behavior. WooCommerce checkout scripts remain intact. Source/asset checks and local layout tests are useful, but do not establish production Core Web Vitals. Measure with real images, catalog and hosting before making performance claims.

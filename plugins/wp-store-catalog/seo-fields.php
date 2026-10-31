@@ -3,18 +3,20 @@
 defined( 'ABSPATH' ) || exit;
 
 function wpmain_catalog_seo_fields( $id, $term = false ) {
-	$labels = array( 'title' => __( 'SEO title', 'wp-store-catalog' ), 'description' => __( 'Meta description', 'wp-store-catalog' ), 'image' => __( 'Social image attachment ID', 'wp-store-catalog' ) );
+	$labels = array( 'title' => __( 'SEO title', 'wp-store-catalog' ), 'description' => __( 'Meta description', 'wp-store-catalog' ), 'image' => __( 'Sharing image', 'wp-store-catalog' ) );
 	foreach ( $labels as $key => $label ) {
 		$value = $term ? get_term_meta( $id, '_wpmain_seo_' . $key, true ) : get_post_meta( $id, '_wpmain_seo_' . $key, true );
-		echo '<p><label for="wpmain_seo_' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label><br>';
+		echo '<div class="wpmain-seo-field"><label for="wpmain_seo_' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label><br>';
 		if ( 'description' === $key ) {
 			echo '<textarea class="widefat" rows="3" id="wpmain_seo_description" name="wpmain_seo_description">' . esc_textarea( is_string( $value ) ? $value : '' ) . '</textarea>';
+		} elseif ( 'image' === $key && function_exists( 'wpmain_catalog_editor_media' ) ) {
+			wpmain_catalog_editor_media( 'wpmain_seo_image', $value );
 		} else {
 			echo '<input class="widefat" type="' . ( 'image' === $key ? 'number' : 'text' ) . '" id="wpmain_seo_' . esc_attr( $key ) . '" name="wpmain_seo_' . esc_attr( $key ) . '" value="' . esc_attr( is_scalar( $value ) ? $value : '' ) . '"' . ( 'image' === $key ? ' min="0" step="1"' : '' ) . '>';
 		}
-		echo '</p>';
+		echo '</div>';
 	}
-	echo '<p class="description">' . esc_html__( 'Optional overrides. Leave blank for automatic values. An active SEO plugin owns frontend metadata instead. Image IDs must refer to images in the media library.', 'wp-store-catalog' ) . '</p>';
+	echo '<p class="description">' . esc_html__( 'Leave blank for automatic values. If an SEO plugin is active, manage metadata there. Choose a sharing image from the media library.', 'wp-store-catalog' ) . '</p>';
 	wp_nonce_field( 'wpmain_seo', 'wpmain_seo_nonce' );
 }
 

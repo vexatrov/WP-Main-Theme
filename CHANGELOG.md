@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-rc.6 / WP Store Catalog 0.7.0
+
+- Standardize shared H1/H2/H3 scale, Persian heading line heights, reading-start alignment, section gaps, card headings and footer copy. Article headers align with their reading column; explicit WordPress content alignment remains respected. Child themes can override the heading/spacing tokens.
+- Replace sharing-image ID entry with native library selection, preview and removal. Add searchable/reorderable category guides, article product recommendations and homepage category/product choices. Replace homepage section-key entry with a named dropdown; retain existing native WooCommerce relationship searches.
+- Keep all new control assets in admin/Customizer screens, preserve stored IDs/data keys and no-JavaScript fallbacks, and enforce native nonce/capability/public-query/save limits. Add focused admin search/save security contracts.
+
 ## 1.0.0-rc.5 / WP Store Catalog 0.6.0
 
 - Add optional native-editor SEO titles, descriptions and sharing-image overrides for products, posts, pages and product/editorial taxonomies. Assigned Home/Shop/Journal pages retain their own metadata and native title pagination. Yield fallback frontend metadata/schema to the chosen SEO plugin.

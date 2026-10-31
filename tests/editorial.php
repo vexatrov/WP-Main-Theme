@@ -13,6 +13,7 @@ function sanitize_title( $value ) { return preg_match('/[^\x00-\x7F]/', $value) 
 function esc_attr( $value ) { return htmlspecialchars( (string) $value, ENT_QUOTES, 'UTF-8' ); }
 function esc_html( $value ) { return htmlspecialchars( (string) $value, ENT_QUOTES, 'UTF-8' ); }
 function esc_html__( $value, $domain = '' ) { return esc_html( $value ); }
+function __( $value, $domain = '' ) { return $value; }
 function check( $condition, $message ) { if ( ! $condition ) { throw new RuntimeException( $message ); } }
 
 /** Small test double for the WordPress HTML Tag Processor methods used here. */
@@ -103,3 +104,32 @@ check( str_contains( $persian, 'id="راهنما"' ) && str_contains( $persian, 
 check( str_contains( $persian, 'id="راهنما-2"' ), 'Duplicate Persian headings remain unique.' );
 
 echo "PASS: article TOC preserves authored anchors and assigns collision-safe IDs across empty and duplicate headings.\n";
+
+// Editor-picked recommendations must keep the established public-product boundary.
+function post_password_required() { return $GLOBALS['protected_article'] ?? false; }
+function get_the_ID() { return 9; }
+function get_post_meta( ...$args ) { return $GLOBALS['article_choices'] ?? array(); }
+class WooCommerce {}
+function shortcode_atts( $defaults, $attributes, $name ) { return array_merge( $defaults, $attributes ); }
+function absint( $value ) { return abs( (int) $value ); }
+function get_post( $id ) { return (object) array( 'post_type' => 'product', 'post_status' => 2 === $id ? 'private' : 'publish', 'post_password' => 3 === $id ? 'secret' : '' ); }
+function esc_url( $value ) { return esc_attr( $value ); }
+function wp_kses_post( $value ) { return $value; }
+function wc_get_product( $id ) {
+	return new class( $id ) {
+		private $id;
+		public function __construct( $id ) { $this->id = $id; }
+		public function is_visible() { return 4 !== $this->id; }
+		public function get_permalink() { return '/product/' . $this->id . '/'; }
+		public function get_image( $size ) { return '<img src="/image.svg" alt="">'; }
+		public function get_name() { return 'Public <pen> ' . $this->id; }
+		public function get_price_html() { return '<span>100</span>'; }
+	};
+}
+check( 'Article' === wpmain_editorial_selected_products( 'Article' ), 'Empty optional recommendations change nothing' );
+$GLOBALS['article_choices'] = array( 1, 2, 3, 4, 5 );
+$selected = wpmain_editorial_selected_products( 'Article' );
+check( 1 === substr_count( $selected, 'class="editorial-product"' ) && str_contains( $selected, 'Public &lt;pen&gt; 1' ) && ! str_contains( $selected, '/product/5/' ), 'Recommendations cap selections, escape titles and omit private/password/hidden products' );
+$GLOBALS['protected_article'] = true;
+check( 'Article' === wpmain_editorial_selected_products( 'Article' ), 'Protected articles do not expose recommendations' );
+echo "PASS: editor-picked article products preserve optional rendering, selection bounds and public visibility.\n";

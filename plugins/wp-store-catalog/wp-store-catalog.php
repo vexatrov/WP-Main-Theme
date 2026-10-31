@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Store Catalog
  * Description: Product guidance, relationships, Persian search and lightweight storefront SEO for the shared storefront.
- * Version: 0.6.0
+ * Version: 0.7.0
  * Requires PHP: 8.1
  * Requires Plugins: woocommerce
  * Text Domain: wp-store-catalog
@@ -48,6 +48,7 @@ require_once __DIR__ . '/archive-content.php';
 require_once __DIR__ . '/seo.php';
 require_once __DIR__ . '/seo-fields.php';
 require_once __DIR__ . '/seo-schema.php';
+require_once __DIR__ . '/editor-controls.php';
 
 function wpmain_catalog_guidance( $id ) {
 	$raw_faq = get_post_meta( $id, '_wpmain_faq', true );

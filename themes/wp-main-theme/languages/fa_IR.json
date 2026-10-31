@@ -131,5 +131,15 @@
   "Store information": "اطلاعات فروشگاه",
   "These options are unavailable. Please open the product.": "این گزینه‌ها در دسترس نیستند. صفحه محصول را باز کنید.",
   "Up to four messages, one per line. Shown on every product. Examples: Prices are up to date; one-day Tehran / two-day other-city delivery; 100% original products; warranty and support. Enter the statements that apply to your store.": "حداکثر چهار پیام، هر کدام در یک خط؛ در همه محصولات نمایش داده می‌شوند. مثال: قیمت‌ها به‌روز هستند؛ ارسال یک‌روزه تهران و دو‌روزه سایر شهرها؛ ضمانت اصالت کالا — ۱۰۰٪ اورجینال؛ گارانتی و پشتیبانی. متن متناسب با فروشگاه خود را وارد کنید.",
-  "Update comparison": "به‌روزرسانی مقایسه"
+  "Update comparison": "به‌روزرسانی مقایسه",
+  "Homepage categories": "دسته‌های صفحه اصلی",
+  "Choose and reorder up to six categories. Leave blank for populated top-level categories.": "حداکثر شش دسته را انتخاب و مرتب کنید. برای نمایش دسته‌های اصلی دارای محصول، خالی بگذارید.",
+  "Homepage products": "محصولات صفحه اصلی",
+  "Default section order": "ترتیب پیش‌فرض بخش‌ها",
+  "Introduction → Catalog → Articles": "معرفی ← فروشگاه ← نوشته‌ها",
+  "Catalog → Introduction → Articles": "فروشگاه ← معرفی ← نوشته‌ها",
+  "Catalog → Articles → Introduction": "فروشگاه ← نوشته‌ها ← معرفی",
+  "Introduction → Articles → Catalog": "معرفی ← نوشته‌ها ← فروشگاه",
+  "Articles → Catalog → Introduction": "نوشته‌ها ← فروشگاه ← معرفی",
+  "Articles → Introduction → Catalog": "نوشته‌ها ← معرفی ← فروشگاه"
 }

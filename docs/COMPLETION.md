@@ -1,6 +1,8 @@
 # Shared-theme completion and release gates
 
-Release: **1.0.0-rc.5**, catalog plugin **0.6.0**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+Release: **1.0.0-rc.6**, catalog plugin **0.7.0**, a shared-theme release candidate. This is not a claim that three branded shops are launched. Brand child themes remain deliberately deferred by the owner. The scope below is reusable behavior and layout, with real WordPress/WooCommerce as the backend.
+
+Rc.6 polishes shared typography, spacing and reading alignment, with named admin media/relationship/homepage controls. See VISUAL-BASELINE.md, EDITOR-CONTROLS.md and VALIDATION.md. No wishlist is included; branded design changes remain child-theme work.
 
 Rc.5 supplies native SEO override fields, assigned shop/journal metadata, archive/hero fallback sources, long native taxonomy guidance, complementary site/article schema, tracking utility indexing and keyboard purchase focus visibility. See SEO.md and VALIDATION.md. Hosting/CWV and search-scale measurements remain deployment checks, rather than ranking requirements for the shared theme.
 

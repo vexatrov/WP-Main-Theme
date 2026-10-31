@@ -2,6 +2,17 @@
 defined( 'ABSPATH' ) || exit;
 
 function wpmain_customize_register( $customizer ) {
+	if ( class_exists( 'WP_Customize_Control' ) && function_exists( 'wpmain_catalog_editor_picker' ) && ! class_exists( 'WPMain_Catalog_Picker_Control' ) ) {
+		class WPMain_Catalog_Picker_Control extends WP_Customize_Control {
+			public $kind = 'product';
+			public $limit = 8;
+			public function render_content() {
+				echo '<span class="customize-control-title">' . esc_html( $this->label ) . '</span>';
+				wpmain_catalog_editor_picker( $this->id, $this->value(), $this->kind, $this->limit, $this->get_link() );
+				if ( $this->description ) { echo '<p class="description">' . esc_html( $this->description ) . '</p>'; }
+			}
+		}
+	}
 	$customizer->add_section( 'wpmain_storefront', array( 'title' => __( 'Storefront homepage', 'wp-main-theme' ), 'priority' => 35 ) );
 	$fields = array(
 		'hero_eyebrow' => array( __( 'Intro label', 'wp-main-theme' ), '', 'text' ),
@@ -14,12 +25,28 @@ function wpmain_customize_register( $customizer ) {
 		$customizer->add_control( 'wpmain_' . $key, array( 'label' => $field[0], 'section' => 'wpmain_storefront', 'type' => $field[2] ) );
 	}
 	$merchandising = array(
-		'home_categories' => array( __( 'Category IDs in display order', 'wp-main-theme' ), __( 'Comma-separated IDs; leave blank for six populated top-level categories.', 'wp-main-theme' ), 'wpmain_sanitize_home_ids' ),
-		'home_products' => array( __( 'Product IDs in display order', 'wp-main-theme' ), __( 'Up to eight published catalog products. Leave blank to use the product source below.', 'wp-main-theme' ), 'wpmain_sanitize_home_ids' ),
+		'home_categories' => array( __( 'Homepage categories', 'wp-main-theme' ), __( 'Choose and reorder up to six categories. Leave blank for populated top-level categories.', 'wp-main-theme' ), 'wpmain_sanitize_home_ids' ),
+		'home_products' => array( __( 'Homepage products', 'wp-main-theme' ), __( 'Up to eight published catalog products. Leave blank to use the product source below.', 'wp-main-theme' ), 'wpmain_sanitize_home_ids' ),
 		'home_sections' => array( __( 'Homepage section order', 'wp-main-theme' ), __( 'Comma-separated: content, catalog, journal. Omitted sections are appended. The hero remains first.', 'wp-main-theme' ), 'wpmain_sanitize_home_sections' ),
 	);
 	foreach ( $merchandising as $key => $field ) {
 		$customizer->add_setting( 'wpmain_' . $key, array( 'default' => '', 'sanitize_callback' => $field[2] ) );
+		if ( in_array( $key, array( 'home_categories', 'home_products' ), true ) && class_exists( 'WPMain_Catalog_Picker_Control' ) ) {
+			$customizer->add_control( new WPMain_Catalog_Picker_Control( $customizer, 'wpmain_' . $key, array( 'label' => $field[0], 'description' => $field[1], 'section' => 'wpmain_storefront', 'kind' => 'home_categories' === $key ? 'product_cat' : 'product', 'limit' => 'home_categories' === $key ? 6 : 8 ) ) );
+			continue;
+		}
+		if ( 'home_sections' === $key ) {
+			$customizer->add_control( 'wpmain_' . $key, array( 'label' => $field[0], 'section' => 'wpmain_storefront', 'type' => 'select', 'choices' => array(
+				'' => __( 'Default section order', 'wp-main-theme' ),
+				'content,catalog,journal' => __( 'Introduction → Catalog → Articles', 'wp-main-theme' ),
+				'catalog,content,journal' => __( 'Catalog → Introduction → Articles', 'wp-main-theme' ),
+				'catalog,journal,content' => __( 'Catalog → Articles → Introduction', 'wp-main-theme' ),
+				'content,journal,catalog' => __( 'Introduction → Articles → Catalog', 'wp-main-theme' ),
+				'journal,catalog,content' => __( 'Articles → Catalog → Introduction', 'wp-main-theme' ),
+				'journal,content,catalog' => __( 'Articles → Introduction → Catalog', 'wp-main-theme' ),
+			) ) );
+			continue;
+		}
 		$customizer->add_control( 'wpmain_' . $key, array( 'label' => $field[0], 'description' => $field[1], 'section' => 'wpmain_storefront', 'type' => 'text' ) );
 	}
 	$customizer->add_setting( 'wpmain_home_product_source', array( 'default' => 'latest', 'sanitize_callback' => 'wpmain_sanitize_home_product_source' ) );

@@ -154,3 +154,12 @@ function wpmain_editorial_products_shortcode( $attributes ) {
 	return $output;
 }
 add_shortcode( 'editorial_products', 'wpmain_editorial_products_shortcode' );
+
+/** Optional editor-picked recommendations retain the existing shortcode's public visibility rules. */
+function wpmain_editorial_selected_products( $content ) {
+	if ( ! is_singular( 'post' ) || ! is_main_query() || ! in_the_loop() || post_password_required() ) { return $content; }
+	$ids = get_post_meta( get_the_ID(), '_wpmain_article_products', true );
+	if ( ! is_array( $ids ) || ! $ids ) { return $content; }
+	return $content . wpmain_editorial_products_shortcode( array( 'ids' => implode( ',', array_slice( array_map( 'absint', $ids ), 0, 4 ) ), 'heading' => __( 'Recommended products', 'wp-main-theme' ) ) );
+}
+add_filter( 'the_content', 'wpmain_editorial_selected_products', 25 );

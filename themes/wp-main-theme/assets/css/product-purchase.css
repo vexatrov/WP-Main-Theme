@@ -29,7 +29,7 @@
 .single-product.woocommerce div.product .product_title {
 	margin: 0 0 .75rem;
 	font-size: clamp(1.5rem, 2.2vw, 2.25rem);
-	line-height: 1.25;
+	line-height: 1.5;
 }
 .single-product.woocommerce div.product .summary > .price {
 	margin-block: 1rem;
