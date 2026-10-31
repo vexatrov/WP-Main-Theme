@@ -4,7 +4,7 @@ Shared, hand-coded WordPress + WooCommerce foundation for three B2C stores: two 
 
 ## Status
 
-Latest review: [2026-10-27 audit](docs/RELEASE-AUDIT-2026-10-27.md). Its shared implementation work is included in rc.2; current verification and store-specific gates are recorded in the completion report.
+Latest review: [2026-10-31 SEO/performance audit](docs/SEO-PERFORMANCE-AUDIT-2026-10-31.md). The shared foundation is lightweight, but the audit identifies metadata/content gaps and unverified production performance. Functional verification and store-specific launch gates remain recorded in the completion report; this is not a production SEO or speed certification.
 
 Version **1.0.0-rc.4**, with WP Store Catalog **0.5.0**, adds aligned gallery/summary columns, buying guides and consistent recommendation rows below the product tabs, and editable category/brand introductions, facts and detailed buying guidance. All ten fictional products have descriptions, specifications, FAQs, reviews and gallery examples. Image stock badges, grid variation picking, comparisons and the shared search/filter/cart/SEO foundation remain included. See the [completion report and remaining release gates](docs/COMPLETION.md). Local checks use fictional inventory and tomans (IRT). Brand designs, hosting, gateway callbacks and real catalog/policy content remain store-specific launch work. The Instagram references are saved in [brand references](docs/BRANDS.md).
 

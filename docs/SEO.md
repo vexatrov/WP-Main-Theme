@@ -1,5 +1,7 @@
 # SEO ownership and toman schema
 
+The [2026-10-31 SEO/performance audit](SEO-PERFORMANCE-AUDIT-2026-10-31.md) records current source/runtime evidence and known gaps, including incomplete description sources for visible homepage/shop/archive copy. The capabilities below do not imply complete production optimization.
+
 WP Store Catalog supplies a small fallback SEO owner when Yoast, All in One SEO, Rank Math, SEOPress and The SEO Framework are absent. `wpmain_catalog_seo_enabled` lets the deployment's selected integration disable this fallback. Detection happens when hooks run, after plugins load.
 
 ## Metadata and discovery policy
