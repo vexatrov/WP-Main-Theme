@@ -3,6 +3,7 @@
 - Mandatory Persian terminology: always write «تتو». The spelling «تاتو» is incorrect and must not appear in newly written or edited customer-facing copy, UI labels, product/category names, documentation prose or replies. Apply this rule in every future task and code review. Preserve existing technical identifiers/URLs until a deliberate migration provides compatibility or redirects.
 
 - Keep this repository as the source of truth. Commit and push completed changes to `main` unless the user requests otherwise.
+- For TattooMato work, consistently save and push research, design, branding, source and handoff context to https://github.com/vexatrov/TattooMato. Its AGENTS.md and docs/STATUS.md define continuity. This repository owns shared behavior; push shared changes here first, then update the brand repository's submodule pin. The brand audit and proposed palette are linked in docs/BRANDS.md. Do not leave meaningful project context only in chat or commit secrets/session/customer data.
 - Build a lightweight classic WordPress theme; no page builders, frontend frameworks, bundled dependencies, or remote fonts by default.
 - Share behavior in `themes/wp-main-theme`; keep brand styling and template variations in child themes.
 - Use one intentional palette per brand; no automatic dark mode or theme toggle.
