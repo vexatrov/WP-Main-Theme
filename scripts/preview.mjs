@@ -3,6 +3,11 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 const persistentPath = resolve('.local/site');
 const resume = existsSync(resolve(persistentPath, 'wp-config.php'));
+const installedVersionFile = resolve(persistentPath, 'wp-includes/version.php');
+if (resume && existsSync(installedVersionFile)) {
+	const installedVersion = readFileSync(installedVersionFile, 'utf8').match(/\$wp_version\s*=\s*'([^']+)'/)?.[1];
+	if (installedVersion && installedVersion !== '7.1.4') console.warn(`Existing preview runs WordPress ${installedVersion}; the 7.1.4 pin does not update existing files. Back up and update the preview core before using it.`);
+}
 mkdirSync(persistentPath, { recursive: true });
 
 // Local disposable WordPress, isolated from production and from real customer data.
@@ -27,7 +32,7 @@ async function archive(name, url) {
 	}
 	return { resource: 'literal', name, contents: new Uint8Array(readFileSync(path)) };
 }
-const coreLanguage = await archive('wordpress-7.1.3-fa_IR.zip', 'https://downloads.wordpress.org/translation/core/7.1.3/fa_IR.zip');
+const coreLanguage = await archive('wordpress-7.1.4-fa_IR.zip', 'https://downloads.wordpress.org/translation/core/7.1.4/fa_IR.zip');
 const commerceLanguage = await archive('woocommerce-11.2.1-fa_IR.zip', 'https://downloads.wordpress.org/translation/plugin/woocommerce/11.2.1/fa_IR.zip');
 const commerce = await archive('woocommerce-11.2.1.zip', 'https://downloads.wordpress.org/plugin/woocommerce.11.2.1.zip');
 const site = await runCLI({
@@ -37,7 +42,7 @@ const site = await runCLI({
 	...(resume ? {} : { 'mount-before-install': [{ hostPath: persistentPath, vfsPath: '/wordpress' }] }),
 	mode: resume ? 'apply-to-existing-site' : 'create-new-site',
 	port: 9400,
-	wp: '7.1.3',
+	wp: '7.1.4',
 	php: '8.3',
 	workers: 6,
 	login: true,

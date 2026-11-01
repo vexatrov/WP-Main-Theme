@@ -1,5 +1,9 @@
 # Validation
 
+## WordPress 7.1.4 preview update — 2026-11-01
+
+The persistent local preview was stopped and backed up before its core and Persian language files were updated. The installed core reports 7.1.4; the restarted homepage returns HTTP 200, and the product-details and layout HTTP suites pass with existing sample data. PHP syntax/contracts, translation coverage and terminology checks also pass. The fresh isolated integration suite remains a separate CI check; no hosted store was updated.
+
 ## Rc.7 — 2026-10-31
 
 Follow-up: specifications now precede comparison controls; suggestions start unchecked and the comparison table appears only after an explicit selection. PHP contracts cover the empty default state, and the product HTTP check covers ordering and a selected comparison.

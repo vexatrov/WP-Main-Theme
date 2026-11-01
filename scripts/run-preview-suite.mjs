@@ -27,7 +27,7 @@ async function archive(name, url) {
 	}
 	return {resource: 'literal', name, contents: new Uint8Array(readFileSync(path))};
 }
-const language = await archive('wordpress-7.1.3-fa_IR.zip', 'https://downloads.wordpress.org/translation/core/7.1.3/fa_IR.zip');
+const language = await archive('wordpress-7.1.4-fa_IR.zip', 'https://downloads.wordpress.org/translation/core/7.1.4/fa_IR.zip');
 const commerceLanguage = await archive('woocommerce-11.2.1-fa_IR.zip', 'https://downloads.wordpress.org/translation/plugin/woocommerce/11.2.1/fa_IR.zip');
 const commerce = await archive('woocommerce-11.2.1.zip', 'https://downloads.wordpress.org/plugin/woocommerce.11.2.1.zip');
 const fixtures = ['seed', 'refresh', 'product-preview', 'layout-preview', 'variable-preview', 'quality-preview', 'storefront-preview', 'complete-catalog-preview', 'header-preview', 'search-lifecycle'];
@@ -35,7 +35,7 @@ let site;
 try {
 	console.log(`Booting fresh WordPress/WooCommerce at ${sitePath} (port ${port})…`);
 	site = await runCLI({
-		command: 'start', path: sitePath, mode: 'create-new-site', port, wp: '7.1.3', php: '8.3', workers: 6, login: true, skipBrowser: true,
+		command: 'start', path: sitePath, mode: 'create-new-site', port, wp: '7.1.4', php: '8.3', workers: 6, login: true, skipBrowser: true,
 		'mount-before-install': [{hostPath: sitePath, vfsPath: '/wordpress'}],
 		'define-bool': {WP_DEBUG: true, WP_DEBUG_DISPLAY: false, WP_DEBUG_LOG: true, DISABLE_WP_CRON: true, WPMAIN_ISOLATED_CI: true},
 		mount: [

@@ -10,7 +10,7 @@ Matching still uses substring `LIKE` against metadata; returning six products/th
 
 ## Repeatable integration run
 
-`node scripts/run-preview-suite.mjs --isolated` boots a fresh database in a unique ignored `.local/ci-site-*` directory, with explicit `/wordpress` mounting so Playground cannot reuse a managed site. It refuses an occupied port 9400 and never resumes `.local/site`. The runtime pins WordPress 7.1.3, WooCommerce 11.2.1, PHP 8.3 and the existing Playground CLI 3.1.40. Six PHP workers support WooCommerce loopbacks; test scripts run sequentially.
+`node scripts/run-preview-suite.mjs --isolated` boots a fresh database in a unique ignored `.local/ci-site-*` directory, with explicit `/wordpress` mounting so Playground cannot reuse a managed site. It refuses an occupied port 9400 and never resumes `.local/site`. The runtime pins WordPress 7.1.4, WooCommerce 11.2.1, PHP 8.3 and the existing Playground CLI 3.1.40. Six PHP workers support WooCommerce loopbacks; test scripts run sequentially.
 
 The runner requires an explicit success marker written only after every booted lifecycle assertion finishes. The run installs an unconditional mail-capture MU plugin before commerce fixtures. A guarded PHP integration fixture requires both the isolated-CI constant and the fictional demo identity; it verifies captured mail before any checkout or recovery tests. It creates and removes synthetic product/term records to check variation save/private/trash/restore/delete behavior, native post/meta imports, term rename, >100-category matching, rebuild recovery and bundled Persian plugin loading.
 
