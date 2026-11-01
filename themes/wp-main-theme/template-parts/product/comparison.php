@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 $current = $args['product'];
 $data = $args['guidance'];
 $choices = $args['choices'] ?? wpmain_product_comparison_candidates( $current, $data );
-$raw = isset( $_GET['compare_product'] ) ? wp_unslash( $_GET['compare_product'] ) : $data['comparison'];
+$raw = isset( $_GET['compare_product'] ) ? wp_unslash( $_GET['compare_product'] ) : array();
 $choices = wpmain_product_comparison_requested( $choices, $current, $raw );
 $query = isset( $_GET['compare_q'] ) && is_string( $_GET['compare_q'] ) ? sanitize_text_field( wp_unslash( $_GET['compare_q'] ) ) : '';
 if ( $query && function_exists( 'wpmain_catalog_comparison_matches' ) ) {
@@ -20,7 +20,13 @@ foreach ( $items as $item ) {
 }
 ?>
 <section class="product-specification-panel" data-comparison data-endpoint="<?php echo esc_url( rest_url( 'wpmain/v1/comparison-search' ) ); ?>" data-current="<?php echo esc_attr( $current->get_id() ); ?>" data-loading="<?php esc_attr_e( 'Searching…', 'wp-main-theme' ); ?>" data-empty="<?php esc_attr_e( 'No products found.', 'wp-main-theme' ); ?>" data-error="<?php esc_attr_e( 'Search unavailable. Press Enter to try again.', 'wp-main-theme' ); ?>" data-limit="<?php esc_attr_e( 'Choose up to three products', 'wp-main-theme' ); ?>">
-<h2><?php esc_html_e( 'Specifications & comparison', 'wp-main-theme' ); ?></h2>
+<?php if ( ! empty( $rows[ $current->get_id() ] ) ) : ?>
+<h2><?php esc_html_e( 'Specifications', 'wp-main-theme' ); ?></h2>
+<dl class="product-specification-list">
+ <?php foreach ( $rows[ $current->get_id() ] as $row ) : ?><div><dt><?php echo esc_html( $row['label'] ); ?></dt><dd><?php echo wp_kses_post( $row['value'] ); ?></dd></div><?php endforeach; ?>
+</dl>
+<?php endif; ?>
+<h2 class="product-comparison-heading"><?php esc_html_e( 'Compare specifications', 'wp-main-theme' ); ?></h2>
 <form class="product-comparison-form" method="get" action="<?php echo esc_url( $current->get_permalink() . '#tab-additional_information' ); ?>">
  <?php if ( ! get_option( 'permalink_structure' ) ) : ?><input type="hidden" name="p" value="<?php echo esc_attr( $current->get_id() ); ?>"><input type="hidden" name="post_type" value="product"><?php endif; ?>
  <input type="hidden" name="compare_product[]" value="">
@@ -41,6 +47,7 @@ foreach ( $items as $item ) {
  </div></fieldset>
  <p class="comparison-status" role="status" aria-live="polite"></p>
 </form>
+<?php if ( $selected ) : ?>
 <div class="product-comparison-scroll" role="region" aria-label="<?php esc_attr_e( 'Product specification comparison', 'wp-main-theme' ); ?>" tabindex="0">
 <table class="product-comparison" style="--comparison-columns:<?php echo esc_attr( count( $items ) ); ?>">
  <caption class="screen-reader-text"><?php esc_html_e( 'Product specification comparison', 'wp-main-theme' ); ?></caption>
@@ -53,4 +60,5 @@ foreach ( $items as $item ) {
  </tbody>
 </table>
 </div>
+<?php endif; ?>
 </section>

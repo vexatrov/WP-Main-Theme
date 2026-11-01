@@ -26,6 +26,12 @@
 .product-comparison-choice small { color: var(--brand-muted); }
 .product-comparison-form button { min-height: 44px; }
 .product-specification-panel > h2 { margin-block: 0 1.25rem; font-size: var(--heading-section); }
+.product-specification-panel > .product-comparison-heading { margin-block: 2rem 1rem; }
+.product-specification-list { margin: 0; border: 1px solid var(--brand-border); border-radius: var(--brand-radius); overflow: hidden; }
+.product-specification-list > div { display: grid; grid-template-columns: minmax(8rem, 1fr) minmax(0, 2fr); gap: 1rem; padding: .85rem 1rem; background: var(--brand-surface); border-block-end: 1px solid var(--brand-border); }
+.product-specification-list > div:last-child { border-block-end: 0; }
+.product-specification-list dt { font-weight: 600; }
+.product-specification-list dd { margin: 0; overflow-wrap: anywhere; }
 .comparison-toolbar { display: flex; align-items: end; justify-content: flex-start; gap: .75rem; max-width: 44rem; margin-block-end: 1.25rem; }
 .comparison-search { display: grid; gap: .5rem; flex: 1; max-width: 30rem; font-weight: 650; }
 .comparison-search input { width: 100%; min-height: 44px; font-weight: 400; }

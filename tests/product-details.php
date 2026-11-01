@@ -73,6 +73,8 @@ ob_start(); require __DIR__ . '/../themes/wp-main-theme/template-parts/product/c
 $comparison_html = $html;
 check( str_contains( $html, 'type="checkbox"' ) && str_contains( $html, 'model-1.jpg' ) && str_contains( $html, 'model-2.jpg' ) && str_contains( $html, 'model-3.jpg' ), 'Selectable thumbnails and selected/current product images render together.' );
 check( ! str_contains( $html, 'Model 4<' ) && ! str_contains( $html, 'Model 6<' ), 'Forged private/password selections never expose names, images or table data.' );
+$_GET = array(); ob_start(); require __DIR__ . '/../themes/wp-main-theme/template-parts/product/comparison.php'; $initial_html = ob_get_clean();
+check( ! str_contains( $initial_html, 'checked="checked"' ) && ! str_contains( $initial_html, '<table class="product-comparison"' ), 'Suggestions remain unchecked and the comparison table is absent until the shopper selects products.' );
 check( '' === wpmain_product_reassurance_messages( array() ), 'Malformed owner copy is ignored.' );
 check( "One\nTwo\nThree\nFour" === wpmain_product_reassurance_messages( "<b>One</b>\n\nTwo\nThree\nFour\nFive" ), 'Owner copy strips markup, blank lines and caps four messages.' );
 $GLOBALS['reassurance'] = ''; ob_start(); wpmain_product_reassurance(); check( '' === ob_get_clean(), 'Blank shared defaults render no assurance claims.' );

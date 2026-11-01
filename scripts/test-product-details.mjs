@@ -10,7 +10,7 @@ assert.ok(pen, 'Sample pen is available');
 const response = await fetch(pen.permalink, { headers, signal: AbortSignal.timeout(60000) });
 assert.equal(response.status, 200);
 const html = await response.text();
-for (const marker of ['wpmain_usage', 'additional_information', 'wpmain_faq', 'product-comparison-scroll', 'product-guide-links', 'product-compatible-title', 'product-alternatives-title', 'single_add_to_cart_button']) {
+for (const marker of ['wpmain_usage', 'additional_information', 'wpmain_faq', 'product-specification-list', 'product-guide-links', 'product-compatible-title', 'product-alternatives-title', 'single_add_to_cart_button']) {
 	assert.ok(html.includes(marker), `${marker} is rendered`);
 }
 assert.match(html, /preview-guide-1/);
@@ -23,6 +23,9 @@ assert.match(html, /name="compare_product\[\]"/, 'Comparison uses native GET cho
 assert.match(html, /id="tab-title-additional_information"[\s\S]*?مشخصات/, 'Native additional-information title is Specifications');
 assert.doesNotMatch(html, /id="tab-title-wpmain_comparison"/, 'There is no duplicate comparison tab');
 assert.match(html, /name="compare_q"/, 'Unified specifications provide product search');
+assert.doesNotMatch(html, /<table class="product-comparison"/, 'No comparison table is shown before a shopper chooses a product');
+assert.doesNotMatch(html, /type="checkbox" name="compare_product\[\]"[^>]*checked/, 'Suggested products are not selected by default');
+assert.ok(html.indexOf('product-specification-list') < html.indexOf('product-comparison-form'), 'Specifications appear before comparison controls');
 assert.match(html, /product-same-brand-title/, 'Assigned brand has its own product rail');
 assert.equal((html.match(/class="product-recommendation-slider"/g) || []).length, 3, 'Fixture shows three consistent recommendation rails');
 const guidePosition=html.indexOf('id="product-guides-title"');

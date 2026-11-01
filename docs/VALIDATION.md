@@ -2,6 +2,8 @@
 
 ## Rc.7 — 2026-10-31
 
+Follow-up: specifications now precede comparison controls; suggestions start unchecked and the comparison table appears only after an explicit selection. PHP contracts cover the empty default state, and the product HTTP check covers ordering and a selected comparison.
+
 PHP syntax and all thirteen offline contracts pass after the header/comparison changes. Navigation checks now cover desktop compact navigation staying visible, pointer hover, keyboard focus, Escape and mobile disclosures. Comparison checks cover the single native tab, request revalidation, public catalog discovery, six-result/query bounds, missing/malformed input, native measurement/attribute filters and removal of explanatory paragraphs. The live product-details HTTP script passes, including a searched product outside the initial category, illustrated comparison columns and noindex GET URLs. An earlier in-flight test process used the old literal table-tag assertion and failed; the updated attribute-aware semantic check passes.
 
 Native header review confirms search physically left of branding, all real informational destinations, social icons and zero horizontal overflow at 1351px. Real pointer movement opens the category's two native child links. At 375px, the mobile menu/disclosure opens those same children with 44px link targets; the expanded menu scrolls within its own 60vh cap and the document does not overflow. Generic demo social URLs and nested menu items were applied by the guarded fixture; its temporary MU copy was removed afterward. Header screenshots are ignored under `.local/review/rc7-header-desktop.png` and `rc7-header-mobile.png`.
