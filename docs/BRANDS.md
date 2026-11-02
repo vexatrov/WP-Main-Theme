@@ -12,6 +12,8 @@ The initial implementation could not fetch Instagram. A later TattooMato browser
 
 TattooMato pins this shared repository as a submodule at `vendor/wp-main-theme`. Keep shared behavior here and brand-specific source/research in its project repository. Push shared changes before updating the brand repository's pinned commit. Git pushes do not deploy either store.
 
+Collection Eyelash follow-up (2026-11-01): its actual profile, captions, sample comments/shop replies and sampled reel playback were reviewed in the private [Collection project repository](https://github.com/vexatrov/Collection-eyelash). Evidence and limits are in `brand-research.md` and `docs/reel-visual-review.md`; the first proposed brand system and visual board are in `brand/brand-system.md` and `brand/board.html`. Collection's ivory/coral palette and locally bundled Persian font are isolated in that repository's `themes/collection-eyelash` child theme. The direction awaits owner review; proposed hex values are not official sampled logo colors. The user authorizes Collection-related changes here but explicitly excludes unrelated changes. No other store's brand styling should be changed for Collection.
+
 Agreed direction: three independent shops, one shared custom parent theme, distinct brand child themes, one fixed palette per store, no Elementor, minimal plugins. Brand references remain here for future work; do not rely on conversation memory.
 
 The earlier PMU site is a functionality reference only. Both tattoo stores primarily sell body tattoo equipment to consumers. Do not carry over PMU positioning or wholesale-first messaging. Current preview uses clearly identified sample content, not any brand's actual inventory.
